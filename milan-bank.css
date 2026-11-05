@@ -1,0 +1,25 @@
+/* Selezione ufficiale Milano: archivio integrato per lo studio. */
+.milano-intro{border-left:4px solid #f28812;background:linear-gradient(130deg,#fff9ef,#fff);padding:20px 24px;margin:18px 0 22px;border-radius:8px;border:1px solid #f1dfc3;border-left-width:4px}
+.milano-intro strong{color:#153e71;font-size:15px;display:block;margin-bottom:6px}
+.milano-intro p{font-size:12px;line-height:1.75;margin:0;color:#50667b}
+.milano-toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:22px 0}
+.milano-toolbar label{display:grid;gap:7px;font-size:11px;font-weight:750;color:#49617d;min-width:160px;flex:1}
+.milano-toolbar input,.milano-toolbar select{border:1px solid #cedae5;border-radius:8px;padding:12px;background:white;color:#21364e;font:inherit;width:100%;max-width:100%;box-sizing:border-box}
+.milano-toolbar input:focus,.milano-toolbar select:focus{outline:2px solid #ed890a;outline-offset:1px}
+.milano-list{display:grid;gap:12px}
+.milano-card{border:1px solid #dce5ed;border-radius:10px;background:#fff;padding:17px 19px;box-shadow:0 4px 18px rgba(20,64,105,.04)}
+.milano-card-head{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:10px}
+.milano-card-head small{font-weight:750;letter-spacing:.045em;font-size:10px;text-transform:uppercase;color:#496582}
+.milano-card h3{font-size:14px;line-height:1.65;letter-spacing:-.01em;color:#203c5c;margin:0 0 10px}
+.milano-card details{margin-top:10px;border-top:1px solid #edf0f2;padding-top:12px}
+.milano-card summary{cursor:pointer;list-style-position:inside;color:#0e578a;font-weight:750;font-size:12px}
+.milano-card details p{font-size:12px;line-height:1.8;color:#405c75;margin:9px 0}
+.milano-card .milano-pending{font-size:11px;color:#7f7665;background:#fff9ed;padding:9px 11px;border-radius:5px}
+.milano-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0;flex-wrap:wrap}
+.milano-pagination span{font-size:11px;color:#6b7f94}
+.milano-source-caption{font-size:10px;color:#8090a1;line-height:1.7;margin-top:12px}
+.milano-stat{background:#f6f9fc;border:1px solid #dce8f4;padding:14px;border-radius:9px;display:grid;gap:4px}
+.milano-stat b{font-size:24px;color:#154e80;letter-spacing:-.04em}
+.milano-stat small{font-size:10px;color:#667e94;line-height:1.5}
+.milano-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media(max-width:650px){.milano-stats{grid-template-columns:1fr 1fr}.milano-toolbar{display:grid;grid-template-columns:1fr}.milano-toolbar label{width:100%}.milano-card{padding:14px}.milano-pagination{justify-content:center}}
