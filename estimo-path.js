@@ -30,6 +30,13 @@ function renderEstimoPath() {
     <div class="estimo-topic-list">${entries.map((item, i) => `<button class="estimo-topic" data-open-module="${item.module.id}" aria-label="Apri il modulo di Estimo: ${item.title}">
       <span>${String(i + 1).padStart(2, '0')}</span><div><strong>${item.title}</strong><small>${item.desc} · ${item.module.lessons.length} lezioni</small></div>
     </button>`).join('')}</div>
+    <h3 class="estimo-formulas-title">Schema rapido: i procedimenti da conoscere</h3>
+    <div class="estimo-formulas">
+      <div class="estimo-formula"><small>01 · Confronto di mercato</small><strong>Comparabili + rettifiche</strong><p>Prezzi di transazioni omogenee, corretti per superficie, stato, posizione e data.</p></div>
+      <div class="estimo-formula"><small>02 · Capitalizzazione diretta</small><strong>V = R / i</strong><p>Reddito netto ordinario e saggio coerente; formula semplificata per reddito costante.</p></div>
+      <div class="estimo-formula"><small>03 · Superfici ragguagliate</small><strong>S = S<sub>principale</sub> + Σ(S<sub>accessoria</sub> × k)</strong><p>Esplicita i coefficienti di ragguaglio, le fonti e il criterio di misurazione.</p></div>
+      <div class="estimo-formula"><small>04 · Valore di trasformazione</small><strong>Prodotto finito − costi e oneri</strong><p>Considera tempi, rischio, utile normale e attualizzazione dove necessari.</p></div>
+    </div>
     <div class="estimo-path-note">Per l’esame studia anche <b>superfici commerciali e ragguagliate, saggi e formule, MCA, valori di trasformazione, espropriazioni e servitù</b>: non limitarti alle definizioni.</div>
   </section>`;
 }
