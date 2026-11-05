@@ -1,0 +1,118 @@
+/* Identità indipendente ispirata ai portali del Gruppo Tecnocasa.
+   Blu/arancio (Tecnorete) prevalenti, verde (Tecnocasa) solo secondario.
+   Non riproduce loghi registrati e non suggerisce affiliazione ufficiale. */
+:root{
+ --bg:#f5f7f9;--paper:#fff;--ink:#18395a;--muted:#687e91;
+ --border:#d9e2eb;--deep:#164f83;--green:#1a6293;
+ --green-dark:#164e7b;--pale:#eaf2f8;--lime:#ef9030;
+ --orange:#f39227;--shadow:0 9px 26px rgba(11,60,103,.07);
+ font-family:"DM Sans",Arial,sans-serif;color:var(--ink);background:var(--bg)
+}
+html,body{background:#f5f7f9}
+/* Portale orizzontale con doppia fascia e navigazione chiara. */
+.app-shell{display:block;min-height:100vh}
+.sidebar{
+ position:sticky;top:0;z-index:50;width:100%;min-width:0;height:auto;
+ display:flex;flex-direction:row;align-items:center;gap:24px;
+ padding:0 max(25px,calc((100vw - 1380px)/2));
+ border:0;border-bottom:5px solid #f2912c;background:white;
+ box-shadow:0 4px 22px rgba(15,62,104,.11)
+}
+.sidebar .brand{padding:12px 0;margin-right:18px;gap:12px;flex-shrink:0}
+.brand-mark{
+ position:relative;width:51px;height:49px;border:0;border-radius:0;
+ display:grid;place-items:center;background:#195b95;color:#fff;
+ box-shadow:inset 0 -7px #ed8c26,4px 4px 0 #e1edf6;
+ transform:skew(-4deg)
+}
+.brand-mark:before{content:"";position:absolute;right:-6px;top:-4px;width:17px;height:9px;background:#f3932c;transform:skew(-25deg)}
+.brand-roof{font-size:37px;font-weight:900;line-height:1;transform:translateY(-4px)}
+.brand-name{font-size:20px;font-weight:850;letter-spacing:-1.1px;color:#195d95;line-height:1;white-space:nowrap}
+.brand-dot{color:#ed8d27}
+.brand-caption{font-size:8.4px;letter-spacing:1.35px;color:#e28420;font-weight:850;margin-top:8px}
+.sidebar-section-caption,.sidebar-bottom{display:none}
+.sidebar>.primary-nav{display:flex;align-items:stretch;gap:3px;min-height:77px;flex-wrap:nowrap}
+.sidebar>.primary-nav:nth-of-type(2){margin-left:auto}
+.sidebar .nav-item{height:77px;border-radius:0;background:transparent;color:#295c7e;padding:0 13px;font-size:12px;white-space:nowrap;gap:7px;box-shadow:none;border-bottom:4px solid transparent;border-top:4px solid transparent}
+.sidebar .nav-item:hover{background:#f2f7fa;color:#124e7e}
+.sidebar .nav-item.active{background:#edf5fa;color:#154e7f;border-bottom-color:#f09026;box-shadow:none}
+.sidebar .nav-item.active .nav-ico{color:#e68721}
+.sidebar .nav-ico{color:#49779b;font-size:19px;width:20px}
+.sidebar .nav-mini{background:#e5f0f6;color:#225d85;padding:3px 5px;border-radius:3px}
+.main-column{width:100%;min-height:calc(100vh - 82px)}
+.topbar{height:55px;padding:0 max(24px,calc((100vw - 1320px)/2));background:#eaf2f7;border-bottom:1px solid #d5e3ee}
+.breadcrumb{color:#426d8e;font-weight:650}
+.topbar-actions{gap:18px}.today-label{color:#71889c}
+.view-frame{max-width:1320px;padding:35px clamp(20px,3vw,43px) 70px}
+.site-footer{border-top:3px solid #ec922e;background:#fff;color:#71899b;padding-left:max(25px,calc((100vw - 1300px)/2));padding-right:max(25px,calc((100vw - 1300px)/2))}
+/* Presentazione frontale e forme geometriche, come una vetrina d'agenzia. */
+.hero{border:0;border-left:9px solid #f39227;border-radius:0;min-height:305px;background:linear-gradient(119deg,#15548c,#1d6da9 77%,#2b79b1);box-shadow:0 10px 29px #134d812b}
+.hero:before{content:"";position:absolute;right:12%;top:0;width:150px;height:100%;background:#ffffff0b;transform:skew(-30deg);pointer-events:none}
+.hero h1{letter-spacing:-.055em}.hero h1 em{color:#ffb461}
+.hero-top{color:#cae2f2}.hero-top .live-dot{background:#f5a43d}
+.hero .btn-lime{background:#f3952b;color:#fff;box-shadow:0 3px 0 #b56b21}
+.hero .btn-lime:hover{background:#ffab43}
+.hero-building{filter:drop-shadow(0 3px 5px #0a3e712b)}
+.hero-building path,.hero-building rect,.hero-building circle{stroke:#dfeaf3}
+.hero-floating b{color:#ed8f2a}
+.hero-circle{background:#ffffff13}
+.eyebrow{color:#d57f27;font-weight:850}
+.page-header h1,.section-heading h2,.summary-card h3{color:#195584}
+.btn{border-radius:2px;font-weight:800;box-shadow:none}
+.btn-primary{background:#165b91;color:#fff}.btn-primary:hover{background:#0d4a78}
+.btn-lime{background:#f29129;color:white}
+.btn-outline{background:#fff;border-color:#cbdce8;color:#1a598b}
+.btn-outline:hover{background:#eef5f9;border-color:#6fa0c2}
+.btn-soft{background:#e9f1f8;color:#1c5b89}
+.metric,.panel,.summary-card,.module-card,.resource-card,.selector-panel,.mode-card,.exam-box{border-radius:3px}
+.metric{background:#fff;border-bottom:3px solid #e7eef5}
+.metric-number{color:#195989}
+.module-card{border-top:5px solid #1d669c;box-shadow:0 6px 20px #164e7810}
+.module-card:hover{box-shadow:0 13px 28px #164e781f}
+.module-num{color:#d67e23;font-weight:850}
+.module-symbol{background:#e6f0f7;color:#1b679d;border-radius:2px}
+.sector-grid{gap:15px}
+.sector-card{border:1px solid #d6e4ed;border-top:5px solid #1d679e;border-radius:3px;box-shadow:0 6px 18px #164e7810}
+.sector-card:nth-child(2){border-top-color:#ed8e2c}
+.sector-card:nth-child(3){border-top-color:#27925d}
+.sector-card.selected{background:#eef6fa;border:1px solid #c3dbe9;border-top:5px solid #ee912d}
+.sector-symbol,.sector-card strong{color:#185b91}
+.sector-card small{color:#d17a22}
+.sector-heading h2{color:#18578b}
+.study-banner{background:#edf4f9;border:1px solid #d3e5ef;border-left:5px solid #ee922e;border-radius:2px}
+.study-banner b{color:#195789}
+.exam-box{background:#ecf3f8;border:1px solid #d9e6ef;border-left:5px solid #f1932d}
+.exam-spec b{color:#1b5b91}
+.summary-card{border-top:3px solid #1c639a}
+.learning-card{border-radius:2px}
+.step-tag,.pill{border-radius:2px}
+.pill:not(.blue):not(.gray){background:#e6f1f8;color:#1b628f}
+.pill.blue{background:#fff0df;color:#b16e21}
+.pill.gray{background:#e8f4eb;color:#247b52}
+.chip{border-radius:2px}.chip.active{background:#1d6398;color:white}
+.progress-track span,.quiz-meter span,.exam-meter span,.tiny-track span{background:#ef922c}
+.lesson-article .article-section p{line-height:1.88}
+.formula{background:#eef5f9;border-left:5px solid #f09126;color:#215781}
+.note-box{border-left-color:#2471a6}.note-box.warning{border-left-color:#ec912b}
+.lesson-row{border-radius:2px}
+.resource-card{border-top:3px solid #1c679c}
+.bottom-nav{border-top:3px solid #ef922e;background:#fff}
+@media(max-width:1250px){
+ .sidebar{padding:0 18px;gap:9px}.sidebar .brand{margin-right:7px}
+ .sidebar .nav-item{padding:0 9px;font-size:11px}
+ .sidebar>.primary-nav{min-height:73px}.sidebar .nav-item{height:73px}
+}
+@media(max-width:990px){
+ .sidebar{position:relative;display:flex;justify-content:space-between;padding:0 20px;min-height:74px}
+ .sidebar .brand{padding:10px 0}
+ .sidebar>.primary-nav{display:none}
+ .topbar{padding:0 20px}
+ .view-frame{padding-top:24px}
+}
+@media(max-width:740px){
+ .sidebar{min-height:68px}.brand-mark{width:43px;height:43px}.brand-name{font-size:18px}
+ .topbar{height:49px}.hero{border-left-width:6px}.hero:before{display:none}
+ .hero h1{font-size:clamp(2rem,9vw,3.2rem)}
+ .sector-grid{grid-template-columns:1fr}.sector-card{min-height:0}
+ .bottom-nav button.active{color:#13568e}
+}
