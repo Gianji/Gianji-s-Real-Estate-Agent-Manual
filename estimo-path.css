@@ -18,3 +18,12 @@
 .estimo-path-note{margin-top:18px;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.07);border-left:3px solid #f39227;color:#dfecfa;font-size:11px;line-height:1.6}
 @media(max-width:1050px){.estimo-topic-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:660px){.estimo-path{padding:22px 16px}.estimo-topic-list{grid-template-columns:1fr}.estimo-path .estimo-cta{white-space:normal}}
+
+.estimo-formulas-title{font-size:13px;color:#fff;font-weight:800;letter-spacing:.015em;margin:23px 0 12px}
+.estimo-formulas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.estimo-formula{border:1px solid rgba(255,255,255,.2);background:rgba(10,38,74,.25);border-radius:10px;padding:15px 14px;min-width:0}
+.estimo-formula small{font-size:9px;text-transform:uppercase;letter-spacing:.065em;font-weight:800;color:#f6bc79}
+.estimo-formula strong{display:block;margin-top:8px;color:#fff;font-size:14px;line-height:1.4;overflow-wrap:anywhere}
+.estimo-formula p{margin:8px 0 0;color:#d8e7f3;font-size:10px;line-height:1.55}
+@media(max-width:1150px){.estimo-formulas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:660px){.estimo-formulas{grid-template-columns:1fr}}
