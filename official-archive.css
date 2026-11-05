@@ -20,5 +20,8 @@
 .official-training-controls label{font-size:12px;font-weight:750;color:#315b7e}
 .official-training-controls select{flex:1;min-width:220px;padding:12px 14px;border:1px solid #cbdbe7;border-radius:9px;background:#fff;color:#245077;font-size:13px}
 .official-training-footer{margin-top:15px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:11px;color:#617b90}
+.module-mini-quiz{margin:17px 0;padding:16px;border:1px solid #c9deed;border-left:4px solid #eb8d2d;background:#f2f7fa;border-radius:10px}
+.module-mini-quiz b{display:block;color:#184e79;font-size:13px}
+.module-mini-quiz p{font-size:11px;line-height:1.65;color:#70889a;margin:7px 0 12px}
 @media(max-width:900px){.archive-row{align-items:stretch;flex-direction:column}.archive-actions{justify-content:flex-end}.archive-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.archive-metrics{grid-template-columns:1fr}.archive-row{padding:15px}.archive-actions{flex-wrap:wrap}.archive-actions .btn{flex:1;justify-content:center}}
