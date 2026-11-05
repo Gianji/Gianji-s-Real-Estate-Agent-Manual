@@ -1,6 +1,4 @@
-/* Identità indipendente ispirata ai portali del Gruppo Tecnocasa.
-   Blu/arancio (Tecnorete) prevalenti, verde (Tecnocasa) solo secondario.
-   Non riproduce loghi registrati e non suggerisce affiliazione ufficiale. */
+/* Identità blu/arancio con logo Tecnorete richiesto per il manuale personale. */
 :root{
  --bg:#f5f7f9;--paper:#fff;--ink:#18395a;--muted:#687e91;
  --border:#d9e2eb;--deep:#164f83;--green:#1a6293;
@@ -116,3 +114,13 @@ html,body{background:#f5f7f9}
  .sector-grid{grid-template-columns:1fr}.sector-card{min-height:0}
  .bottom-nav button.active{color:#13568e}
 }
+/* Identità del manuale: logo Tecnorete e intestazione richiesta. */
+.sidebar .brand-manual{display:flex;align-items:center;gap:13px;margin-right:8px;min-width:0;max-width:370px}
+.brand-tecnorete-logo{display:block;width:112px;max-height:68px;object-fit:contain;flex:0 0 112px}
+.brand-manual-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
+.brand-manual-copy strong{font-family:Manrope,'DM Sans',sans-serif;font-size:11px;font-weight:800;line-height:1.25;color:#164f83;letter-spacing:.02em}
+.brand-manual-copy strong span{display:block;color:#164f83}
+.brand-manual-copy small{font-size:8px;line-height:1.3;font-weight:700;color:#d77b24;letter-spacing:.005em}
+@media(max-width:1240px) and (min-width:991px){.sidebar{gap:7px;padding:0 12px}.sidebar .brand-manual{gap:8px;max-width:330px;margin-right:0}.brand-tecnorete-logo{width:95px;flex-basis:95px}.brand-manual-copy strong{font-size:9px}.brand-manual-copy small{font-size:7px}.sidebar .nav-item{padding:0 7px;font-size:10px}}
+@media(max-width:990px){.sidebar .brand-manual{max-width:none;gap:16px}.brand-tecnorete-logo{width:150px;flex-basis:150px}.brand-manual-copy strong{font-size:13px}.brand-manual-copy small{font-size:10px}}
+@media(max-width:520px){.sidebar{padding:0 13px}.sidebar .brand-manual{gap:10px}.brand-tecnorete-logo{width:110px;flex-basis:110px}.brand-manual-copy strong{font-size:10px}.brand-manual-copy small{font-size:8px}}
