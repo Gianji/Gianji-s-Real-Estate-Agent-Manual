@@ -1,0 +1,10 @@
+.archive-list{display:grid;gap:10px;margin-top:17px}
+.archive-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 20px;background:var(--surface,#fff);border:1px solid var(--border,#e1e7ec);border-radius:12px;box-shadow:0 2px 8px rgba(18,50,79,.035)}
+.archive-main{display:flex;align-items:center;gap:17px;min-width:0}
+.archive-main h3{font-size:15px;margin:5px 0 4px;color:var(--ink,#1b344b)}
+.archive-main small{font-size:11px;color:var(--muted,#7c8c97)}
+.archive-number{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;background:#ecf3f9;color:#245987;border-radius:10px;font-size:14px;font-weight:800}
+.archive-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.archive-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:900px){.archive-row{align-items:stretch;flex-direction:column}.archive-actions{justify-content:flex-end}.archive-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.archive-metrics{grid-template-columns:1fr}.archive-row{padding:15px}.archive-actions{flex-wrap:wrap}.archive-actions .btn{flex:1;justify-content:center}}
