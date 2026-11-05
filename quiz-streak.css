@@ -1,0 +1,51 @@
+/* Quiz Streak — design in palette Blu Tecnorete, arancio Tecnocasa. */
+.streak-launch{position:relative;isolation:isolate;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:22px;padding:30px 33px;background:linear-gradient(112deg,#103f69 0%,#175d96 68%,#216da4 100%);border-left:7px solid #f3932d;border-radius:3px;box-shadow:0 12px 30px rgba(17,67,107,.12);color:#fff}
+.streak-launch:after{content:"";position:absolute;right:-80px;bottom:-105px;width:340px;height:340px;border:48px solid rgba(255,255,255,.055);border-radius:50%;z-index:-1;pointer-events:none}
+.streak-launch-copy{position:relative;z-index:1;max-width:770px}
+.streak-launch .eyebrow{color:#ffbd74;font-size:10px;letter-spacing:1.4px}
+.streak-launch h2{font-size:clamp(29px,4vw,44px);letter-spacing:-.06em;color:#fff;margin:8px 0 12px;line-height:1}
+.streak-dot{color:#ff9d36}
+.streak-launch p{font-size:13px;line-height:1.75;color:#e3eff7;margin:0;max-width:690px}
+.streak-launch p strong{color:#fff}
+.streak-launch-metrics{display:flex;flex-wrap:wrap;gap:8px 16px;margin:17px 0}
+.streak-launch-metrics span{font-size:11px;color:#eef6ff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);padding:7px 10px;border-radius:2px}
+.streak-launch-metrics strong{font-size:14px;color:#fff}
+.streak-launch-actions{display:flex;flex-wrap:wrap;gap:10px;margin:21px 0 12px}
+.streak-launch .btn-primary{background:#f3932d;color:#133e64;border:1px solid #f8a64c}
+.streak-launch .btn-primary:hover{background:#ffac52;color:#103c66}
+.streak-launch .btn-outline{color:#fff;background:rgba(255,255,255,.08);border-color:#83b4d5}
+.streak-launch .btn-outline:hover{background:rgba(255,255,255,.18)}
+.streak-launch small{font-size:10px;line-height:1.5;color:#b9d6eb;display:block;max-width:740px}
+.streak-symbol{flex:0 0 150px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:1;text-align:center;padding:15px}
+.streak-symbol>span{font-size:54px;line-height:1}
+.streak-symbol>strong{font-family:Manrope,"DM Sans",sans-serif;font-size:72px;letter-spacing:-.08em;line-height:1.15;color:#ffbc75}
+.streak-symbol>small{font-size:10px;font-weight:850;letter-spacing:2px;color:#fff}
+.streak-stage{max-width:920px}
+.streak-game-header{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:24px 27px;background:#164f83;border-left:6px solid #f39227;border-radius:3px;color:#fff}
+.streak-game-header .eyebrow{color:#ffb260;font-size:10px}
+.streak-game-header h2{font-size:clamp(22px,3vw,29px);letter-spacing:-.04em;margin:7px 0 5px;color:#fff}
+.streak-game-header p{font-size:11px;line-height:1.65;margin:0;color:#d7e9f5;max-width:550px}
+.streak-numbers{display:grid;grid-template-columns:repeat(2,minmax(76px,100px));gap:9px}
+.streak-numbers>div{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:3px;padding:12px 10px;text-align:center}
+.streak-numbers strong{font-family:Manrope,"DM Sans",sans-serif;font-size:29px;letter-spacing:-.04em;color:#ffb86e;display:block;line-height:1.25}
+.streak-numbers span{font-size:9px;color:#e5f0f8;white-space:nowrap}
+.streak-course{display:flex;justify-content:space-between;gap:10px;margin:17px 0 9px;color:#527897;font-size:11px;font-weight:800}
+.streak-meter{margin-bottom:22px}
+.streak-meter span{background:#f39227}
+.streak-outcome{padding:22px 24px;margin-top:20px;border-left:5px solid #ec9b39;border-radius:3px;background:#fff5e9;display:flex;flex-wrap:wrap;align-items:center;gap:11px}
+.streak-outcome b{font-size:16px;color:#854d1b;flex-basis:100%}
+.streak-outcome p{font-size:12px;line-height:1.7;color:#776652;margin:0 0 6px;flex-basis:100%}
+.streak-outcome.complete{background:#edf6f1;border-left-color:#379675}
+.streak-outcome.complete b{color:#20684b}
+.streak-outcome.complete p{color:#567c6a}
+.streak-stage .question-card{border-top:4px solid #f39227}
+@media(max-width:780px){
+ .streak-launch{padding:22px 20px;gap:0}
+ .streak-symbol{display:none}
+ .streak-launch-actions .btn{flex:1 1 210px}
+ .streak-game-header{align-items:flex-start;flex-direction:column;padding:20px}
+ .streak-numbers{grid-template-columns:repeat(2,minmax(115px,1fr));width:100%}
+ .streak-course{flex-wrap:wrap}
+ .streak-outcome{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){.streak-meter span{transition:none}}
