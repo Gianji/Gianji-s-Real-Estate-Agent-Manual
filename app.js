@@ -147,7 +147,8 @@ document.addEventListener('click',e=>{
   case 'go-exam':quizSession=null;navigate('exam');break;
   case 'go-errors':quizSession=null;reviewTab='errors';navigate('review');break;
   case 'quiz-module':quizSession=null;quizModule=action.dataset.moduleId;quizSubject='all';navigate('quiz');break;
-  case 'start-quiz':startQuiz();break;\n  case 'start-expert-quiz':quizSession=null;quizOrigin='original';quizSubject='all';quizModule='all';quizSize=20;startQuiz();break;
+  case 'start-quiz':startQuiz();break;
+  case 'start-expert-quiz':quizSession=null;quizOrigin='original';quizSubject='all';quizModule='all';quizSize=20;startQuiz();break;
   case 'start-milano-quiz':quizSession=null;quizOrigin='milano';quizSubject='all';quizModule='all';quizSize=50;navigate('quiz');break;
   case 'start-official-quiz':navigate('officialtest',officialSessionId);break;
   case 'start-error-quiz':quizSubject='all';quizModule='all';quizOrigin='all';quizSize='errors';startQuiz(true);break;
