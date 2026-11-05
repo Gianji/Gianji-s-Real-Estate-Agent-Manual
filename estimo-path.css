@@ -1,0 +1,20 @@
+/* Percorso Estimo nel settore Immobiliare. Colori coerenti con il manuale Tecnorete. */
+.estimo-path{margin:22px 0 26px;padding:26px 28px 27px;background:linear-gradient(128deg,#163b69 0%,#1b5d91 78%,#2573a7 100%);border-radius:17px;box-shadow:0 13px 30px rgba(14,63,106,.14);position:relative;overflow:hidden}
+.estimo-path:after{content:"";position:absolute;width:240px;height:240px;border:34px solid rgba(255,255,255,.06);border-radius:50%;right:-100px;top:-125px;pointer-events:none}
+.estimo-path *{position:relative;z-index:1}
+.estimo-path-top{display:flex;align-items:flex-start;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.estimo-path-eyebrow{display:block;margin-bottom:8px;color:#ffc58a;font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.estimo-path h2{margin:0;color:#fff;font-family:Manrope,sans-serif;font-weight:800;font-size:clamp(22px,2vw,30px);line-height:1.23}
+.estimo-path p{max-width:750px;margin:10px 0 0;color:#e0ecf9;font-size:12px;line-height:1.75}
+.estimo-path .estimo-count{font-size:11px;color:#fff;font-weight:800;margin:15px 0 0}
+.estimo-path .estimo-cta{background:#f39227!important;color:#162e48!important;border-color:#f39227!important;white-space:nowrap;font-weight:800!important}
+.estimo-path .estimo-cta:hover{background:#ffa741!important;border-color:#ffa741!important}
+.estimo-topic-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}
+.estimo-topic{min-width:0;text-align:left;display:flex;align-items:center;gap:11px;padding:13px 12px;border:1px solid rgba(255,255,255,.21);border-radius:9px;color:#fff;background:rgba(255,255,255,.075);cursor:pointer;transition:background .15s,border-color .15s}
+.estimo-topic:hover{background:rgba(255,255,255,.16);border-color:#f8b269}
+.estimo-topic span{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:7px;background:#f39227;color:#153251;font-size:11px;font-weight:900}
+.estimo-topic strong{font-size:11px;line-height:1.35;overflow-wrap:anywhere;font-weight:750}
+.estimo-topic small{display:block;margin-top:3px;color:#bfd8ee;font-size:10px;font-weight:600}
+.estimo-path-note{margin-top:18px;padding:10px 12px;border-radius:7px;background:rgba(255,255,255,.07);border-left:3px solid #f39227;color:#dfecfa;font-size:11px;line-height:1.6}
+@media(max-width:1050px){.estimo-topic-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:660px){.estimo-path{padding:22px 16px}.estimo-topic-list{grid-template-columns:1fr}.estimo-path .estimo-cta{white-space:normal}}
