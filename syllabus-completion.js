@@ -137,5 +137,26 @@ const MILANO_COMPLETION_QUESTIONS=[
  ['eco-dati-mercato','Quale indicatore statistico è il valore che ricorre più frequentemente nella distribuzione?',['Moda','Mediana','Varianza','Deviazione standard'],0,'La moda è il valore con frequenza maggiore.']
 ];
 addBank('mi-approf','milano',MILANO_COMPLETION_QUESTIONS);
+
+/* Rielaborazioni brevi da raccolte con soluzione contrassegnata, pubblicate
+   dalla Camera di Commercio di Venezia Rovigo. Non sono copie letterali.
+   Fonte: https://www.dl.camcom.it/agenti-d-affari-in-mediazione/quiz-preparazione-esame-idoneita
+   Raccolte storiche: le norme correnti prevalgono sulle soluzioni d'epoca. */
+const VENEZIA_ROVIGO_QUESTIONS=[
+ ['dir-titoli','Qual è la funzione economica tipica dei titoli di credito?',['Consentire una circolazione del credito più agevole e sicura','Creare necessariamente un’ipoteca','Sostituire la trascrizione degli immobili','Attribuire rendita catastale'],0,'La circolazione del credito è la funzione economica tradizionale del titolo.'],
+ ['dir-titoli','La cambiale tratta si caratterizza perché contiene:',['Un ordine di pagamento incondizionato','Un contratto di locazione','Un diritto reale di superficie','Una proposta di mediazione'],0,'La tratta contiene un ordine di pagamento, a differenza del vaglia cambiario che contiene una promessa.'],
+ ['dir-titoli','A cosa serve, in termini generali, lo sbarramento di un assegno?',['A limitarne le modalità di pagamento e circolazione secondo la disciplina','Ad aumentare la rendita del bene','A garantire la proprietà di un immobile','A eliminare la firma del traente'],0,'Lo sbarramento comporta regole particolari per il pagamento dell’assegno.'],
+ ['dir-garanzie','Se si acquista con atto valido ma si trascura la trascrizione, quale rischio emerge?',['L’acquisto può non essere opponibile a determinati terzi','Il contratto è sempre inesistente','L’immobile diventa automaticamente comunale','Si perde automaticamente la capacità di agire'],0,'Per gli atti soggetti a trascrizione questa è di regola pubblicità dichiarativa e rileva verso i terzi.'],
+ ['dir-garanzie','Un’ipoteca è detta legale quando:',['È la legge ad attribuire il diritto di iscriverla nei casi previsti','È richiesta da una banca privata','È prevista da qualunque contratto di affitto','È iscritta solo su immobili pubblici'],0,'La fonte del diritto all’iscrizione distingue l’ipoteca legale.'],
+ ['dir-garanzie','Fra più ipoteche iscritte, il grado dipende ordinariamente:',['Dall’ordine delle iscrizioni','Dalla superficie dell’immobile','Dalla prima visita dell’acquirente','Dalla classe energetica'],0,'Il grado si determina con riferimento alla formalità d’iscrizione, salvo eccezioni.'],
+ ['pubblicita','Nella compravendita di immobili, la trascrizione ha generalmente funzione:',['Dichiarativa ai fini dell’opponibilità','Sempre costitutiva della proprietà','Di accatastamento DOCFA','Di prova della classe APE'],0,'L’atto valido trasferisce secondo le regole del contratto; la trascrizione tutela i rapporti con i terzi.'],
+ ['pubblicita','Per una corretta continuità delle trascrizioni occorre controllare:',['Anche i passaggi anteriori nella catena dei titoli','Solo l’ultima bolletta','Esclusivamente l’APE','Solo il numero civico'],0,'La continuità ha effetti sulla pubblicità immobiliare.'],
+ ['imm-estimo-approfondito','Qual è il campo fondamentale dell’estimo?',['Valutare beni e diritti applicando criteri economici motivati','Predisporre soltanto rendite fiscali','Rilasciare licenze edilizie','Registrare la compravendita'],0,'L’estimo studia criteri e procedimenti per determinare valori secondo lo scopo della stima.'],
+ ['imm-estimo-approfondito','Quali grandi ambiti dell’estimo immobiliare vengono tradizionalmente distinti?',['Civile, rurale e catastale','Soltanto bancario e commerciale','Soltanto locativo','Solo industriale'],0,'La trattazione tradizionale comprende estimo civile, rurale e catastale.'],
+ ['imm-estimo-legale3','Il valore di surrogazione riguarda un bene che:',['Può sostituire funzionalmente quello oggetto di stima','Non ha alcun uso','È sempre gravato da ipoteca','Non può essere trasferito'],0,'Il valore di surrogazione considera il costo o valore di beni idonei a svolgere funzione equivalente.'],
+ ['imm-estimo-legale3','In ambito assicurativo, che differenza c’è fra danno e indennizzo?',['Il danno è il pregiudizio; l’indennizzo è la prestazione dovuta secondo la polizza e la legge','Sono sempre e necessariamente uguali','Il danno è un’imposta locale','L’indennizzo è il valore catastale'],0,'La polizza può prevedere limiti, franchigie e criteri di liquidazione.']
+];
+addBank('vr','venezia-rovigo',VENEZIA_ROVIGO_QUESTIONS);
+SOURCES.push({type:'Quiz camerali con soluzioni',title:'Camera di Commercio Venezia Rovigo – raccolte per materia',detail:'Banca storica per esercitazioni: quesiti con alternative e risposta contrassegnata. Nel manuale alcuni temi sono rielaborati e le regole vanno controllate alla luce della normativa vigente.',url:'https://www.dl.camcom.it/agenti-d-affari-in-mediazione/quiz-preparazione-esame-idoneita'});
 const syllabusOrder={immobiliare:0,diritto:1,economia:2};
 MODULES.sort((a,b)=>(a.id==='cremona'?3:syllabusOrder[sectorOf(a)])-(b.id==='cremona'?3:syllabusOrder[sectorOf(b)]));
