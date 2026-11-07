@@ -57,3 +57,6 @@ button.cm-node:focus-visible{outline:3px solid #f58200;outline-offset:3px}
 @media(max-width:900px){.cm-intro{align-items:flex-start}.cm-intro h2{font-size:19px}.cm-count{display:none}.cm-viewport{height:590px}.cm-under{grid-template-columns:1fr}}
 @media(max-width:620px){.cm-intro{padding:17px}.cm-board-top{display:block;padding:14px}.cm-controls{margin-top:13px}.cm-tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin;padding-bottom:5px}.cm-tab{white-space:nowrap;padding:10px 12px}.cm-viewport{height:520px}.cm-board-foot span:last-child{margin-left:0}.cm-board-foot{gap:10px}.cm-node-root strong{font-size:20px}.cm-under>div{padding:15px}}
 @media(prefers-reduced-motion:reduce){button.cm-node,.cm-tab{transition:none}}
+
+/* Six shortcuts fit within the original fixed mobile navigation. */
+@media(max-width:740px){.bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.bottom-nav button{min-width:0;font-size:9px}.bottom-nav button span{font-size:20px}}
