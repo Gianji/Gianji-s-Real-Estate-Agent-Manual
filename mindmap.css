@@ -208,26 +208,16 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
   box-shadow:none!important;
   overflow-wrap:anywhere;
  }
- /* The printed notebook margin is kept outside the single column of notes. */
- .cm-poster-world{
-  background-image:
-   linear-gradient(90deg,transparent 32px,rgba(225,112,126,.32) 33px,
-    rgba(225,112,126,.32) 35px,transparent 36px),
-   repeating-linear-gradient(to bottom,transparent 0,transparent 30px,
-    rgba(104,157,205,.12) 31px,transparent 32px)!important;
- }
- .cm-poster-world:before{left:8px!important;opacity:.55!important}
- .cm-poster-world .cm-note-note .cm-handline{font-size:12.5px!important;line-height:1.43!important}
- .cm-poster-world .cm-note-group .cm-handline{font-size:12px!important;line-height:1.5!important}
- .cm-poster-world .cm-note-root strong{font-size:24px!important}
+ /* Keep the original notebook lines, margins, font sizes and highlights.
+    The entire on-screen map is uniformly scaled, never rearranged. */
 
  .cm-poster-world .cm-open{display:none!important}
  .cm-poster-window.cm-hide-relations .cm-cross-lines{display:none!important}
  .cm-poster-page,.cm-poster-window,.cm-poster-world{contain:none!important}
 }
 
-/* In a vertical A4 the map occupies ONE fixed-width column;
-   the sheet changes only when the bottom is reached. */
+/* Printed A4 always contains the full original map width, uniformly scaled.
+   Only vertical sections continue on subsequent sheets. */
 @media print {
  .cm-poster-window,.cm-poster-page{overflow:hidden!important}
  .cm-poster-window{width:194mm!important;max-width:194mm!important}
