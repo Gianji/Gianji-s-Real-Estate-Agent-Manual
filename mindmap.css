@@ -206,8 +206,32 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  .cm-poster-world .cm-note{
   -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
   box-shadow:none!important;
+  overflow-wrap:anywhere;
  }
+ /* The printed notebook margin is kept outside the single column of notes. */
+ .cm-poster-world{
+  background-image:
+   linear-gradient(90deg,transparent 32px,rgba(225,112,126,.32) 33px,
+    rgba(225,112,126,.32) 35px,transparent 36px),
+   repeating-linear-gradient(to bottom,transparent 0,transparent 30px,
+    rgba(104,157,205,.12) 31px,transparent 32px)!important;
+ }
+ .cm-poster-world:before{left:8px!important;opacity:.55!important}
+ .cm-poster-world .cm-note-note .cm-handline{font-size:12.5px!important;line-height:1.43!important}
+ .cm-poster-world .cm-note-group .cm-handline{font-size:12px!important;line-height:1.5!important}
+ .cm-poster-world .cm-note-root strong{font-size:24px!important}
+
  .cm-poster-world .cm-open{display:none!important}
  .cm-poster-window.cm-hide-relations .cm-cross-lines{display:none!important}
  .cm-poster-page,.cm-poster-window,.cm-poster-world{contain:none!important}
+}
+
+/* In a vertical A4 the map occupies ONE fixed-width column;
+   the sheet changes only when the bottom is reached. */
+@media print {
+ .cm-poster-window,.cm-poster-page{overflow:hidden!important}
+ .cm-poster-window{width:194mm!important;max-width:194mm!important}
+ .cm-poster-world{transform-origin:top left!important}
+ .cm-poster-page{break-after:page}
+ .cm-poster-page:last-child{break-after:auto}
 }
