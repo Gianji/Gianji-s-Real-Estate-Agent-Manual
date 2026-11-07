@@ -224,3 +224,24 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  .cm-poster-page{break-after:page}
  .cm-poster-page:last-child{break-after:auto}
 }
+
+
+/* Download a PDF whose pages are truly 210 × 297 mm.
+   The independent PDF path is not constrained by printer paper settings. */
+.cm-print-browser-btn{
+ font:750 11px 'DM Sans',sans-serif;border:1px solid #c5d4e1;
+ border-radius:5px;height:34px;padding:0 11px;white-space:nowrap;
+ color:#164f83;background:#fff;cursor:pointer;
+}
+.cm-print-browser-btn:hover{background:#f0f5fb}
+.cm-print-btn:disabled{opacity:.65;cursor:progress}
+.cm-pdf-capture{box-sizing:border-box}
+.cm-pdf-capture .cm-world{
+ position:absolute;top:0;left:0;transform-origin:top left;
+ box-shadow:none;
+}
+.cm-pdf-capture .cm-open{display:none!important}
+.cm-pdf-capture.cm-hide-relations .cm-cross-lines{display:none!important}
+@media print{
+ .cm-pdf-capture{display:none!important}
+}
