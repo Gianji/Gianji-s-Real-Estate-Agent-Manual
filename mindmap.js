@@ -27,14 +27,18 @@ const CM_GROUPS={
   {name:'Catasto e documentazione',ids:['catasto','catasto-terreni','imm-catasto-operativo','pubblicita','imm-documenti','imm-topografia']},
   {name:'Urbanistica e costruzioni',ids:['urbanistica','imm-urbanistica2','imm-edilizia','imm-impianti','tecnica-costruttiva']},
   {name:'Condominio e pratiche',ids:['condominio','imm-condominio-operativo','contratti-pratica','orale']},
-  {name:'Estimo e valutazione',ids:['estimo','estimo-calcoli','imm-superfici','imm-market2','imm-estimo-approfondito','imm-estimo-speciale','imm-estimo-legale3','mercato','formule']},
+  {name:'Estimo: criteri e metodi',ids:['estimo','estimo-processo6','estimo-valori6','estimo-mca6','estimo-reddito6','estimo-costi6','estimo-residuo6']},
   {name:'Fondi e estimo agrario',ids:['agrario','imm-rurale2','imm-rurale-diritto']}
  ],
  estimo:[
-  {name:'Fondamenti e parametri',ids:['estimo','estimo-calcoli','imm-superfici','formule']},
-  {name:'Mercato e comparazione',ids:['imm-market2','mercato']},
-  {name:'Metodi e valore speciale',ids:['imm-estimo-approfondito','imm-estimo-speciale','imm-estimo-legale3']},
-  {name:'Agrario e fondi rustici',ids:['agrario','imm-rurale2','imm-rurale-diritto']}
+  {name:'Fondamenti e aspetti economici',ids:['estimo','estimo-processo6','estimo-valori6']},
+  {name:'Comparazione e mercato',ids:['imm-market2','estimo-mca6','mercato','estimo-statistica6']},
+  {name:'Reddito, capitalizzazione e DCF',ids:['estimo-calcoli','estimo-reddito6','estimo-dcf6']},
+  {name:'Costi e trasformazione',ids:['imm-estimo-approfondito','estimo-costi6','estimo-residuo6','estimo-aree6']},
+  {name:'Superfici e formule',ids:['imm-superfici','estimo-superfici6','formule']},
+  {name:'Estimo speciale, diritti e danni',ids:['imm-estimo-speciale','imm-estimo-legale3','estimo-diritti6','estimo-legale6']},
+  {name:'Agrario e fondi rustici',ids:['agrario','imm-rurale2','estimo-agrario6']},
+  {name:'Perizie e immobili speciali',ids:['estimo-speciali6','estimo-perizia6']}
  ],
  professione:[
   {name:'Professione e requisiti',ids:['professione','adempimenti']},
@@ -73,8 +77,8 @@ const CM_OVERVIEW=[
   title:'MUTUO E CREDITO',sub:'Finanziamento immobiliare',
   lines:['Capitale + interessi → rimborso','TAN ≠ TAEG, piano di ammortamento','Ipoteca ≠ fideiussione','Quota capitale / quota interessi','Valutazione del merito creditizio']},
  {id:'es',x:1152,y:1230,w:450,h:285,t:'branch',color:'orange',mode:'estimo',
-  title:'ESTIMO',sub:'Determinazione motivata del valore',
-  lines:['Prezzo effettivo ≠ valore stimato','Comparazione, capitalizzazione, costo','Superfici ragguagliate e coefficienti','Reddito netto e saggio di capitalizzazione','Estimo legale, agrario e speciale']},
+  title:'ESTIMO',sub:'Criteri economici → procedimenti → perizia',
+  lines:['Aspetti: mercato, costo, trasformazione','Complementare e surrogazione','Confronto/MCA, reddito/DCF, costo','Superfici, saggi, prezzi marginali','Diritti reali, danni e indennità','Agrario, aree e immobili speciali']},
  {id:'p',x:90,y:1634,w:450,h:227,t:'branch',color:'blue',mode:'professione',
   title:'PROFESSIONE',sub:'Applicazione al lavoro del mediatore',
   lines:['Incarico → visite → proposta → trattativa','Verifiche documentali e dovere informativo','Provvigione: conclusione dell’affare','Obblighi professionali e antiriciclaggio']}
@@ -95,7 +99,7 @@ const CM_CROSS_BY_SECTION={
  diritto:[['obbligazioni','dir-garanzie','garanzie del credito'],['contratti','vendita','contratto tipico'],['reali','successioni','diritti ereditati'],['contratti','dir-invalidita','validità']],
  economia:[['eco-credito','mutui','credito immobiliare'],['economia-finanza','eco-matematica','interesse e rate'],['fisco','eco-imposte-procedura','tributi e adempimenti'],['eco-microeconomia','eco-mercato-stat','domanda / offerta']],
  immobiliare:[['catasto','urbanistica','≠ stessa verifica'],['estimo','imm-market2','comparazione'],['urbanistica','contratti-pratica','verifiche'],['imm-superfici','imm-estimo-approfondito','superficie → valore']],
- estimo:[['imm-superfici','imm-market2','coefficienti e prezzo'],['estimo-calcoli','imm-estimo-approfondito','capitalizzazione'],['agrario','imm-rurale2','stima fondi rustici']],
+ estimo:[['estimo-mca6','estimo-reddito6','due approcci al valore di mercato'],['estimo-residuo6','estimo-aree6','valore residuale del lotto'],['estimo-costi6','estimo-speciali6','costo e beni speciali'],['estimo-superfici6','estimo-mca6','superficie e prezzi corretti'],['estimo-diritti6','estimo-legale6','diritti e indennità']],
  professione:[['professione','vendita','conclusione dell’affare'],['vendita','pubblicita','trascrizione'],['dir-garanzie','mutui','fideiussione'],['catasto','urbanistica','controlli distinti']]
 };
 function cmAvailable(id){return MODULES.find(m=>m.id===id);}
@@ -137,7 +141,7 @@ function cmBuildDetail(view){
   if(modules.length)actual.push({name:g.name,modules});
  });
  if(['diritto','economia','immobiliare'].includes(view)){
-  const other=MODULES.filter(m=>m.id!=='cremona'&&sectorOf(m)===view&&!seen.has(m.id));
+  const other=MODULES.filter(m=>m.id!=='cremona'&&sectorOf(m)===view&&!seen.has(m.id)&&!(view==='immobiliare'&&m.id.startsWith('estimo-')));
   if(other.length)actual.push({name:'Altri approfondimenti',modules:other});
  }
  const nodes=[{
