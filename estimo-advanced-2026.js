@@ -582,6 +582,384 @@ const ESTIMO_ADVANCED_2026=[
     "Valutare stato attuale e alternativa realizzabile."
    ]
   ]
+ },
+ {
+  "id": "estimo-diritti6",
+  "title": "Stima dei diritti reali e interessi parziali",
+  "description": "Usufrutto, nuda proprietà, superficie, servitù, locazione e ipoteche.",
+  "lessons": [
+   [
+    "Piena proprietà, nuda proprietà e usufrutto",
+    "Il valore varia secondo il diritto effettivamente trasferito.",
+    "Il proprietario pieno esercita facoltà di godimento e disposizione; usufrutto e nuda proprietà sono interessi distinti. Nella valutazione si considerano durata, limiti, reddito e mercato; le tabelle fiscali per usufrutto servono alle finalità previste dalla norma e non costituiscono automaticamente stima di mercato.",
+    "Alloggio libero 240.000: la sola nuda proprietà può avere valore diverso, dipendente anche dall'età dell'usufruttuario.",
+    "Non equiparare coefficienti fiscali e valore negoziale reale.",
+    "Prima stimare il diritto, non soltanto il mattone."
+   ],
+   [
+    "Usufrutto: durata e capitalizzazione",
+    "L'usufrutto attribuisce godimento nel rispetto della destinazione economica e nei limiti legali.",
+    "Per la stima economica si valuta il beneficio atteso durante la durata, che per persona fisica non eccede la vita dell'usufruttuario. Redditi e spese attribuibili al diritto sono attualizzati coerentemente. Il valore della nuda proprietà è collegato all'interesse residuo, evitando somma meccanica non motivata.",
+    "Usufrutto con canone netto atteso 8.000 annui per 10 anni: si valuta una rendita temporanea, non perpetua.",
+    "Non applicare V = R/i senza considerare la durata.",
+    "Usufrutto temporaneo → VA dei benefici di durata."
+   ],
+   [
+    "Diritto di superficie e proprietà superficiaria",
+    "La superficie può separare proprietà del suolo e della costruzione secondo il titolo.",
+    "La valutazione deve accertare durata, corrispettivi, scadenza, vincoli e sorte dell'edificio alla fine del diritto. Il diritto a termine è diverso dalla piena proprietà senza termine e può comportare un valore terminale altrui.",
+    "Diritto superficiario con 35 anni residui: l'interesse non è lo stesso della piena proprietà perpetua.",
+    "Non supporre che il fabbricato sia libero da vincoli perché esiste al catasto.",
+    "Durata + titolo + restituzione finale."
+   ],
+   [
+    "Servitù prediali e deprezzamento del fondo servente",
+    "La servitù attribuisce un'utilità a un fondo a carico di un altro secondo il titolo o la legge.",
+    "Per la stima si possono esaminare minor valore del fondo gravato, danni e oneri secondo il problema concreto. Le indennità legali eventualmente dovute seguono la specifica disciplina. Accessibilità, fascia di rispetto e limitazione edificatoria modificano utilità e mercato.",
+    "Una servitù di passaggio impedisce l'uso di una parte strategica del cortile e può incidere sul valore del residuo.",
+    "Non stimare sempre come superficie occupata × prezzo medio.",
+    "Servitù = incidenza concreta sui diritti e sull'utilità."
+   ],
+   [
+    "Locazione, contratti e reddito",
+    "Il bene venduto locato richiede attenzione al contratto e ai diritti opponibili.",
+    "Canone, durata, rinnovi, indicizzazione, morosità e condizioni di liberazione incidono sul reddito e sulla commercializzabilità del diritto. Il valore del bene come ipoteticamente libero è diverso da quello riferito allo stato effettivo locato, se i presupposti mutano.",
+    "Negozio con canone inferiore al mercato per molti anni: il contratto può incidere sull'analisi reddituale.",
+    "Non assumere che il rogito estingua automaticamente la locazione.",
+    "Valuta il diritto con il contratto realmente esistente."
+   ],
+   [
+    "Ipoteca, debito residuo e stima",
+    "Ipoteca e mutuo incidono sul quadro giuridico e finanziario, ma non definiscono il valore fisico del bene.",
+    "Il valore di mercato dell'immobile va distinto dall'equity del proprietario e dal debito residuo. Per calcolare ciò che resta al venditore dopo l'estinzione dei gravami occorre una diversa analisi patrimoniale. Iscrizioni, pignoramenti e altri vincoli devono essere verificati in conservatoria.",
+    "Casa 260.000 e mutuo residuo 110.000: 150.000 è una differenza patrimoniale semplificata, non il valore immobiliare.",
+    "Non sottrarre mutuo residuo dalla stima di mercato nella relazione immobiliare.",
+    "Valore bene ≠ valore netto del proprietario."
+   ],
+   [
+    "Indivisione, comunione e quote",
+    "Il valore di una quota indivisa non è sempre proporzionale al valore dell'intero.",
+    "La limitata commerciabilità di una quota e l'esistenza di diritti concorrenti possono incidere sul mercato. La valutazione deve definire se si stima l'intero immobile in ipotesi di divisione o il diritto di quota cedibile isolatamente.",
+    "Casa 300.000 e quota 1/3: 100.000 euro è riparto aritmetico, non necessariamente valore di mercato della quota separata.",
+    "Non presumere che quote indivise siano liquide come la piena proprietà.",
+    "Quota aritmetica e valore di mercato della quota sono diversi."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-legale6",
+  "title": "Estimo legale: espropri, danni e indennità",
+  "description": "Valore complementare, espropriazione, occupazione, danni e successioni.",
+  "lessons": [
+   [
+    "Espropriazione per pubblica utilità",
+    "L'espropriazione è una fattispecie legale e l'indennità segue la disciplina del caso.",
+    "Occorre individuare bene espropriato, destinazione urbanistica rilevante, data legale, procedimento, leggi applicabili e giurisprudenza. L'indennità non è sempre il semplice prodotto di metri quadrati per una tariffa fissa. Il DPR 327/2001 e norme speciali richiedono verifica aggiornata.",
+    "Un terreno edificabile e uno agricolo della stessa estensione possono seguire criteri e indennizzi diversi.",
+    "Non applicare in ogni caso i vecchi valori agricoli medi come indennità automatica.",
+    "Esproprio → fattispecie + data + legge + caratteristiche."
+   ],
+   [
+    "Esproprio parziale e valore complementare",
+    "La perdita di parte del bene può diminuire anche il valore di ciò che resta.",
+    "Un'analisi complementare confronta il valore dell'intero prima con quello del residuo dopo; per l'indennità valgono presupposti specifici di legge. Accessi, interclusione e frazionamento modificano il risultato.",
+    "Fondo 250.000 prima e 180.000 dopo: perdita 70.000 come dato estimativo di confronto, prima di disciplina applicabile.",
+    "Non guardare solo ai metri quadrati sottratti.",
+    "Perdita del sistema ≠ sola superficie espropriata."
+   ],
+   [
+    "Servitù coattive e indennità",
+    "In determinati casi la legge consente la costituzione coattiva di servitù e prevede la tutela del fondo servente.",
+    "Passaggio, acquedotto, elettrodotti e altre servitù hanno regole e presupposti specifici. La stima può considerare area interessata, danni, perdita di uso, impatti sul resto e criteri legali distinti per fattispecie.",
+    "Una fascia occupata da condotta può limitare nuove costruzioni e ridurre l'utilità del terreno.",
+    "Non uniformare servitù volontarie e coattive senza leggere il titolo e la disciplina.",
+    "Servitù: titolo, tracciato, limiti, danno, norma."
+   ],
+   [
+    "Stima dei danni a un immobile",
+    "Il danno può essere valutato tramite costi di ripristino, minor valore o altre grandezze pertinenti.",
+    "La misura deve rispettare la funzione dell'accertamento e limitare duplicazioni tra ripristino e deprezzamento residuo. Eventuali danni ulteriori richiedono supporto e disciplina giuridica. Per un bene già degradato non si può assumere il costo del nuovo come danno senza correzioni.",
+    "Infiltrazione: 12.000 euro di riparazione più eventuale riduzione residua solo se distinta e dimostrata.",
+    "Non aggiungere due volte il medesimo pregiudizio.",
+    "Ripristino e minor valore: evitare doppio conteggio."
+   ],
+   [
+    "Divisioni ereditarie e stima della massa",
+    "Una divisione richiede valori e diritti riferiti ai beni e al momento pertinente.",
+    "Si considerano quote, passività, conguagli, pesi, servitù e divisibilità. Le regole di collazione, imputazione e divisione seguono il diritto successorio. La stima dell'intero non implica che ogni porzione sia esattamente proporzionale.",
+    "Due coeredi dividono un compendio con casa e terreno: controlla accesso e servitù per ciascun lotto.",
+    "Non effettuare conguagli senza definire massa e quote.",
+    "Divisione = valori omogenei + diritti + conguagli."
+   ],
+   [
+    "Diritto di sopraelevazione in condominio",
+    "La sopraelevazione e le eventuali indennità seguono norme condominiali specifiche.",
+    "Occorre esaminare art. 1127 c.c., struttura, diritti, limiti e modalità di calcolo del compenso. Il valore del diritto non coincide automaticamente con prezzo di vendita del nuovo appartamento; includi costi, tempi e condizioni realizzative.",
+    "Sopraelevazione teorica con nuovo piano vendibile: sottrai tutti i costi e verifica i requisiti legali.",
+    "Non presumere il diritto sempre esercitabile in qualsiasi condominio.",
+    "Sopraelevazione: diritto, limiti e indennità distinti."
+   ],
+   [
+    "Successioni e stime fiscali",
+    "Il valore usato per dichiarazioni o imposte ereditarie può differire dal prezzo di mercato.",
+    "Massa, diritti reali, valore fiscale dei beni e ripartizioni richiedono riferimenti normativi. Per una stima commerciale di un erede è necessario anche valutare commerciabilità, stato e comparabili. Il coefficiente fiscale per usufrutto non è automaticamente prezzo del diritto sul libero mercato.",
+    "Un immobile ereditato presenta valore catastale dichiarativo diverso dalla possibile vendita a un terzo.",
+    "Non sostituire regole fiscali e valutazione commerciale.",
+    "Fisco e mercato hanno basi diverse."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-agrario6",
+  "title": "Estimo agrario, rurale e forestale",
+  "description": "Fondi rustici, ordinamento colturale, redditi, miglioramenti e danni.",
+  "lessons": [
+   [
+    "Fondo rustico: analisi delle caratteristiche",
+    "Il terreno agricolo va studiato come bene produttivo, non come semplice superficie.",
+    "Rileva estensione, qualità, coltura, irrigazione, accessi, pendenza, esposizione, servitù, frammentazione, fabbricati rurali e vincoli. Valore di mercato e reddito agrario catastale non coincidono necessariamente.",
+    "Due ettari irrigui e due ettari asciutti possono avere valori unitari diversi.",
+    "Non usare un unico €/ha per tutte le classi di terreno.",
+    "Caratteristiche agronomiche e mercato locale."
+   ],
+   [
+    "Valutazione comparativa del terreno agricolo",
+    "Prezzi di compravendite rurali simili costituiscono evidenze dirette.",
+    "Prezzo/ettaro è significativo solo se simili qualità del suolo, dotazioni, destinazione, vincoli, accessi e dimensione. La scarsità di compravendite richiede più cautela e verifica delle fonti.",
+    "Tre terreni irrigui vicini venduti a 42.000, 45.000 e 47.000 €/ha, da rettificare per dotazioni.",
+    "Non confrontare un vigneto specializzato con seminativo semplice.",
+    "Comparazione per qualità e ordinamento colturale."
+   ],
+   [
+    "Reddito agrario e capitalizzazione del fondo",
+    "Il fondo genera risultati economici attribuibili a terra, capitale e impresa.",
+    "Un reddito netto fondiario richiede conto economico ordinario con produzione, spese e remunerazione degli altri fattori. Il reddito dominicale catastale è base fiscale, non sempre adeguata per stimare il reddito economico effettivo.",
+    "Reddito netto ordinario del fondo 7.000 annui e saggio ipotetico 3,5% → 200.000 euro solo nel modello costante coerente.",
+    "Non capitalizzare il reddito lordo agricolo senza scorporare costi di produzione.",
+    "R fondiario economico ≠ reddito catastale."
+   ],
+   [
+    "Miglioramenti fondiari e convenienza",
+    "I miglioramenti possono aumentare produttività o utilità del fondo.",
+    "Bonifica, irrigazione, livellamento, strade e impianti arborei richiedono costi e benefici lungo la vita utile. La convenienza va calcolata confrontando valore prima/dopo e costo, con tempi e rischio.",
+    "Impianto irriguo costa 60.000 ma il maggior valore documentato è solo 45.000: incremento non copre il costo.",
+    "Non confondere costo del miglioramento con beneficio di mercato.",
+    "Valore marginale del miglioramento dipende dal mercato."
+   ],
+   [
+    "Frutti pendenti e anticipazioni colturali",
+    "La stima può riguardare prodotti in maturazione o costi anticipati su colture in corso.",
+    "La valutazione di frutti pendenti considera produzione attesa, tempi, costi futuri di raccolta e rischio secondo il criterio pertinente; le anticipazioni colturali riguardano spese già effettuate e non esaurite. Le due fattispecie non sono sinonimi.",
+    "Grano in crescita con valore di vendita atteso 22.000 e costi futuri 5.000: controllo preliminare del risultato netto 17.000 prima di altri aspetti.",
+    "Non attribuire a coltura in campo il prezzo lordo di tutto il prodotto raccolto senza costi e rischio.",
+    "Frutti pendenti ≠ anticipazioni colturali."
+   ],
+   [
+    "Colture arboree, boschi e cicli pluriennali",
+    "Una coltura pluriennale richiede valutare età, produttività, investimenti e ciclo.",
+    "Vigneti, frutteti e boschi possono avere flussi variabili nel tempo e costi di impianto, manutenzione e abbattimento. Stima dell'area e del soprassuolo vanno coordinate per evitare doppioni.",
+    "Vigneto a fine ciclo utile non va valutato come uno in piena produzione.",
+    "Non capitalizzare un reddito perpetuo se la produzione ha orizzonte limitato.",
+    "Ciclo biologico → flussi e valore coerenti."
+   ],
+   [
+    "Fabbricati rurali e pertinenze agricole",
+    "I fabbricati a servizio del fondo possono richiedere criteri differenti da quelli residenziali.",
+    "Valuta idoneità aziendale, dimensioni, stato, impianti, autorizzazioni, eventuale mercato autonomo e funzionalità rispetto all'attività. L'essere rurale fiscalmente non stabilisce da solo il valore.",
+    "Una stalla specialistica senza mercato può essere studiata tramite costo deprezzato e utilità agricola.",
+    "Non attribuire automaticamente alla stalla il prezzo al m² di un'abitazione.",
+    "Fabbricato rurale = funzione agricola e dati specifici."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-statistica6",
+  "title": "Statistica, indici e analisi quantitativa",
+  "description": "Media, mediana, moda, dispersione, campioni e dati immobiliari.",
+  "lessons": [
+   [
+    "Media aritmetica, ponderata e mediana",
+    "Le misure di posizione sintetizzano prezzi ma rispondono a domande differenti.",
+    "Media semplice: somma/numero osservazioni. Media ponderata: quantità × peso / totale pesi. Mediana: dato centrale ordinato; moda: valore più ricorrente. Scelta dipende da distribuzione e qualità dei comparabili.",
+    "1.500, 1.600 e 5.000 €/m²: mediana 1.600, media 2.700.",
+    "Non scegliere la media senza considerare valori estremi.",
+    "Mediana è robusta agli outlier rispetto alla media."
+   ],
+   [
+    "Moda e frequenza",
+    "La moda è il valore o classe che ricorre più frequentemente.",
+    "In dati continui può essere utile raggruppare osservazioni in classi, con attenzione alle ampiezze. Frequenze assolute e relative descrivono il segmento; non individuano da sole il valore del soggetto.",
+    "Prezzi 1.800, 1.800, 2.000, 2.100: moda 1.800 €/m².",
+    "Non confondere «moda» con prezzo medio.",
+    "Moda = classe o dato più frequente."
+   ],
+   [
+    "Varianza, deviazione standard e dispersione",
+    "Una media può nascondere osservazioni molto eterogenee.",
+    "La deviazione standard misura dispersione nella scala delle osservazioni; la varianza la misura al quadrato. In campioni piccoli occorre maggiore prudenza e distinguere variabilità del mercato da errori nei dati.",
+    "Prezzi corretti 210, 211, 209 mila indicano minore dispersione di 170, 210, 260 mila.",
+    "Non confrontare medie senza valutare lo spread.",
+    "Precisione apparente dipende dalla qualità dei dati."
+   ],
+   [
+    "Outlier e campioni distorti",
+    "Un prezzo fuori scala può essere reale oppure frutto di dato erroneo.",
+    "Controlla rogito, diritti inclusi, vendite tra parenti, tempi, caratteristiche eccezionali e fonti. Eliminare un valore va motivato; la scelta del campione può introdurre bias e sovrastimare il mercato.",
+    "Un appartamento di lusso compreso in un insieme di bilocali ordinari può essere un comparabile inappropriato.",
+    "Non eliminare osservazioni solo perché scomode.",
+    "Pulizia dati motivata, non arbitraria."
+   ],
+   [
+    "Variazione percentuale e indice dei prezzi",
+    "Le variazioni percentuali si riferiscono a una base iniziale dichiarata.",
+    "Variazione = (P1−P0)/P0 × 100. Gli indici dei prezzi possono essere usati per analisi temporali, ma il settore immobiliare è eterogeneo; bisogna distinguere variazioni di mix e variazioni a parità di qualità.",
+    "Da 200.000 a 220.000 euro → +10%; tornare da 220.000 a 200.000 è −9,09%.",
+    "Non considerare simmetriche variazioni percentuali di aumento e diminuzione.",
+    "Base percentuale e qualità del campione contano."
+   ],
+   [
+    "Regressione e modelli edonici",
+    "La statistica multivariata tenta di stimare il contributo di caratteristiche osservate al prezzo.",
+    "Il modello può considerare superficie, piano, zona, epoca e stato per isolare contributi. Richiede campioni adeguati, qualità delle variabili e verifiche di significatività e coerenza. Una correlazione non dimostra da sola rapporto causale.",
+    "Un modello stima contributo del box tenendo conto di superficie, posizione e stato degli immobili.",
+    "Non applicare coefficienti di regressione da mercati diversi come tariffe generali.",
+    "Modello statistico supporta il giudizio, non lo sostituisce."
+   ],
+   [
+    "OMI e statistiche semestrali",
+    "La banca dati OMI presenta intervalli orientativi, non perizie sul singolo immobile.",
+    "Le quotazioni sono aggregate per zona, tipologia e stato, generalmente con frequenza semestrale. Una proprietà eccezionale può collocarsi fuori dal range; lo standard professionale richiede comparabili e motivazione puntuale.",
+    "Zona 1.400–2.100 €/m²: scegliere 1.750 per semplice media non è stima sufficiente.",
+    "Non presentare il range OMI come prezzo obbligatorio.",
+    "OMI = controllo statistico e orientativo."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-speciali6",
+  "title": "Estimo di immobili particolari e casi complessi",
+  "description": "Negozi, alberghi, impianti industriali, immobili vincolati e immobili non ordinari.",
+  "lessons": [
+   [
+    "Immobili commerciali e negozi",
+    "Per il negozio contano esposizione, passaggio, visibilità, metratura e redditività locativa.",
+    "Valore di mercato e valore dell'attività commerciale sono entità da separare. Canoni e prezzi vanno confrontati tenendo conto di micro-localizzazione e contratto. Nel negozio le superfici secondarie non hanno sempre lo stesso peso commerciale.",
+    "Locale in strada principale e identico locale in galleria secondaria possono avere canoni differenti.",
+    "Non stimare l'avviamento dell'impresa come parte automatica del valore dei muri.",
+    "Muri commerciali ≠ avviamento dell'attività."
+   ],
+   [
+    "Capannoni industriali e opifici",
+    "Gli immobili produttivi richiedono analisi di utilità industriale, caratteristiche tecniche e mercato locale.",
+    "Altezza, carichi, accessibilità mezzi, impianti, destinazioni e vincoli contano quanto la superficie. Quando i comparabili sono rari si può ricorrere a metodo del costo deprezzato, con validazione dei dati.",
+    "Capannone con portoni troppo bassi perde utilità pur mantenendo superficie invariata.",
+    "Non usare €/m² residenziale per immobili industriali.",
+    "Mercato industriale + utilità + costi pertinenti."
+   ],
+   [
+    "Alberghi e strutture ricettive",
+    "L'immobile alberghiero può essere valutato tenendo conto della capacità reddituale e della separazione tra immobile e impresa.",
+    "Ricavi da camere, occupazione, costi, gestione e capex consentono analisi per flussi, ma bisogna distinguere valore immobiliare da avviamento e attività. I dati della singola gestione non coincidono automaticamente con reddito ordinario del bene.",
+    "Due alberghi con stesso numero di camere ma diverso tasso di occupazione possono generare flussi diversi.",
+    "Non capitalizzare l'intero fatturato alberghiero come canone di locazione del fabbricato.",
+    "Redditualità operativa richiede scorpori appropriati."
+   ],
+   [
+    "Immobili storici e vincolati",
+    "Vincoli culturali e paesaggistici possono alterare costi, uso, tempi e mercato.",
+    "Le verifiche riguardano tutela, possibilità di modifica, costi specialistici, domanda di mercato e finanziabilità. Le caratteristiche di pregio non sempre si traducono in premi senza vincoli. L'approccio di costo o confronto va adattato.",
+    "Palazzo storico con affreschi richiede manutenzioni particolari e potrebbe avere limitazioni alle opere.",
+    "Non convertire automaticamente il costo del restauro in aumento di prezzo.",
+    "Vincoli e pregio agiscono insieme."
+   ],
+   [
+    "Immobili in costruzione e stato avanzamento lavori",
+    "Un immobile non ultimato non coincide col bene finito.",
+    "Occorre stimare valore del prodotto completato, lavori residui, rischi, ritardi, eventuali garanzie e titoli. La stima può avvalersi di residuale o analisi di costo secondo il problema. I prezzi al finito richiedono deduzioni motivate.",
+    "Appartamento al grezzo con valore finito 270.000 e costi mancanti 65.000: il valore del grezzo non è automaticamente 205.000 se ci sono altri oneri e rischi.",
+    "Non ignorare spese tecniche e incertezze del completamento.",
+    "Stato attuale ≠ valore del finito."
+   ],
+   [
+    "Immobile danneggiato e post-sinistro",
+    "Il danno è misurabile con costi di ripristino, diminuzione di valore o altre basi pertinenti.",
+    "Una perizia deve chiarire il prima e dopo il sinistro, la possibilità di riparare, i tempi, i costi e l'eventuale deprezzamento residuo. Il costo di riparazione non va sommato a un minor valore già interamente ricompreso.",
+    "Incendio causa riparazioni per 40.000 euro; eventuale danno residuo deve essere dimostrato come ulteriore.",
+    "Non duplicare costo di ripristino e minor valore.",
+    "Danno = differenze giustificate, senza doppioni."
+   ],
+   [
+    "Immobile non regolare e vincoli urbanistici",
+    "La commerciabilità e il valore dipendono dalla situazione documentale reale.",
+    "Difformità e irregolarità richiedono verifiche sulla sanabilità; un ipotetico costo di sanatoria non basta se non è possibile ottenerla. La relazione distingue fatto accertato, ipotesi e rischio. Per i profili urbanistici serve supporto tecnico competente.",
+    "Un bene con ampliamento non sanabile può richiedere diversa valutazione rispetto a uno regolarizzabile.",
+    "Non presumere sanabilità dal semplice pagamento di una sanzione.",
+    "Conformità e possibilità legale incidono sul valore."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-perizia6",
+  "title": "Relazione di stima, verifiche e casi pratici",
+  "description": "Impostazione di una perizia, controlli, fonti, coerenza, formule e calcoli.",
+  "lessons": [
+   [
+    "Identificazione del bene e del diritto",
+    "La relazione individua immobile, ubicazione, titolo, consistenza e diritto da stimare.",
+    "Descrivi identificativi catastali, confini e pertinenze, accessi e quote; verifica documentazione ed esplicita i limiti di controllo. Distingui titolarità e dati catastali. Un bene può essere gravato da diritti che influiscono sul tipo di valutazione.",
+    "Appartamento con cantina e box: indicare separatamente identificativi, quote e inclusione nella stima.",
+    "Non stimare accessori non posseduti dal soggetto senza chiarirlo.",
+    "Oggetto certo prima del valore."
+   ],
+   [
+    "Sopralluogo, conformità e caratteristiche",
+    "Il sopralluogo osserva stato fisico e distribuzione ma non sostituisce ogni verifica documentale.",
+    "Descrivi superfici, materiali, impianti, servizi, difetti apparenti, occupazione e accessi; segnala controlli non eseguiti. Distinguere conformità catastale, urbanistica e edilizia. Per aspetti tecnici servono verifiche di specialisti quando necessarie.",
+    "Pianta catastale conforme alla distribuzione ma titolo edilizio non verificato: non dichiarare piena conformità urbanistica.",
+    "Non considerare l'esame visivo prova delle strutture nascoste.",
+    "Sopralluogo e documenti sono fonti distinte."
+   ],
+   [
+    "Scelta e giustificazione del procedimento",
+    "Il valutatore motiva perché un metodo è adatto ai dati disponibili.",
+    "Se esistono rogiti omogenei, confronto spesso centrale; per redditi stabili può aiutare capitalizzazione; per bene speciale o sviluppo il costo o residuale possono essere pertinenti. Si possono confrontare più approcci spiegando divergenze.",
+    "Residenziale ordinario con molti rogiti: applicazione MCA e controllo reddituale se dati idonei.",
+    "Non imporre sempre lo stesso procedimento per qualunque immobile.",
+    "Metodo scelto in base al bene, scopo e dati."
+   ],
+   [
+    "Espressione del risultato e limiti",
+    "Una stima conclusiva illustra importo, data, metodo, assumptions e principali incertezze.",
+    "Il risultato può essere un valore motivato o un intervallo, secondo scopo e metodologia. Evita falsi centesimi e precisione artificiosa. Indica dati non disponibili e le conseguenze sulle conclusioni.",
+    "Comparabili dispersi e documenti incompleti: occorre motivare incertezza maggiore.",
+    "Non fornire un valore esatto al centesimo da assunzioni grossolane.",
+    "Precisione coerente con qualità dell'evidenza."
+   ],
+   [
+    "Controllo di coerenza tra metodi",
+    "Differenze tra stima comparativa, costo e reddito vanno interpretate, non mediate automaticamente.",
+    "Metodi possono valutare assunzioni differenti. Prima di mediare risultati verifica che oggetto, data, diritti, stato e basi di valore coincidano. Aggiustamenti e pesi possono essere giustificati dalla qualità dei dati.",
+    "Mercato 215.000, reddito 190.000: controlla canone e saggio prima di fare 202.500 come media.",
+    "Non usare media aritmetica dei metodi come regola universale.",
+    "Conciliare = interpretare differenze."
+   ],
+   [
+    "Errori tipici nelle domande d'esame",
+    "Molti errori derivano da confusione fra aspetti economici e procedimenti.",
+    "Allenati a distinguere valore complementare e trasformazione, reddito lordo e netto, saggio e tasso, prezzo richiesto e prezzo rogito, superficie catastale e commerciale. Le formule semplici vanno accompagnate da ipotesi.",
+    "Il quesito chiede valore di un'area dopo progetto: valuta se è problema di trasformazione, non solo €/m².",
+    "Non memorizzare formule senza conoscerne presupposti e ambito.",
+    "Identifica la parola chiave del problema estimativo."
+   ],
+   [
+    "Checklist finale della perizia",
+    "La qualità della relazione si controlla con una lista coerente.",
+    "Verifica data, oggetto, diritto, sopralluogo, fonti, misurazioni, titolo, segmento, metodo, formule, calcoli, doppioni, assunzioni, scenari, risultato e allegati. L'impostazione dovrebbe permettere a un altro valutatore di seguire ragionamenti e dati.",
+    "Prima di consegnare correggi una superficie ragguagliata calcolata due volte, poi aggiorna tutti i totali.",
+    "Non consegnare una perizia con importi incoerenti fra tabelle e conclusione.",
+    "Tracciabilità e replicabilità della stima."
+   ]
+  ]
  }
 ];
 function addEstimoAdvanced2026(spec){if(MODULES.some(m=>m.id===spec.id))return;const lessons=spec.lessons.map(r=>L(...r));const m=M(spec.id,'tecnica',spec.title,spec.description,'∑',lessons,lessons.map(l=>l.key),lessons.map(l=>'Spiega '+l.title.toLowerCase()+' e risolvi un caso applicativo.'));m.sector='immobiliare';MODULES.push(m);}
