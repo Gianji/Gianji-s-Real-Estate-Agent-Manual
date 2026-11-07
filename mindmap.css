@@ -92,3 +92,73 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
 @media(max-width:620px){.cm-intro{padding:17px}.cm-intro h2{font-size:19px}.cm-board-top{display:block;padding:13px}.cm-controls{margin-top:13px}.cm-note-tools>span{display:none}.cm-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}.cm-tab{white-space:nowrap;padding:10px 12px}.cm-viewport{height:540px}.cm-board-foot{gap:12px}.cm-under>div{padding:17px}}
 @media(max-width:740px){.bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}.bottom-nav button{min-width:0;font-size:9px}.bottom-nav button span{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.cm-open,.cm-tab{transition:none}}
+
+
+/* Revisione appunti: ogni nodo è una vera scheda con contenuto leggibile. */
+.cm-note-note{
+  border:1px solid #dddbe6;
+  border-left:4px solid #d9bb50;
+  background:rgba(255,255,255,.94);
+  border-radius:4px;
+  padding:16px 19px 19px;
+  box-shadow:2px 4px 9px rgba(48,52,87,.045);
+}
+.cm-note-note .cm-lines{gap:6px;margin-top:8px}
+.cm-note-note .cm-handline{font-size:12.5px;line-height:1.43;color:#343e54;overflow-wrap:anywhere}
+.cm-note-note .cm-noteline{color:#8a7795;font-size:9px}
+.cm-note-note strong{font-size:19px;line-height:1.18;margin-bottom:2px}
+.cm-note-group{background:rgba(244,240,251,.93);border-radius:3px;border:1px solid #e4daef;border-left:5px solid #7655a7}
+.cm-note-group .cm-handline{font-size:12px;line-height:1.5}
+.cm-note-branch{background:rgba(255,252,245,.94);border-radius:3px;padding:17px 20px}
+.cm-note-branch .cm-handline{font-size:13px;line-height:1.44}
+.cm-cross-lines{opacity:.62;stroke-width:2}
+.cm-tree-lines{opacity:.82}
+.cm-print-btn{
+  font:800 11px 'DM Sans',sans-serif!important;
+  min-width:115px!important;
+  white-space:nowrap;
+  background:#164f83!important;
+  color:#fff!important;
+  border-color:#164f83!important;
+}
+.cm-print-btn:hover{background:#0f3f6e!important}
+.cm-controls{flex-wrap:wrap}
+.cm-print-only{display:none}
+.cm-print-head{margin:0 0 9mm;border-bottom:2px solid #164f83;padding-bottom:4mm}
+.cm-print-head div{font-size:9pt;letter-spacing:.07em;color:#3b6384}
+.cm-print-head h1{font-size:18pt;margin:4mm 0;color:#164f83;line-height:1.16}
+.cm-print-head p{font-size:9pt;color:#586c80;line-height:1.5}
+.cm-print-grid{columns:2;column-gap:8mm}
+.cm-print-group{break-inside:auto;margin:0 0 7mm}
+.cm-print-card{border:1px solid #d7dde6;border-left:3px solid #4a76a8;padding:3.3mm 4mm;margin:0 0 4mm;break-inside:avoid;background:#fff}
+.cm-print-card h2,.cm-print-card h3{font-size:11pt;line-height:1.2;color:#174f7e;margin:0 0 2mm}
+.cm-print-card p,.cm-print-card small{font-size:8.5pt;color:#68798a}
+.cm-print-card ul{margin:2mm 0 0;padding-left:5mm}
+.cm-print-card li{font-size:9pt;line-height:1.42;color:#1c2b3c;margin:1mm 0;overflow-wrap:anywhere}
+.cm-print-lead{border-left-color:#e18b27;background:#fff8ea}
+.cm-print-section{color:#6f4b9c;font-size:11.5pt;border-bottom:2px solid #e2d8ef;padding-bottom:2mm;margin:6mm 0 3mm}
+.cm-print-rel{border-top:2px solid #e5b36a;padding-top:4mm;margin-top:8mm;break-inside:avoid}
+.cm-print-rel h2{font-size:11.5pt;color:#88551c}
+.cm-print-rel p{font-size:9pt;line-height:1.5;margin:2mm 0}
+.cm-print-only footer{font-size:8pt;color:#87929a;border-top:1px solid #cdd5df;margin-top:8mm;padding-top:3mm}
+@media(max-width:620px){
+  .cm-note-tools{padding:9px 12px}
+  .cm-print-btn{min-width:0!important}
+}
+@page{size:A4 portrait;margin:12mm}
+@media print{
+  html,body{margin:0!important;padding:0!important;background:#fff!important;color:#111!important}
+  .app-shell{display:block!important;min-height:0!important;background:#fff!important}
+  .main-column{display:block!important;min-height:0!important;width:100%!important}
+  .view-frame{display:block!important;max-width:none!important;width:100%!important;margin:0!important;padding:0!important;overflow:visible!important}
+  .sidebar,.topbar,.bottom-nav,.site-footer,#search-modal,#toast,
+  .page-header,.cm-intro,.cm-tabs,.cm-board,.cm-under,.cm-disclaimer,
+  .study-banner{display:none!important}
+  #cm-print-view.cm-print-only{display:block!important;width:100%!important;position:static!important}
+  .cm-print-grid{display:block!important;columns:2!important;column-gap:8mm!important}
+  .cm-print-group,.cm-print-card{page-break-inside:avoid;break-inside:avoid-column}
+  .cm-print-card,.cm-print-lead{box-shadow:none!important}
+  .cm-print-head h1,.cm-print-section,.cm-print-card h2,.cm-print-card h3{
+    -webkit-print-color-adjust:exact;print-color-adjust:exact
+  }
+}
