@@ -267,6 +267,321 @@ const ESTIMO_ADVANCED_2026=[
     "i aumenta → V diminuisce, a reddito fisso."
    ]
   ]
+ },
+ {
+  "id": "estimo-dcf6",
+  "title": "DCF e attualizzazione dei flussi di cassa",
+  "description": "Discounted Cash Flow, flussi, terminal value, sconti e scenari.",
+  "lessons": [
+   [
+    "Valore attuale e fattore di sconto",
+    "Il valore attuale rende confrontabili somme con scadenze diverse.",
+    "La formula VA = F/(1+r)^n usa il tasso r espresso in decimali e n periodi omogenei. Aumenti di r riducono il valore presente del medesimo flusso futuro. Il tasso deve corrispondere al rischio e al punto di vista della stima.",
+    "121.000 euro da incassare fra due anni con tasso 10% → 121.000/1,1² = 100.000 euro.",
+    "Non usare un tasso annuale direttamente su rate mensili senza conversione.",
+    "VA = flusso futuro / (1+r)^n."
+   ],
+   [
+    "Cash flow immobiliare",
+    "Il DCF elenca incassi e uscite attribuibili all'immobile lungo l'orizzonte previsto.",
+    "Proietta locazioni, indicizzazioni, sfitto, morosità, gestione, manutenzioni, investimenti e costi di rilocazione. Se stimi il bene senza leva finanziaria, non mescolare pagamenti di mutui dei singoli proprietari con i flussi prima del debito.",
+    "Anno 1: canoni 18.000, vacancy 900, spese 4.100, investimento 2.000 → flusso netto 11.000.",
+    "Non confondere fatturato dell'impresa conduttrice col reddito dell'immobile.",
+    "Flussi per anno, con date e oneri esplicitati."
+   ],
+   [
+    "Discount rate e cap rate",
+    "Il tasso di attualizzazione e il saggio di capitalizzazione non sono intercambiabili automaticamente.",
+    "Il tasso di sconto esprime remunerazione richiesta nel tempo e rischio; il cap rate lega un reddito stabilizzato al valore. Nel modello perpetuo crescente di Gordon il cap rate può essere r − g sotto ipotesi specifiche, non come regola universale.",
+    "Rendimento richiesto 8%, crescita perpetua coerente 2% → cap rate teorico 6% soltanto nel modello che lo consente.",
+    "Non usare il tasso del mutuo come discount rate della proprietà.",
+    "Tasso di sconto ≠ saggio diretto di capitalizzazione."
+   ],
+   [
+    "Valore terminale",
+    "Un modello a orizzonte finito può comprendere un valore di rivendita al termine.",
+    "Si può applicare un exit yield al reddito stabilizzato dell'anno successivo e scontare il valore finale. Vanno considerati costi di cessione, stato futuro e condizioni di mercato ipotizzate. Il terminal value non è dovuto se il diritto finisce senza residuo.",
+    "VT al quinto anno 300.000, sconto 8% → VA del terminal value = 300.000/1,08^5.",
+    "Non sommare il valore finale senza attualizzarlo.",
+    "VT entra solo se esiste, alla data in cui matura."
+   ],
+   [
+    "DCF completo: esempio numerico",
+    "Il valore DCF è la somma di ogni flusso scontato e del valore terminale scontato.",
+    "Per due anni con FC1 = 12.000, FC2 = 13.000 e VT2 = 205.000 a r = 10%, V = 12.000/1,10 + (13.000+205.000)/1,10², circa 191.074 euro. Il modello è illustrativo e le ipotesi vanno documentate.",
+    "Calcola 10.909 euro più 180.165 euro circa = 191.074.",
+    "Non aggiungere due volte il flusso finale o la rendita dell'ultimo anno.",
+    "DCF = Σ FCt/(1+r)^t + VT/(1+r)^n."
+   ],
+   [
+    "Rendite finite e illimitate",
+    "Una rendita temporanea non ha lo stesso fattore di una perpetua.",
+    "Per rendita ordinaria R costante per n anni, VA = R × [1−(1+r)^−n]/r. Se la rendita continua indefinitamente e resta costante, l'idealizzazione tende a R/r. I fattori dipendono dal momento dei pagamenti.",
+    "Dieci rate annue da 5.000 al 5% hanno VA inferiore a 50.000 euro perché i pagamenti futuri sono scontati.",
+    "Non scegliere il fattore di rendita perpetua quando il diritto termina.",
+    "Rendita temporanea: somma di rate scontate."
+   ],
+   [
+    "Analisi di sensibilità e scenario",
+    "Il DCF deve esplicitare come il risultato dipende dalle ipotesi.",
+    "Verifica variazioni plausibili di canoni, sfitto, capex, tassi e valore di uscita. Lo scenario pessimista non è automaticamente un prezzo di vendita forzata; serve a leggere il rischio e la robustezza del modello.",
+    "Simula vacancy 3, 9 e 15 mesi per un negozio in zona con rotazione di conduttori.",
+    "Non presentare lo scenario favorevole come previsione certa.",
+    "Sensitività = variabile → impatto sul valore."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-costi6",
+  "title": "Approccio del costo e deprezzamenti",
+  "description": "Riproduzione, sostituzione, computo metrico, obsolescenze e terreno.",
+  "lessons": [
+   [
+    "Principio del costo e sostituzione",
+    "Il metodo del costo si basa sull'alternativa di ottenere utilità equivalente.",
+    "È adatto, tra gli altri casi, a immobili speciali con scarsa evidenza di vendite. Costruzione nuova e immobile esistente devono essere separati: vetustà, utilità funzionale e mercato locale contano. L'approccio del costo può contribuire a stimare un valore di mercato.",
+    "Un deposito industriale non comune può richiedere costo di sostituzione e valore dell'area, con deprezzamenti.",
+    "Non equiparare costo nuovo e prezzo del capannone usato.",
+    "Il costo è base da correggere, non prezzo automatico."
+   ],
+   [
+    "Ricostruzione, riproduzione e sostituzione",
+    "Riprodurre significa replicare; sostituire significa fornire utilità equivalente.",
+    "Materiali e impianti attuali possono produrre la stessa utilità a costi inferiori rispetto a una replica storica. Occorre dichiarare il modello scelto e l'epoca dei prezzi usati.",
+    "Riprodurre un impianto datato costa 900.000, sostituirlo con uno moderno equivalente 690.000 euro.",
+    "Non imporre la replica inefficiente quando il problema richiede sostituzione.",
+    "Riproduzione identica ≠ sostituzione equivalente."
+   ],
+   [
+    "Computo metrico estimativo",
+    "Il computo determina un costo tramite quantità e prezzi di ogni lavorazione.",
+    "Si definiscono opere, unità, quantità, prezzi di riferimento, oneri e aliquote pertinenti. La stima parametrica €/m² è invece una sintesi da integrare con opere particolari, progettazione e spese.",
+    "Demolizione 350 m³ × 38 €/m³ = 13.300 euro per quella voce, prima di altre lavorazioni.",
+    "Non confondere 300 m² × tariffa standard con computo analitico completo.",
+    "Computo = somma delle voci quantità × prezzo."
+   ],
+   [
+    "Deprezzamento fisico",
+    "Usura, vetustà e manutenzione possono ridurre il contributo dell'edificio esistente.",
+    "Età anagrafica e vita utile economica residua non coincidono sempre. Manutenzioni eseguite e componenti sostituite vanno considerate. Modelli lineari sono semplificazioni da motivare.",
+    "Due condomini del 1980 hanno valori differenti se uno ha rifatto tetto e facciata e l'altro no.",
+    "Non applicare una percentuale annua identica a ogni tipologia.",
+    "Stato reale, vita residua, interventi effettuati."
+   ],
+   [
+    "Obsolescenza funzionale",
+    "Un bene può essere tecnicamente integro ma non adatto alle esigenze attuali.",
+    "Distribuzione poco razionale, altezze non sufficienti, accessi inadatti, assenza di impianti richiesti riducono l'utilità. Una parte può essere correggibile con lavori, altra no. La svalutazione deve evitare sovrapposizioni con costi già dedotti.",
+    "Un capannone con altezza interna insufficiente rispetto al segmento può risultare meno appetibile.",
+    "Non confondere buone finiture con piena funzionalità.",
+    "Funzionalità = adeguatezza all'uso economico."
+   ],
+   [
+    "Obsolescenza esterna o economica",
+    "Fattori esterni possono diminuire utilità e prezzo anche senza difetti edilizi.",
+    "Traffico, perdita di servizi, vincoli e contrazione della domanda possono incidere. Occorre distinguere effetti esterni dal deprezzamento fisico per non duplicarli.",
+    "Un negozio efficiente perde passaggio dopo la deviazione della strada commerciale.",
+    "Non imputare al degrado fisico un calo dovuto al contesto.",
+    "Obsolescenza esterna = influssi non intrinseci."
+   ],
+   [
+    "Area e contributo del fabbricato",
+    "Una formula del costo deprezzato può combinare valore dell'area e contributo dell'edificio.",
+    "V indicativo = Varea + (Costo nuovo − deprezzamenti), con ulteriori voci soltanto se coerenti. Il valore del terreno deve essere indipendente e non contato due volte. Utile normale e oneri indiretti richiedono attenta inclusione.",
+    "Area 140.000, costo nuovo 360.000, deprezzamenti 90.000 → 410.000 euro, da confrontare col mercato.",
+    "Non sommare area se già inclusa nel costo di riferimento.",
+    "Terreno + edificio deprezzato, senza duplicazioni."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-residuo6",
+  "title": "Valore residuale e trasformazione edilizia",
+  "description": "Immobili da recuperare, aree, costi di sviluppo, tempi e fattibilità.",
+  "lessons": [
+   [
+    "Fattibilità della trasformazione",
+    "L'uso alternativo deve essere legalmente ammissibile, fisicamente possibile e sostenibile sul mercato.",
+    "Prima di stimare ricavi ipotetici controlla strumenti urbanistici, vincoli, interventi consentiti, tempi e possibilità di vendita. La trasformazione più redditizia sulla carta può essere vietata.",
+    "Un deposito convertibile in abitazioni solo dopo cambio d'uso ammesso va valutato secondo questo presupposto.",
+    "Non considerare edificabile un immobile solo per un progetto immaginato.",
+    "Fattibilità legale + tecnica + mercato."
+   ],
+   [
+    "Valore del prodotto finito",
+    "Il primo passaggio del residuo è stimare quanto valgono i beni realizzabili dopo l'intervento.",
+    "Calcola superfici commercializzabili, destinazioni consentite e prezzi plausibili per ciascuna unità. Ricavi teorici e incassi effettivi nel tempo non coincidono. Considera spazi comuni e pertinenze senza duplicazione.",
+    "Sei alloggi × 85 m² × 2.700 €/m² = 1.377.000 euro di ricavi teorici prima di deduzioni.",
+    "Non trattare tutta la superficie lorda di piano come superficie residenziale vendibile.",
+    "Ricavo finale da confronto di mercato."
+   ],
+   [
+    "Costi diretti e indiretti",
+    "Il costo totale include lavori edili e molte spese accessorie.",
+    "A lavori, demolizioni e impianti aggiungi progettazione, professionisti, urbanizzazioni, permessi, sicurezza, collaudi, commercializzazione e tributi pertinenti. La possibilità di recuperare IVA dipende dal soggetto e dal contesto fiscale.",
+    "Lavori 650.000, progettazione 60.000, oneri 95.000, vendite 24.000 → 829.000 prima di ulteriori voci.",
+    "Non sottrarre soltanto la tariffa del costruttore.",
+    "Costi sviluppo = diretti + indiretti + oneri."
+   ],
+   [
+    "Utile, rischio e finanziamento",
+    "Un'operazione di sviluppo richiede remunerazione e assunzione di rischio.",
+    "L'utile del promotore può comparire come voce specifica oppure il rischio può riflettersi nel tasso: definire la struttura per evitare doppioni. I costi di capitale dipendono da calendario e finanza scelta.",
+    "Se il residuo è 220.000 prima dell'utile e il modello richiede 90.000 di remunerazione, il risultato scende a 130.000.",
+    "Non sottrarre due volte lo stesso costo del capitale.",
+    "Rischio e utile devono essere inclusi una sola volta per la stessa funzione."
+   ],
+   [
+    "Residuo statico",
+    "Il valore residuo semplificato è ricavi meno tutti gli oneri complessivi riconducibili al progetto.",
+    "V = vendite previste − costi diretti − indiretti − oneri finanziari e utile, se il modello è statico. È una fotografia nominale; per progetti lunghi è spesso inadeguata rispetto a una modellazione temporale.",
+    "Ricavi 1.200.000, lavori 690.000, altre spese 130.000, remunerazione 140.000 → residuo 240.000.",
+    "Non dichiarare definitivo un residuo senza controllare costi e assunzioni.",
+    "Residuo statico = valore finale − uscite pertinenti."
+   ],
+   [
+    "Residuo dinamico",
+    "Costi e ricavi in anni diversi devono essere riportati a una data comune.",
+    "Con DCF di sviluppo attualizzi entrate e uscite periodiche, includendo rischio e incertezza in modo coerente. Un ricavo a tre anni non vale uguale a un incasso oggi. Le tempistiche degli interventi possono determinare la fattibilità economica.",
+    "Incasso anno 3 di 800.000 euro e costi 440.000 anno 1 e 160.000 anno 2: differenza nominale 200.000, ma residuo attuale diverso.",
+    "Non ignorare tempi del cantiere e della commercializzazione.",
+    "Residuo dinamico = somma flussi scontati."
+   ],
+   [
+    "Edifici da demolire e bonifiche",
+    "Un'area occupata da fabbricato inutilizzabile non equivale economicamente a un lotto libero.",
+    "Demolizione, smaltimenti, amianto, autorizzazioni, bonifica e vincoli possono incidere sul residuo. Verifica anche se la ricostruzione e le volumetrie esistenti sono riconoscibili.",
+    "Lotto libero potenzialmente 150.000; demolizione e bonifica stimate 35.000 → il bene con edificio non vale automaticamente 150.000.",
+    "Non presumere la possibilità di riutilizzare sempre la stessa volumetria.",
+    "Terreno trasformabile ≠ terreno pronto e libero."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-superfici6",
+  "title": "Superfici estimative e consistenze",
+  "description": "SEL, SUL, superfici commerciali, ragguagli, vani e unità di misura.",
+  "lessons": [
+   [
+    "Superficie netta, lorda e commerciale",
+    "La superficie assume significati diversi secondo la finalità di misurazione.",
+    "Superficie interna netta, lorda costruita, catastale, superficie utile e superficie commerciale non sono sinonimi. Occorre dichiarare il criterio adottato e verificare che i confronti utilizzino lo stesso metodo.",
+    "Appartamento: 88 m² calpestabili e 104 m² lordi non sono dati scambiabili senza definizione.",
+    "Non applicare €/m² lordo alla misura netta.",
+    "Prima lo standard di misurazione, poi il prezzo unitario."
+   ],
+   [
+    "Muri, confini e parti comuni",
+    "La superficie di riferimento dipende dal trattamento delle murature.",
+    "Le regole sulla quota di muri perimetrali e confinanti dipendono dallo standard utilizzato. Un piano catastale non offre sempre la misura corretta per la stima commerciale. Le superfici vanno controllate con rilievo o documentazione attendibile.",
+    "Due unità sullo stesso piano possono avere superfici lorde differenti a pari superficie calpestabile.",
+    "Non sommare integralmente due volte i muri condivisi.",
+    "Esplicitare spessori e regole convenzionali."
+   ],
+   [
+    "Balconi, terrazzi e giardini",
+    "Le superfici accessorie possono essere ragguagliate secondo la loro contribuzione di mercato.",
+    "Si usano coefficienti quando supportati dallo standard o dal segmento; non esiste una percentuale economica universale valida per ogni balcone o giardino. Dimensione, esposizione, accessibilità e utilizzo incidono.",
+    "Balcone di 20 m² con coefficiente ipotetico 0,30 → 6 m² ragguagliati; il coefficiente va giustificato.",
+    "Non adottare per ogni terrazzo la stessa percentuale senza verifica.",
+    "Superficie ragguagliata = Σ S_i × k_i."
+   ],
+   [
+    "Cantina, soffitta, box e posto auto",
+    "Le pertinenze possono avere una stima autonoma o essere ragguagliate.",
+    "Un box in zona di forte carenza di parcheggi può meritare valutazione separata. Evita il doppio conteggio se il prezzo dei comparabili include già il box. Specifica accessibilità, titolo e destinazione.",
+    "Alloggio 200.000 senza box; box stimato separatamente 20.000 → valore complessivo 220.000, se coerente con mercato.",
+    "Non sommare box per quota di superficie e di nuovo come bene separato.",
+    "Pertinenza: inclusa una volta sola."
+   ],
+   [
+    "Superficie catastale e regole fiscali",
+    "La superficie catastale segue criteri amministrativi, non sempre coincidenti con quelli commerciali.",
+    "La disciplina catastale prevede proprie categorie, consistenze e metodologie, fra cui il DPR 138/1998 nelle applicazioni previste. Le quotazioni e la stima devono usare unità e standard coerenti. Vano catastale, rendita e m² commerciali non sono equivalenti.",
+    "La visura indica superficie catastale 112 m², mentre la commerciale secondo metodo dichiarato è 107 m².",
+    "Non usare il dato catastale come prova automatica dei m² commerciali.",
+    "Catasto ≠ stima, salvo specifico uso coerente."
+   ],
+   [
+    "Superficie fondiaria e territoriale",
+    "Nella stima di aree la superficie può essere fondiaria, territoriale o coperta.",
+    "Superficie territoriale e fondiaria possono differire per strade e servizi; gli indici urbanistici vanno applicati alla superficie prevista dalla disciplina locale. È necessario conoscere il significato degli indici e le NTA.",
+    "Lotto territoriale 3.000 m², strade e cessioni 600 → fondiaria 2.400 m² in un progetto ipotetico.",
+    "Non applicare l'indice fondiario alla superficie territoriale senza fondamento.",
+    "Indice × superficie definita dalla norma."
+   ],
+   [
+    "Volumi, scale e conversioni",
+    "Misure lineari e di volume richiedono conversioni corrette.",
+    "Per scala 1:n una misura su carta è moltiplicata per n per ottenere la misura reale. Le aree si moltiplicano per n², i volumi per n³. Conversioni tra m, cm, m², ha e m³ sono frequenti nei calcoli estimativi e catastali.",
+    "1,96 cm a 1:200 = 392 cm = 3,92 m reali.",
+    "Non moltiplicare una superficie disegnata per 200 anziché 200².",
+    "Lunghezze × n; aree × n²; volumi × n³."
+   ]
+  ]
+ },
+ {
+  "id": "estimo-aree6",
+  "title": "Aree edificabili e terreni per lo sviluppo",
+  "description": "Indici, potenzialità urbanistica, metodo diretto e residuale.",
+  "lessons": [
+   [
+    "Aree edificabili: qual è il valore?",
+    "Il valore dipende dalla concreta potenzialità edilizia e dal mercato.",
+    "Studia posizione, destinazione, accessi, servizi, rischio e tempi autorizzativi. Il valore deriva dal diritto edificatorio utilizzabile, non solo dalla superficie geografica del lotto.",
+    "Due lotti di 1.000 m² con indici e destinazioni differenti possono avere prezzi molto diversi.",
+    "Non assumere stesso €/m² di terreno a parità di superficie.",
+    "Potenzialità effettiva → valore."
+   ],
+   [
+    "Indici e capacità edificatoria",
+    "Indice volumetrico o di superficie stabilisce quantità realizzabili secondo il piano.",
+    "Interpreta correttamente indice territoriale e fondiario, superficie utile/lorda e limiti di altezza, distanze, parcheggi e standard. Ogni comune segue proprie regole urbanistiche e denominazioni.",
+    "Area fondiaria 1.500 m² e indice ipotetico 0,50 m²/m² → 750 m² di superficie edificabile secondo l'indice, da verificare altri limiti.",
+    "Non convertire automaticamente volume in superficie senza altezza convenzionale applicabile.",
+    "Indice applicato alla quantità corretta e ai vincoli del piano."
+   ],
+   [
+    "Stima sintetica dell'area",
+    "Il metodo diretto confronta prezzi di terreni effettivamente simili.",
+    "Confronta destinazione, indice, opere di urbanizzazione, stato del titolo e dimensione. Prezzo €/m² di terreno e prezzo €/m² edificabile danno parametri diversi e vanno dichiarati.",
+    "Lotto da 2.000 m² per 300.000 → 150 €/m² fondiario; capacità 1.000 m² di SLP → 300 €/m² edificabile.",
+    "Non confrontare questi due indici come se fossero identici.",
+    "Unità di confronto deve essere omogenea."
+   ],
+   [
+    "Stima residuale dell'area",
+    "Il valore del terreno può essere derivato dai ricavi del progetto realizzabile meno costi e rischi.",
+    "Le previsioni devono essere compatibili con piano, tempi, oneri e mercato futuro. La quota residuale è sensibile a prezzo degli alloggi e costo del cantiere; costruisci scenari.",
+    "Progetto finito da 1.600.000; costi e remunerazione 1.200.000 → residuo preliminare terreno 400.000.",
+    "Non prendere il residuo statico come certezza per progetti pluriennali.",
+    "Terreno = residuo dello sviluppo coerente."
+   ],
+   [
+    "Urbanizzazioni, convenzioni e vincoli",
+    "Oneri e obblighi pubblicistici possono incidere significativamente sulla stima.",
+    "Considera cessioni di aree, opere da eseguire, piani attuativi, lotti minimi, vincoli paesaggistici e convenzioni edilizie. La capacità nominale non implica autorizzazione immediata.",
+    "Lotto urbanisticamente edificabile ma soggetto a piano attuativo può avere tempi e costi superiori a uno pronto.",
+    "Non ignorare costo e tempi delle opere di urbanizzazione.",
+    "Edificabilità formale ≠ edificazione immediata."
+   ],
+   [
+    "Volumetria residua e diritti edificatori",
+    "Potenzialità non sfruttata e trasferibilità vanno accertate caso per caso.",
+    "Occorre analizzare titoli, disciplina vigente, asservimenti e limiti al trasferimento di diritti edificatori. Una volumetria pretesa dal venditore non equivale a capacità effettivamente utilizzabile.",
+    "Edificio già asservito ad altro lotto può non avere ulteriore capacità nonostante il terreno libero.",
+    "Non valutare volumetrie ipotetiche senza controllo documentale.",
+    "Diritti utilizzabili > mere aspettative."
+   ],
+   [
+    "Lotti con fabbricati e demolizione",
+    "Un'area occupata da costruzioni richiede analisi di costi e alternative.",
+    "Stima valore d'uso del fabbricato, potenziale di riqualificazione e, quando applicabile, demolizione con smaltimenti e bonifiche. Confronta i risultati in base all'uso economicamente sostenibile e legalmente ammesso.",
+    "Capannone dismesso ha valore di mercato non necessariamente uguale al valore del solo terreno.",
+    "Non presumere che sia sempre possibile demolire e ricostruire allo stesso volume.",
+    "Valutare stato attuale e alternativa realizzabile."
+   ]
+  ]
  }
 ];
 function addEstimoAdvanced2026(spec){if(MODULES.some(m=>m.id===spec.id))return;const lessons=spec.lessons.map(r=>L(...r));const m=M(spec.id,'tecnica',spec.title,spec.description,'∑',lessons,lessons.map(l=>l.key),lessons.map(l=>'Spiega '+l.title.toLowerCase()+' e risolvi un caso applicativo.'));m.sector='immobiliare';MODULES.push(m);}
