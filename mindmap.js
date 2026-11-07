@@ -269,8 +269,7 @@ const CM_PRINT_PAGE_MM={width:194,height:259};
 /* Bounds of the actual notes AND visible SVG connectors, not the blank
    1650/1700px planning canvas. Keep all original node coordinates. */
 function cmPrintBounds(g){
- const visible=g.nodes.filter(n=>n.t!=='scribble');
- const nodes=visible.length?visible:g.nodes;
+ const nodes=g.nodes; // include handwritten margin notes as part of the printed map
  let minX=Math.min(...nodes.map(n=>n.x));
  let maxX=Math.max(...nodes.map(n=>n.x+n.w));
  const byId=new Map(g.nodes.map(n=>[n.id,n]));
