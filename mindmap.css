@@ -157,10 +157,10 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  .cm-note-tools{gap:10px}
 }
 
-/* A4 portrait with 8-mm margins: the page body has 194 × 281 mm.
-   Each print tile reproduces the *same* full canvas with a clipping offset.
-   No conversion to columns/cards, no screenshot rasterization. */
-@page{size:A4 portrait;margin:8mm}
+/* A4 portrait is 210 × 297 mm. The page itself includes 8-mm padding;
+   the artwork is precisely 194 mm wide. This avoids auto-shrink-to-fit
+   when a print driver adds extra page margins. The original SVG/HTML stays intact. */
+@page{size:A4 portrait;margin:0}
 @media print {
  html,body{margin:0!important;padding:0!important}
  body.cm-poster-printing{background:#fff!important;overflow:visible!important}
@@ -170,18 +170,18 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  body.cm-poster-printing #toast{display:none!important}
  body.cm-poster-printing #cm-print-poster{
   display:block!important;position:static!important;visibility:visible!important;
-  margin:0!important;padding:0!important;width:194mm!important;
+  margin:0!important;padding:0!important;width:210mm!important;
  }
  .cm-poster-page{
-  position:relative;box-sizing:border-box;width:194mm;height:281mm;overflow:hidden;
-  padding:0;margin:0;background:#fff;color:#162e47;
+  position:relative;box-sizing:border-box;width:210mm;height:296mm;overflow:hidden;padding:8mm;
+  margin:0;background:#fff;color:#162e47;
   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
   display:flex;flex-direction:column;
   -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
  }
  .cm-poster-page:last-child{page-break-after:auto;break-after:auto}
  .cm-poster-head,.cm-poster-foot{
-  box-sizing:border-box;flex:0 0 11mm;height:11mm;
+  box-sizing:border-box;flex:0 0 10.5mm;height:10.5mm;
   display:flex;align-items:center;justify-content:space-between;gap:8mm;
   padding:1mm 1mm;color:#486c91;background:#fff;
   font-family:'DM Sans',Arial,sans-serif;font-size:8pt;line-height:1.2;
@@ -205,7 +205,6 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  }
  .cm-poster-world .cm-note{
   -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
-  box-shadow:none!important;
   overflow-wrap:anywhere;
  }
  /* Keep the original notebook lines, margins, font sizes and highlights.
