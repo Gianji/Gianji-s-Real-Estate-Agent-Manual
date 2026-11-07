@@ -386,7 +386,10 @@ async function cmExportPdfA4(previewForPrinting=false){
   for(let i=0;i<pages.length;i++){
    capture=document.createElement('div');
    capture.className='cm-pdf-capture'+(CM_STATE.relations?'':' cm-hide-relations');
-   capture.style.cssText='position:fixed;left:0;top:0;z-index:-1;pointer-events:none;'+
+   capture.setAttribute('data-cm-pdf-capture','');
+   // Keep the original document hidden; html2canvas makes only its
+   // temporary cloned element visible for rendering.
+   capture.style.cssText='position:fixed;left:0;top:0;visibility:hidden;pointer-events:none;'+
     'width:'+width+'px;height:'+height+'px;overflow:hidden;background:#fffefa;';
    capture.innerHTML=pages[i].innerHTML;
    const world=capture.querySelector('.cm-poster-world');
@@ -401,7 +404,11 @@ async function cmExportPdfA4(previewForPrinting=false){
    const image=await window.html2canvas(capture,{
     backgroundColor:'#fffefa',scale:2,logging:false,useCORS:true,
     width,height,scrollX:0,scrollY:0,windowWidth:Math.max(1024,window.innerWidth),
-    windowHeight:Math.max(1100,window.innerHeight)
+    windowHeight:Math.max(1100,window.innerHeight),
+    onclone:clonedDoc=>{
+     const cloned=clonedDoc.querySelector('[data-cm-pdf-capture]');
+     if(cloned){cloned.style.visibility='visible';cloned.style.zIndex='999999';}
+    }
    });
    capture.remove();capture=null;
    if(i)pdf.addPage('a4','portrait');
