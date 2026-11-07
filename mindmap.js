@@ -264,7 +264,7 @@ function cmCanvas(g){
 }
 /* Stampa realmente la mappa OneNote, non un riepilogo testuale.
    Ogni pagina mostra una porzione dello STESSO canvas, inclusi connettori e colori.
-   278 × 170 mm di area disegno in A4 orizzontale, con una piccola sovrapposizione
+   194 × 259 mm di area disegno in A4 verticale, con una piccola sovrapposizione
    fra fogli contigui per poterli riunire in un poster leggibile. */
 function cmPrintPosterPrepare(){
  const viewport=document.getElementById('cm-viewport');
@@ -277,8 +277,8 @@ function cmPrintPosterPrepare(){
  const selected=document.getElementById('cm-print-scale');
  const scale=Math.max(.7,Math.min(1.2,Number(selected?.value||'1')||1));
  const pxPerMm=96/25.4;
- const tileW=278*pxPerMm,tileH=170*pxPerMm;
- const overlap=24; // circa 6,4 mm di sovrapposizione per il montaggio
+ const tileW=194*pxPerMm,tileH=259*pxPerMm;
+ const overlap=18; // circa 4,8 mm di sovrapposizione per il montaggio
  const stepX=tileW-overlap,stepY=tileH-overlap;
  const totalW=g.w*scale,totalH=g.h*scale;
  const cols=Math.max(1,Math.ceil((totalW-overlap)/stepX));
@@ -302,7 +302,7 @@ function cmPrintPosterPrepare(){
     '<div class="cm-poster-window'+(CM_STATE.relations?'':' cm-hide-relations')+'">'+canvas+'</div>'+
     '<footer class="cm-poster-foot"><span>Foglio '+(row*cols+col+1)+'/'+(rows*cols)+
     ' · riga '+(row+1)+'/'+rows+' · colonna '+(col+1)+'/'+cols+'</span>'+
-    '<span>Unisci i fogli con sovrapposizione di circa 6 mm</span></footer></section>');
+    '<span>Unisci i fogli con sovrapposizione di circa 5 mm</span></footer></section>');
   }
  }
  const poster=document.createElement('div');
