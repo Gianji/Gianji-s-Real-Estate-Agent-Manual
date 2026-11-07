@@ -262,31 +262,64 @@ function cmCanvas(g){
  '<div class="cm-margin-note" style="top:'+(g.h-85)+'px">Frecce blu: percorso di studio. Frecce arancioni: rimandi tra temi distinti.</div>'+
  '</div>';
 }
-function cmPrintView(view,g){
+/* Stampa realmente la mappa OneNote, non un riepilogo testuale.
+   Ogni pagina mostra una porzione dello STESSO canvas, inclusi connettori e colori.
+   278 × 170 mm di area disegno in A4 orizzontale, con una piccola sovrapposizione
+   fra fogli contigui per poterli riunire in un poster leggibile. */
+function cmPrintPosterPrepare(){
+ const viewport=document.getElementById('cm-viewport');
+ if(!viewport)return false;
+ const old=document.getElementById('cm-print-poster');
+ if(old)return true;
+ const view=CM_STATE.view;
+ const g=cmGraph(view);
  const label=CM_SECTIONS.find(x=>x.id===view)?.label||'Panoramica';
- const nodes=g.nodes.filter(n=>n.t!=='scribble');
- const groups=nodes.filter(n=>n.t==='group');
- const title='<header class="cm-print-head"><div>MANUALE PROPEDEUTICO · AGENTE IMMOBILIARE</div><h1>MAPPE E APPUNTI — '+esc(label.toUpperCase())+'</h1><p>Schede ordinate e leggibili, estratte dal programma di studio. Ogni freccia indica un collegamento concettuale, non una relazione giuridica di equivalenza.</p></header>';
- let cards='';
- if(view==='overview'){
-  const cols=[['d','fideiussione','vendita','p'],['e','fisco','mutuo'],['i','catasto','es']];
-  cards=cols.map(chain=>'<section class="cm-print-group">'+chain.map((id,i)=>{
-    const n=nodes.find(n=>n.id===id);return n?'<article class="cm-print-card '+(i===0?'cm-print-lead':'')+'"><h2>'+(i?'↓ ':'')+esc(n.title)+'</h2><p>'+esc(n.sub||'')+'</p><ul>'+(n.lines||[]).map(line=>'<li>'+esc(line)+'</li>').join('')+'</ul></article>':'';
-   }).join('')+'</section>').join('');
- }else{
-  for(const group of groups){
-   const side=group.x<825;
-   const next=groups.filter(n=>n.x===group.x&&n.y>group.y).sort((a,b)=>a.y-b.y)[0];
-   const members=nodes.filter(n=>n.t==='note'&&(n.x<825)===side&&n.y>group.y&&(!next||n.y<next.y)).sort((a,b)=>a.y-b.y);
-   cards+='<section class="cm-print-group"><h2 class="cm-print-section">'+esc(group.title)+'</h2>'+
-    members.map(n=>'<article class="cm-print-card"><h3>↓ '+esc(n.title)+'</h3><small>'+esc(n.sub||'')+'</small><ul>'+
-    (n.lines||[]).map(line=>'<li>'+esc(line)+'</li>').join('')+'</ul></article>').join('')+'</section>';
+ const selected=document.getElementById('cm-print-scale');
+ const scale=Math.max(.7,Math.min(1.2,Number(selected?.value||'1')||1));
+ const pxPerMm=96/25.4;
+ const tileW=278*pxPerMm,tileH=170*pxPerMm;
+ const overlap=24; // circa 6,4 mm di sovrapposizione per il montaggio
+ const stepX=tileW-overlap,stepY=tileH-overlap;
+ const totalW=g.w*scale,totalH=g.h*scale;
+ const cols=Math.max(1,Math.ceil((totalW-overlap)/stepX));
+ const rows=Math.max(1,Math.ceil((totalH-overlap)/stepY));
+ const map=cmCanvas(g);
+ const pages=[];
+ for(let row=0;row<rows;row++){
+  for(let col=0;col<cols;col++){
+   const dx=Math.round(col*stepX),dy=Math.round(row*stepY);
+   // Reuse every original HTML node and SVG arrow, with only a viewport offset.
+   const canvas=map.replace(
+    '<div id="cm-world" class="cm-world" style="',
+    '<div class="cm-world cm-poster-world" style="transform:translate('+
+    (-dx)+'px,'+(-dy)+'px) scale('+scale+');'
+   );
+   pages.push('<section class="cm-poster-page">'+
+    '<header class="cm-poster-head"><strong>MAPPE E APPUNTI · '+esc(label.toUpperCase())+'</strong>'+
+    '<span>Quaderno visuale · scala '+Math.round(scale*100)+'%</span></header>'+
+    '<div class="cm-poster-window'+(CM_STATE.relations?'':' cm-hide-relations')+'">'+canvas+'</div>'+
+    '<footer class="cm-poster-foot"><span>Foglio '+(row*cols+col+1)+'/'+(rows*cols)+
+    ' · riga '+(row+1)+'/'+rows+' · colonna '+(col+1)+'/'+cols+'</span>'+
+    '<span>Unisci i fogli con sovrapposizione di circa 6 mm</span></footer></section>');
   }
  }
- const rel=g.cross.map(e=>{const a=nodes.find(n=>n.id===e.a),b=nodes.find(n=>n.id===e.b);return a&&b?'<p>↝ <b>'+esc(a.title)+'</b> ↔ <b>'+esc(b.title)+'</b> — '+esc(e.label)+'</p>':''}).join('');
- return '<section id="cm-print-view" class="cm-print-only">'+title+'<div class="cm-print-grid">'+cards+'</div>'+
- '<aside class="cm-print-rel"><h2>Rimandi da memorizzare</h2>'+rel+'</aside><footer>Materiale di ripasso; verificare sempre testi normativi e fonti ufficiali aggiornate.</footer></section>';
+ const poster=document.createElement('div');
+ poster.id='cm-print-poster';
+ poster.className='cm-poster-print';
+ poster.setAttribute('aria-label','Mappa concettuale pronta per stampa su fogli A4');
+ poster.innerHTML=pages.join('');
+ document.body.appendChild(poster);
+ document.body.classList.add('cm-poster-printing');
+ return true;
 }
+function cmPrintPosterClear(){
+ document.body.classList.remove('cm-poster-printing');
+ document.getElementById('cm-print-poster')?.remove();
+}
+window.addEventListener('beforeprint',()=>{
+ if(document.getElementById('cm-viewport'))cmPrintPosterPrepare();
+});
+window.addEventListener('afterprint',cmPrintPosterClear);
 
 function renderMindmap(section){
  const view=CM_SECTIONS.some(s=>s.id===section)?section:'overview';
@@ -301,13 +334,13 @@ function renderMindmap(section){
  '<p>Ogni nota riassume un concetto; <b>tocca il titolo</b> per entrare nel modulo. Le frecce blu indicano il percorso, quelle arancioni tratteggiate sono rimandi incrociati tra argomenti, come negli appunti scritti a mano.</p></div><span class="cm-count">'+count+' schede collegate</span></div>'+
  '<div class="cm-tabs" aria-label="Seleziona quaderno">'+tabs+'</div>'+
  '<section class="cm-board"><div class="cm-board-top"><div><strong>▣ '+esc(CM_SECTIONS.find(s=>s.id===view).label)+' <span class="cm-paper-caption">/ PAGINA DI APPUNTI</span></strong><small>Trascina lo sfondo per spostare il foglio, usa + e − per ingrandire.</small></div>'+
- '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa gli appunti o salva in PDF">⎙ Stampa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
- '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Le frecce possono intrecciarsi per mostrare rapporti tra argomenti.</span></div>'+
+ '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa questa stessa mappa, con box, frecce e colori">⎙ Stampa mappa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
+ '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Stampa fedele alla mappa, su più fogli A4 orizzontali.</span><label class="cm-print-choice" for="cm-print-scale">Scala di stampa <select id="cm-print-scale" aria-label="Dimensione della mappa nella stampa"><option value="0.8">Compatta (80%)</option><option value="1" selected>Normale (100%)</option><option value="1.15">Grande (115%)</option></select></label></div>'+
  '<div id="cm-viewport" class="cm-viewport" role="region" aria-label="Quaderno di appunti navigabile">'+cmCanvas(g)+'</div>'+
  '<div class="cm-board-foot"><span><i class="cm-key cm-key-root"></i>Tema centrale</span><span><i class="cm-key cm-key-branch"></i>Ramo di studio</span><span><i class="cm-key cm-key-leaf"></i>Appunto apribile</span><span><i class="cm-key cm-key-cross"></i>Collegamento trasversale</span></div></section>'+
  '<div class="cm-under"><div><h3>↳ Da collegare a mente</h3><div class="cm-cross">'+links+'</div></div>'+
  '<div><h3>Indice veloce degli appunti</h3><div class="cm-index">'+(sections||'<button class="cm-index-item" data-cm-mode="diritto">Diritto<b>Apri ↗</b></button><button class="cm-index-item" data-cm-mode="economia">Economia<b>Apri ↗</b></button><button class="cm-index-item" data-cm-mode="immobiliare">Immobiliare<b>Apri ↗</b></button>')+'</div></div></div>'+
- cmPrintView(view,g)+'<p class="cm-disclaimer">Le tre aree sono un’organizzazione didattica. La prova scritta di Milano è divisa in normativa e tecnica. Lo schema è un ausilio al ripasso, non sostituisce le lezioni.</p>';
+ '<p class="cm-disclaimer">Le tre aree sono un’organizzazione didattica. La prova scritta di Milano è divisa in normativa e tecnica. Lo schema è un ausilio al ripasso, non sostituisce le lezioni.</p>';
 }
 function cmApply(){
  const w=document.getElementById('cm-world');if(!w)return;
@@ -356,7 +389,7 @@ document.addEventListener('click',e=>{
  if(tab){navigate('mindmap',tab.dataset.cmMode);return}
  const tool=e.target.closest('[data-cm-tool]');if(!tool)return;
  const key=tool.dataset.cmTool;
- if(key==='print'){window.print();return;}
+ if(key==='print'){if(cmPrintPosterPrepare())window.print();return;}
  if(key==='fit')cmFit();
  else if(key==='relations'){CM_STATE.relations=!CM_STATE.relations;cmApply()}
  else cmZoom(key==='plus'?1.22:1/1.22);
