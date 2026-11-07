@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="milan-bank.css" />
   <link rel="stylesheet" href="estimo-path.css?v=20261105b" />
   <link rel="stylesheet" href="quiz-streak.css?v=20261105a" />
+  <link rel="stylesheet" href="mindmap.css?v=20261107a" />
 </head>
 <body>
   <div class="app-shell">
@@ -31,6 +32,7 @@
       <nav class="primary-nav" aria-label="Navigazione principale">
         <button data-nav="home" class="nav-item active"><span class="nav-ico">◫</span><span>Panoramica</span></button>
         <button data-nav="library" class="nav-item"><span class="nav-ico">▤</span><span>Il programma</span><span class="nav-mini">27</span></button>
+        <button data-nav="mindmap" class="nav-item"><span class="nav-ico">⑂</span><span>Mappe concettuali</span></button>
         <button data-nav="quiz" class="nav-item"><span class="nav-ico">◉</span><span>Allenamento quiz</span></button>
         <button data-nav="archive" class="nav-item"><span class="nav-ico">▥</span><span>Banche quiz ufficiali</span></button>
         <button data-nav="exam" class="nav-item"><span class="nav-ico">◷</span><span>Simulazione d’esame</span></button>
@@ -50,7 +52,7 @@
       <footer class="site-footer"><span>Patentino. Studio chiaro, progressi veri.</span><span>Materiale didattico non sostitutivo delle fonti normative ufficiali · Aggiornato a novembre 2026</span></footer>
     </main>
   </div>
-  <nav class="bottom-nav" aria-label="Navigazione mobile"><button data-nav="home"><span>◫</span>Home</button><button data-nav="library"><span>▤</span>Studia</button><button data-nav="quiz"><span>◉</span>Quiz</button><button data-nav="exam"><span>◷</span>Esame</button><button data-nav="review"><span>◇</span>Ripasso</button></nav>
+  <nav class="bottom-nav" aria-label="Navigazione mobile"><button data-nav="home"><span>◫</span>Home</button><button data-nav="library"><span>▤</span>Studia</button><button data-nav="mindmap"><span>⑂</span>Mappe</button><button data-nav="quiz"><span>◉</span>Quiz</button><button data-nav="exam"><span>◷</span>Esame</button><button data-nav="review"><span>◇</span>Ripasso</button></nav>
   <div id="search-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Cerca le lezioni"><div class="search-dialog"><div class="modal-search-head"><span>⌕</span><input id="global-search" placeholder="Cerca un argomento, una parola chiave..." autocomplete="off"/><button id="close-search" aria-label="Chiudi">✕</button></div><div id="search-results"></div></div></div>
   <div id="toast" class="toast" role="status"></div>
   <script src="content.js"></script>
@@ -64,6 +66,7 @@
   <script src="estimo-path.js?v=20261105b"></script>
   <script src="curriculum-expansion-2026.js?v=20261106a"></script>
   <script src="expert-distractors-2026.js?v=20261106a"></script>
-  <script src="app.js?v=20261106a"></script>
+  <script src="mindmap.js?v=20261107a"></script>
+  <script src="app.js?v=20261107a"></script>
 </body>
 </html>
