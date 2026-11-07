@@ -144,11 +144,11 @@ function cmBuildDetail(view){
   let noteY=gy+groupH+30;
   g.modules.forEach((m,i)=>{
    const id='m-'+m.id;
-   nodes.push({id,x:x+(i%2?60:10),y:noteY,w:485,h:123,t:'note',
+   nodes.push({id,x:x+(i%2?60:10),y:noteY,w:485,h:160,t:'note',
     color:['yellow','purple','teal','blue'][i%4],module:m.id,title:m.title.toUpperCase(),
     sub:m.lessons.length+' lezioni',lines:cmModulePoints(m)});
    edges.push({a:gid,b:id});
-   noteY+=151;
+   noteY+=185;
   });
   groupsById.set(gid,gy);
   sideY[side]=noteY+115;
@@ -263,7 +263,7 @@ function cmFit(){
  const vp=document.getElementById('cm-viewport');if(!vp)return;
  const side=(vp.clientWidth-50)/CM_STATE.width;
  const height=(vp.clientHeight-50)/CM_STATE.height;
- CM_STATE.scale=Math.max(.24,Math.min(1.05,Math.min(side,height)));
+ CM_STATE.scale=Math.max(.24,Math.min(1.05,CM_STATE.view==='overview'?Math.min(side,height):side));
  CM_STATE.x=Math.max(12,(vp.clientWidth-CM_STATE.width*CM_STATE.scale)/2);
  CM_STATE.y=22;cmApply();
 }
