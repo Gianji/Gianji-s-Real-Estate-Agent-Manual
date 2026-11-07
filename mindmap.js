@@ -119,9 +119,9 @@ function cmModulePoints(m){
  // All of these are derived from the existing study module, not a newly invented syllabus.
  (m.summary||[]).filter(Boolean).slice(0,3).forEach((v,i)=>push(i===0?'Concetto':i===1?'Regola':'Distinzione',v));
  const lessons=m.lessons||[];
- if(lessons[0]){push('Da ricordare',lessons[0].key||lessons[0].intro);push('Esempio',lessons[0].example,120);}
+ if(lessons[0]){push('Esempio',lessons[0].example,120);push('Attenzione',lessons[0].mistake,110);}
  if(lessons[1])push('Approfondimento',lessons[1].key||lessons[1].intro);
- if(items.length<5&&lessons[0])push('Attenzione',lessons[0].mistake);
+ if(items.length<5&&lessons[0])push('Da ricordare',lessons[0].intro);
  return items.slice(0,6);
 }
 
