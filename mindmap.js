@@ -151,7 +151,7 @@ function cmBuildDetail(view){
  const edges=[],sideY=[425,425];
  actual.forEach((g,idx)=>{
   const side=idx%2,x=side?1000:130,gy=sideY[side];
-  const gid='g-'+idx,groupH=165;
+  const gid='g-'+idx,groupH=194;
   nodes.push({id:gid,x,y:gy,w:520,h:groupH,t:'group',
     color:view==='economia'?'orange':view==='immobiliare'||view==='estimo'?'teal':'blue',
     title:g.name.toUpperCase(),sub:g.modules.length+' moduli',
@@ -160,14 +160,14 @@ function cmBuildDetail(view){
   let noteY=gy+groupH+44,prev=gid;
   g.modules.forEach((m,i)=>{
    const id='m-'+m.id,lines=cmModulePoints(m);
-   const noteH=310+Math.max(0,lines.length-5)*22;
+   const noteH=364+Math.max(0,lines.length-5)*22+(m.title.length>42?30:0);
    nodes.push({id,x,y:noteY,w:520,h:noteH,t:'note',
      color:['yellow','purple','teal','blue'][i%4],
      module:m.id,title:m.title.toUpperCase(),sub:m.lessons.length+' lezioni',
      lines});
    edges.push({a:prev,b:id});
    prev=id;
-   noteY+=noteH+39;
+   noteY+=noteH+45;
   });
   sideY[side]=noteY+125;
  });
