@@ -289,11 +289,13 @@ function cmPrintPosterPrepare(){
   for(let col=0;col<cols;col++){
    const dx=Math.round(col*stepX),dy=Math.round(row*stepY);
    // Reuse every original HTML node and SVG arrow, with only a viewport offset.
+   const markerSuffix='-sheet-'+row+'-'+col;
    const canvas=map.replace(
     '<div id="cm-world" class="cm-world" style="',
     '<div class="cm-world cm-poster-world" style="transform:translate('+
     (-dx)+'px,'+(-dy)+'px) scale('+scale+');'
-   );
+   ).replaceAll('cm-arrow-blue','cm-arrow-blue'+markerSuffix)
+    .replaceAll('cm-arrow-orange','cm-arrow-orange'+markerSuffix);
    pages.push('<section class="cm-poster-page">'+
     '<header class="cm-poster-head"><strong>MAPPE E APPUNTI · '+esc(label.toUpperCase())+'</strong>'+
     '<span>Quaderno visuale · scala '+Math.round(scale*100)+'%</span></header>'+
