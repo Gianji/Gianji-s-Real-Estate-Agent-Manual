@@ -27,3 +27,24 @@
 .estimo-formula p{margin:8px 0 0;color:#d8e7f3;font-size:10px;line-height:1.55}
 @media(max-width:1150px){.estimo-formulas{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:660px){.estimo-formulas{grid-template-columns:1fr}}
+
+/* Estimo enciclopedico: struttura didattica per famiglie di procedimenti. */
+.estimo-path{border-radius:12px}
+.estimo-path-top p b{color:#fff}
+.estimo-method-steps{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:22px;border:1px solid rgba(255,255,255,.24);background:rgba(9,31,69,.27);border-radius:9px;overflow:hidden}
+.estimo-method-steps>span{padding:11px 15px;color:#fff;flex:1;min-width:136px;font-size:10px;font-weight:750;position:relative}
+.estimo-method-steps>span:not(:last-child):after{content:"›";position:absolute;right:1px;top:7px;font-size:18px;color:#f8bd78}
+.estimo-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:15px;margin-top:19px}
+.estimo-group{min-width:0;border:1px solid rgba(255,255,255,.22);background:rgba(7,35,70,.22);border-radius:10px;padding:16px}
+.estimo-group-header h3{color:#fff;font-size:14px;line-height:1.35;margin:0 0 5px}
+.estimo-group-header p{color:#c7dff4;font-size:10px;line-height:1.5;margin:0 0 10px}
+.estimo-group .estimo-topic-list{display:flex;flex-direction:column;gap:8px;margin:0}
+.estimo-group .estimo-topic{padding:10px 12px}
+.estimo-group .estimo-topic span{width:25px;height:25px;flex-basis:25px;font-size:10px}
+.estimo-formulas{grid-template-columns:repeat(3,minmax(0,1fr))}
+.estimo-formula{min-height:117px}
+.estimo-source-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11px;margin-top:18px;color:#c2ddf3}
+.estimo-source-links a{color:#fff;background:rgba(255,255,255,.13);border-radius:5px;padding:7px 10px;text-decoration:none;font-size:10px;font-weight:650}
+.estimo-source-links a:hover{background:rgba(255,255,255,.24);text-decoration:underline}
+@media(max-width:980px){.estimo-groups{grid-template-columns:1fr}.estimo-formulas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.estimo-formulas{grid-template-columns:1fr}.estimo-method-steps{display:grid;grid-template-columns:1fr 1fr}.estimo-group{padding:12px}.estimo-method-steps>span:after{display:none}}
