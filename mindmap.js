@@ -365,6 +365,103 @@ function cmLoadPdfLibraries(){
  }
  return cmPdfLibrariesLoading;
 }
+/* html2canvas does not consistently retain inline-SVG markers. Render
+   the exact existing SVG paths and arrowheads to a transparent PNG before
+   converting the page. The PNG occupies the SVG's original layer behind
+   the notes; no nodes or connections change position. */
+function cmPdfPathTip(d){
+ let x=0,y=0,dx=0,dy=1;
+ for(const m of d.matchAll(/([MHVC])([^MHVC]*)/g)){
+  const numbers=(m[2].match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+  const beforeX=x,beforeY=y;
+  if(m[1]==='M'){x=numbers[0];y=numbers[1];}
+  else if(m[1]==='H')x=numbers[numbers.length-1];
+  else if(m[1]==='V')y=numbers[numbers.length-1];
+  else if(m[1]==='C'&&numbers.length>=6){x=numbers[numbers.length-2];y=numbers[numbers.length-1];}
+  const mx=x-beforeX,my=y-beforeY;
+  if(mx||my){dx=mx;dy=my;}
+ }
+ return {x,y,angle:Math.atan2(dy,dx)};
+}
+function cmPdfDrawWiresCanvas(ctx,svg,tx,ty,scale){
+ ctx.save();
+ ctx.setTransform(2*scale,0,0,2*scale,2*tx,2*ty);
+ for(const g of svg.querySelectorAll('g')){
+  const crossing=g.classList.contains('cm-cross-lines');
+  if(crossing&&!CM_STATE.relations)continue;
+  const color=crossing?'#db781e':'#326cab';
+  ctx.strokeStyle=color;
+  ctx.globalAlpha=Number(g.getAttribute('opacity')||1);
+  ctx.lineWidth=Number(g.getAttribute('stroke-width')||2.7);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.setLineDash(crossing?[9,9]:[]);
+  for(const path of g.querySelectorAll('path')){
+   const d=path.getAttribute('d');
+   if(!d)continue;
+   ctx.stroke(new Path2D(d));
+   if(g.hasAttribute('marker-end')){
+    const tip=cmPdfPathTip(d);
+    const len=9,spread=.46;
+    ctx.save();ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(tip.x-len*Math.cos(tip.angle-spread),tip.y-len*Math.sin(tip.angle-spread));
+    ctx.lineTo(tip.x,tip.y);
+    ctx.lineTo(tip.x-len*Math.cos(tip.angle+spread),tip.y-len*Math.sin(tip.angle+spread));
+    ctx.stroke();ctx.restore();
+   }
+  }
+ }
+ ctx.restore();
+}
+async function cmPdfRasterizeWires(capture,width,height){
+ const world=capture.querySelector('.cm-poster-world');
+ const svg=world?.querySelector('svg.cm-wires');
+ if(!svg)return;
+ const transform=world.style.transform.match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px\s*\)\s*scale\(\s*([\d.]+)\s*\)/);
+ if(!transform)throw new Error('Trasformazione mappa PDF non riconosciuta');
+ const tx=Number(transform[1]),ty=Number(transform[2]),scale=Number(transform[3]);
+ if(!(scale>0))throw new Error('Scala mappa PDF non valida');
+ const originX=-tx/scale,originY=-ty/scale;
+ const cropped=svg.cloneNode(true);
+ cropped.setAttribute('xmlns','http://www.w3.org/2000/svg');
+ cropped.setAttribute('width',String(width));
+ cropped.setAttribute('height',String(height));
+ cropped.setAttribute('viewBox',originX+' '+originY+' '+(width/scale)+' '+(height/scale));
+ cropped.setAttribute('preserveAspectRatio','none');
+ if(!CM_STATE.relations)cropped.querySelector('.cm-cross-lines')?.remove();
+ const wireCanvas=document.createElement('canvas');
+ wireCanvas.width=width*2;wireCanvas.height=height*2;
+ const ctx=wireCanvas.getContext('2d');
+ if(!ctx)throw new Error('Canvas 2D non disponibile');
+ let wireUrl;
+ try{
+  const serialized=new XMLSerializer().serializeToString(cropped);
+  wireUrl=URL.createObjectURL(new Blob([serialized],{type:'image/svg+xml;charset=utf-8'}));
+  const img=new Image();
+  await new Promise((resolve,reject)=>{
+   img.onload=resolve;
+   img.onerror=()=>reject(new Error('SVG non convertibile in immagine'));
+   img.src=wireUrl;
+  });
+  ctx.drawImage(img,0,0,wireCanvas.width,wireCanvas.height);
+ }catch(err){
+  // Draw original SVG paths directly if the browser rejects SVG-as-image.
+  ctx.clearRect(0,0,wireCanvas.width,wireCanvas.height);
+  cmPdfDrawWiresCanvas(ctx,svg,tx,ty,scale);
+ }finally{
+  if(wireUrl)URL.revokeObjectURL(wireUrl);
+ }
+ const raster=document.createElement('img');
+ raster.className='cm-pdf-wires';
+ raster.alt='';
+ raster.style.cssText='position:absolute;z-index:1;pointer-events:none;'+
+  'left:'+originX+'px;top:'+originY+'px;width:'+(width/scale)+
+  'px;height:'+(height/scale)+'px;';
+ raster.src=wireCanvas.toDataURL('image/png');
+ if(raster.decode)await raster.decode();
+ svg.replaceWith(raster);
+}
+
 async function cmExportPdfA4(previewForPrinting=false){
  if(cmPdfGenerating)return;
  cmPdfGenerating=true;
@@ -401,6 +498,7 @@ async function cmExportPdfA4(previewForPrinting=false){
    }
    document.body.appendChild(capture);
    await document.fonts?.ready;
+   await cmPdfRasterizeWires(capture,width,height);
    const image=await window.html2canvas(capture,{
     backgroundColor:'#fffefa',scale:2,logging:false,useCORS:true,
     width,height,scrollX:0,scrollY:0,windowWidth:Math.max(1024,window.innerWidth),
