@@ -964,3 +964,6 @@ const ESTIMO_ADVANCED_2026=[
 ];
 function addEstimoAdvanced2026(spec){if(MODULES.some(m=>m.id===spec.id))return;const lessons=spec.lessons.map(r=>L(...r));const m=M(spec.id,'tecnica',spec.title,spec.description,'∑',lessons,lessons.map(l=>l.key),lessons.map(l=>'Spiega '+l.title.toLowerCase()+' e risolvi un caso applicativo.'));m.sector='immobiliare';MODULES.push(m);}
 ESTIMO_ADVANCED_2026.forEach(addEstimoAdvanced2026);
+const estimoSectorOrder2026={immobiliare:0,diritto:1,economia:2};
+MODULES.sort((a,b)=>(a.id==='cremona'?3:estimoSectorOrder2026[sectorOf(a)])-(b.id==='cremona'?3:estimoSectorOrder2026[sectorOf(b)]));
+
