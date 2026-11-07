@@ -338,6 +338,95 @@ function cmPrintPosterPrepare(){
  document.body.classList.add('cm-poster-printing');
  return true;
 }
+/* Scarica un PDF con DIMENSIONI FISICHE A4 (210 x 297 mm).
+   Il PDF usa gli stessi nodi e le stesse frecce di cmCanvas: ogni foglio
+   cattura solo una sezione verticale della mappa originale.
+   A differenza di window.print(), non dipende dal formato carta scelto
+   nella finestra della stampante (A5, Lettera, ecc.). */
+let cmPdfLibrariesLoading=null;
+let cmPdfGenerating=false;
+function cmScriptFromCdn(url,globalCheck){
+ if(globalCheck())return Promise.resolve();
+ return new Promise((resolve,reject)=>{
+  const script=document.createElement('script');
+  script.src=url;script.async=true;script.crossOrigin='anonymous';
+  script.onload=()=>globalCheck()?resolve():reject(new Error('Libreria non inizializzata'));
+  script.onerror=()=>reject(new Error('Impossibile caricare la libreria PDF'));
+  document.head.appendChild(script);
+ });
+}
+function cmLoadPdfLibraries(){
+ if(window.html2canvas&&window.jspdf?.jsPDF)return Promise.resolve();
+ if(!cmPdfLibrariesLoading){
+  cmPdfLibrariesLoading=Promise.all([
+   cmScriptFromCdn('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',()=>!!window.html2canvas),
+   cmScriptFromCdn('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',()=>!!window.jspdf?.jsPDF)
+  ]).catch(e=>{cmPdfLibrariesLoading=null;throw e;});
+ }
+ return cmPdfLibrariesLoading;
+}
+async function cmExportPdfA4(){
+ if(cmPdfGenerating)return;
+ cmPdfGenerating=true;
+ const trigger=document.querySelector('[data-cm-tool="pdf"]');
+ if(trigger){trigger.disabled=true;trigger.textContent='Preparazione PDF…';}
+ let capture=null;
+ try{
+  await cmLoadPdfLibraries();
+  if(!cmPrintPosterPrepare())throw new Error('La mappa non è disponibile');
+  const pages=[...document.querySelectorAll('#cm-print-poster .cm-poster-window')];
+  if(!pages.length)throw new Error('Nessuna pagina generata');
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
+  const label=CM_SECTIONS.find(s=>s.id===CM_STATE.view)?.label||'Panoramica';
+  const width=Math.round(194*96/25.4);
+  const height=Math.round(259*96/25.4);
+  for(let i=0;i<pages.length;i++){
+   capture=document.createElement('div');
+   capture.className='cm-pdf-capture'+(CM_STATE.relations?'':' cm-hide-relations');
+   capture.style.cssText='position:fixed;left:0;top:0;z-index:-1;pointer-events:none;'+
+    'width:'+width+'px;height:'+height+'px;overflow:hidden;background:#fffefa;';
+   capture.innerHTML=pages[i].innerHTML;
+   const world=capture.querySelector('.cm-poster-world');
+   if(world){
+    world.style.position='absolute';
+    world.style.top='0';
+    world.style.left='0';
+    world.style.transformOrigin='top left';
+   }
+   document.body.appendChild(capture);
+   await document.fonts?.ready;
+   const image=await window.html2canvas(capture,{
+    backgroundColor:'#fffefa',scale:2,logging:false,useCORS:true,
+    width,height,scrollX:0,scrollY:0,windowWidth:Math.max(1024,window.innerWidth),
+    windowHeight:Math.max(1100,window.innerHeight)
+   });
+   capture.remove();capture=null;
+   if(i)pdf.addPage('a4','portrait');
+   pdf.setFillColor(255,255,255);
+   pdf.rect(0,0,210,297,'F');
+   pdf.setTextColor(22,79,131);
+   pdf.setFont('helvetica','bold');pdf.setFontSize(9);
+   pdf.text('MAPPE E APPUNTI - '+label.toUpperCase(),8,13);
+   pdf.setDrawColor(185,203,219);pdf.line(8,16,202,16);
+   pdf.addImage(image.toDataURL('image/jpeg',0.94),'JPEG',8,19,194,259,undefined,'FAST');
+   pdf.setTextColor(104,122,139);pdf.setFontSize(8);pdf.setFont('helvetica','normal');
+   pdf.text('A4 verticale | Pagina '+(i+1)+' di '+pages.length,8,287);
+   if(i<pages.length-1)pdf.text('La mappa continua nella pagina successiva',202,287,{align:'right'});
+  }
+  const safeLabel=label.toLowerCase().replace(/[^a-z0-9]+/gi,'-');
+  pdf.save('Mappa-concettuale-'+safeLabel+'-A4.pdf');
+ }catch(e){
+  console.error('Esportazione PDF A4 non riuscita',e);
+  if(typeof toast==='function')toast('Impossibile generare il PDF A4. Controlla la connessione e riprova.');
+ }finally{
+  capture?.remove();
+  cmPrintPosterClear();
+  cmPdfGenerating=false;
+  if(trigger){trigger.disabled=false;trigger.textContent='↓ PDF A4';}
+ }
+}
+
 function cmPrintPosterClear(){
  document.body.classList.remove('cm-poster-printing');
  document.getElementById('cm-print-poster')?.remove();
@@ -360,8 +449,8 @@ function renderMindmap(section){
  '<p>Ogni nota riassume un concetto; <b>tocca il titolo</b> per entrare nel modulo. Le frecce blu indicano il percorso, quelle arancioni tratteggiate sono rimandi incrociati tra argomenti, come negli appunti scritti a mano.</p></div><span class="cm-count">'+count+' schede collegate</span></div>'+
  '<div class="cm-tabs" aria-label="Seleziona quaderno">'+tabs+'</div>'+
  '<section class="cm-board"><div class="cm-board-top"><div><strong>▣ '+esc(CM_SECTIONS.find(s=>s.id===view).label)+' <span class="cm-paper-caption">/ PAGINA DI APPUNTI</span></strong><small>Trascina lo sfondo per spostare il foglio, usa + e − per ingrandire.</small></div>'+
- '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa la mappa OneNote a larghezza A4 verticale, senza affiancare fogli">⎙ Stampa mappa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
- '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Stampa identica alla mappa visualizzata: larghezza A4 verticale, poi prosegue soltanto verso il basso.</span><span class="cm-print-choice">Larghezza A4: adattamento automatico</span></div>'+
+ '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="pdf" title="Scarica un PDF delle mappe in formato A4 verticale reale">↓ PDF A4</button><button type="button" class="cm-print-browser-btn" data-cm-tool="print" title="Stampa dal browser: imposta A4 verticale nella stampante">⎙ Stampa</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
+ '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Scarica il PDF A4 già impaginato. La stampa diretta usa invece il formato carta della tua stampante.</span><span class="cm-print-choice">Larghezza A4: adattamento automatico</span></div>'+
  '<div id="cm-viewport" class="cm-viewport" role="region" aria-label="Quaderno di appunti navigabile">'+cmCanvas(g)+'</div>'+
  '<div class="cm-board-foot"><span><i class="cm-key cm-key-root"></i>Tema centrale</span><span><i class="cm-key cm-key-branch"></i>Ramo di studio</span><span><i class="cm-key cm-key-leaf"></i>Appunto apribile</span><span><i class="cm-key cm-key-cross"></i>Collegamento trasversale</span></div></section>'+
  '<div class="cm-under"><div><h3>↳ Da collegare a mente</h3><div class="cm-cross">'+links+'</div></div>'+
@@ -415,6 +504,7 @@ document.addEventListener('click',e=>{
  if(tab){navigate('mindmap',tab.dataset.cmMode);return}
  const tool=e.target.closest('[data-cm-tool]');if(!tool)return;
  const key=tool.dataset.cmTool;
+ if(key==='pdf'){cmExportPdfA4();return;}
  if(key==='print'){if(cmPrintPosterPrepare())window.print();return;}
  if(key==='fit')cmFit();
  else if(key==='relations'){CM_STATE.relations=!CM_STATE.relations;cmApply()}
