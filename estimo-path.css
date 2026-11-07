@@ -48,3 +48,9 @@
 .estimo-source-links a:hover{background:rgba(255,255,255,.24);text-decoration:underline}
 @media(max-width:980px){.estimo-groups{grid-template-columns:1fr}.estimo-formulas{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.estimo-formulas{grid-template-columns:1fr}.estimo-method-steps{display:grid;grid-template-columns:1fr 1fr}.estimo-group{padding:12px}.estimo-method-steps>span:after{display:none}}
+
+.estimo-top-actions{display:flex;flex-direction:column;gap:10px;align-items:stretch;max-width:245px}
+.estimo-top-actions .estimo-cta{text-align:center;padding:11px 13px;justify-content:center;white-space:normal;line-height:1.35}
+.estimo-top-actions .estimo-map-link{background:#edf5fd!important;color:#164f83!important;border:1px solid #b9d3e9!important;text-decoration:none!important}
+.estimo-top-actions .estimo-map-link:hover{background:#fff!important}
+@media(max-width:660px){.estimo-top-actions{max-width:none;width:100%}}
