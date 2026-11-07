@@ -964,6 +964,25 @@ const ESTIMO_ADVANCED_2026=[
 ];
 function addEstimoAdvanced2026(spec){if(MODULES.some(m=>m.id===spec.id))return;const lessons=spec.lessons.map(r=>L(...r));const m=M(spec.id,'tecnica',spec.title,spec.description,'∑',lessons,lessons.map(l=>l.key),lessons.map(l=>'Spiega '+l.title.toLowerCase()+' e risolvi un caso applicativo.'));m.sector='immobiliare';MODULES.push(m);}
 ESTIMO_ADVANCED_2026.forEach(addEstimoAdvanced2026);
+/* I nuovi moduli usano prima le domande camerali già verificate
+   nei moduli vicini, senza modificare le tracce ufficiali. */
+const ESTIMO_MINI_QUIZ_FALLBACK_2026={
+ 'estimo-processo6':['estimo','imm-estimo-approfondito'],
+ 'estimo-valori6':['estimo','imm-estimo-speciale'],
+ 'estimo-mca6':['imm-market2','estimo'],
+ 'estimo-reddito6':['estimo-calcoli','estimo'],
+ 'estimo-dcf6':['estimo-calcoli','eco-matematica'],
+ 'estimo-costi6':['imm-estimo-approfondito','estimo'],
+ 'estimo-residuo6':['imm-estimo-speciale','imm-estimo-approfondito'],
+ 'estimo-superfici6':['imm-superfici','estimo-calcoli'],
+ 'estimo-aree6':['imm-estimo-speciale','imm-urbanistica2'],
+ 'estimo-diritti6':['imm-estimo-legale3','reali'],
+ 'estimo-legale6':['imm-estimo-legale3','imm-estimo-speciale'],
+ 'estimo-agrario6':['agrario','imm-rurale2'],
+ 'estimo-statistica6':['eco-mercato-stat','imm-market2'],
+ 'estimo-speciali6':['imm-estimo-approfondito','imm-estimo-speciale'],
+ 'estimo-perizia6':['estimo','imm-estimo-approfondito']
+};
 const estimoSectorOrder2026={immobiliare:0,diritto:1,economia:2};
 MODULES.sort((a,b)=>(a.id==='cremona'?3:estimoSectorOrder2026[sectorOf(a)])-(b.id==='cremona'?3:estimoSectorOrder2026[sectorOf(b)]));
 
