@@ -157,10 +157,10 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  .cm-note-tools{gap:10px}
 }
 
-/* A4 landscape with 8-mm margins: the page body has 278 × 192 mm.
+/* A4 portrait with 8-mm margins: the page body has 194 × 281 mm.
    Each print tile reproduces the *same* full canvas with a clipping offset.
    No conversion to columns/cards, no screenshot rasterization. */
-@page{size:A4 landscape;margin:8mm}
+@page{size:A4 portrait;margin:8mm}
 @media print {
  html,body{margin:0!important;padding:0!important}
  body.cm-poster-printing{background:#fff!important;overflow:visible!important}
@@ -170,10 +170,10 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  body.cm-poster-printing #toast{display:none!important}
  body.cm-poster-printing #cm-print-poster{
   display:block!important;position:static!important;visibility:visible!important;
-  margin:0!important;padding:0!important;width:278mm!important;
+  margin:0!important;padding:0!important;width:194mm!important;
  }
  .cm-poster-page{
-  position:relative;box-sizing:border-box;width:278mm;height:192mm;overflow:hidden;
+  position:relative;box-sizing:border-box;width:194mm;height:281mm;overflow:hidden;
   padding:0;margin:0;background:#fff;color:#162e47;
   page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
   display:flex;flex-direction:column;
@@ -190,8 +190,8 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
  .cm-poster-head strong{color:#164f83;font-weight:850;font-size:9pt;letter-spacing:.025em}
  .cm-poster-foot{border-top:1px dashed #c3cbd9;color:#687c8e;font-size:7.5pt}
  .cm-poster-window{
-  box-sizing:border-box;position:relative;flex:0 0 170mm;
-  height:170mm;width:278mm;max-width:278mm;overflow:hidden!important;
+  box-sizing:border-box;position:relative;flex:0 0 259mm;
+  height:259mm;width:194mm;max-width:194mm;overflow:hidden!important;
   background:#fffefa!important;
  }
  .cm-poster-world{
