@@ -365,10 +365,12 @@ function cmLoadPdfLibraries(){
  }
  return cmPdfLibrariesLoading;
 }
-async function cmExportPdfA4(){
+async function cmExportPdfA4(previewForPrinting=false){
  if(cmPdfGenerating)return;
  cmPdfGenerating=true;
- const trigger=document.querySelector('[data-cm-tool="pdf"]');
+ const preview=previewForPrinting?window.open('','_blank'):null;
+ if(preview){preview.document.title='Mappa concettuale A4';preview.document.body.textContent='Preparazione PDF A4…';}
+ const trigger=document.querySelector(previewForPrinting?'[data-cm-tool="print"]':'[data-cm-tool="pdf"]');
  if(trigger){trigger.disabled=true;trigger.textContent='Preparazione PDF…';}
  let capture=null;
  try{
@@ -415,15 +417,21 @@ async function cmExportPdfA4(){
    if(i<pages.length-1)pdf.text('La mappa continua nella pagina successiva',202,287,{align:'right'});
   }
   const safeLabel=label.toLowerCase().replace(/[^a-z0-9]+/gi,'-');
-  pdf.save('Mappa-concettuale-'+safeLabel+'-A4.pdf');
+  if(previewForPrinting&&preview){
+   const blob=pdf.output('blob');
+   const url=URL.createObjectURL(blob);
+   preview.location.href=url;
+   // Browser PDF viewers offer print using the embedded A4 page dimensions.
+  }else pdf.save('Mappa-concettuale-'+safeLabel+'-A4.pdf');
  }catch(e){
   console.error('Esportazione PDF A4 non riuscita',e);
+  if(preview&&!preview.closed)preview.close();
   if(typeof toast==='function')toast('Impossibile generare il PDF A4. Controlla la connessione e riprova.');
  }finally{
   capture?.remove();
   cmPrintPosterClear();
   cmPdfGenerating=false;
-  if(trigger){trigger.disabled=false;trigger.textContent='↓ PDF A4';}
+  if(trigger){trigger.disabled=false;trigger.textContent=previewForPrinting?'⎙ Stampa A4':'↓ PDF A4';}
  }
 }
 
@@ -449,7 +457,7 @@ function renderMindmap(section){
  '<p>Ogni nota riassume un concetto; <b>tocca il titolo</b> per entrare nel modulo. Le frecce blu indicano il percorso, quelle arancioni tratteggiate sono rimandi incrociati tra argomenti, come negli appunti scritti a mano.</p></div><span class="cm-count">'+count+' schede collegate</span></div>'+
  '<div class="cm-tabs" aria-label="Seleziona quaderno">'+tabs+'</div>'+
  '<section class="cm-board"><div class="cm-board-top"><div><strong>▣ '+esc(CM_SECTIONS.find(s=>s.id===view).label)+' <span class="cm-paper-caption">/ PAGINA DI APPUNTI</span></strong><small>Trascina lo sfondo per spostare il foglio, usa + e − per ingrandire.</small></div>'+
- '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="pdf" title="Scarica un PDF delle mappe in formato A4 verticale reale">↓ PDF A4</button><button type="button" class="cm-print-browser-btn" data-cm-tool="print" title="Stampa dal browser: imposta A4 verticale nella stampante">⎙ Stampa</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
+ '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="pdf" title="Scarica un PDF delle mappe in formato A4 verticale reale">↓ PDF A4</button><button type="button" class="cm-print-browser-btn" data-cm-tool="print" title="Apri il PDF A4 per stamparlo con il formato carta corretto">⎙ Stampa A4</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
  '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Scarica il PDF A4 già impaginato. La stampa diretta usa invece il formato carta della tua stampante.</span><span class="cm-print-choice">Larghezza A4: adattamento automatico</span></div>'+
  '<div id="cm-viewport" class="cm-viewport" role="region" aria-label="Quaderno di appunti navigabile">'+cmCanvas(g)+'</div>'+
  '<div class="cm-board-foot"><span><i class="cm-key cm-key-root"></i>Tema centrale</span><span><i class="cm-key cm-key-branch"></i>Ramo di studio</span><span><i class="cm-key cm-key-leaf"></i>Appunto apribile</span><span><i class="cm-key cm-key-cross"></i>Collegamento trasversale</span></div></section>'+
@@ -505,7 +513,7 @@ document.addEventListener('click',e=>{
  const tool=e.target.closest('[data-cm-tool]');if(!tool)return;
  const key=tool.dataset.cmTool;
  if(key==='pdf'){cmExportPdfA4();return;}
- if(key==='print'){if(cmPrintPosterPrepare())window.print();return;}
+ if(key==='print'){cmExportPdfA4(true);return;}
  if(key==='fit')cmFit();
  else if(key==='relations'){CM_STATE.relations=!CM_STATE.relations;cmApply()}
  else cmZoom(key==='plus'?1.22:1/1.22);
