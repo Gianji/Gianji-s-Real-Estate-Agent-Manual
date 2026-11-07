@@ -49,46 +49,47 @@ const CM_GROUPS={
    La fonte delle note sintetiche è il contenuto dei moduli del manuale. */
 const CM_STATE={view:'overview',scale:1,x:0,y:0,width:0,height:0,relations:true};
 const CM_OVERVIEW=[
- {id:'root',x:590,y:375,w:330,h:156,t:'root',title:'ESAME DA AGENTE IMMOBILIARE',
-  sub:'3 macro-aree di studio',lines:['Diritto + Economia + Immobiliare','Scritto: normativa / tecnica']},
- {id:'d',x:90,y:124,w:335,h:192,t:'branch',color:'blue',mode:'diritto',title:'DIRITTO',
-  sub:'Norme e rapporti',lines:['Soggetti → obbligazioni → contratti','Proprietà, diritti reali, successioni','Mediazione e responsabilità']},
- {id:'e',x:1125,y:103,w:340,h:194,t:'branch',color:'orange',mode:'economia',title:'ECONOMIA',
-  sub:'Rapporti economici',lines:['Mercato, impresa e bilancio','Tributi: registro, IVA, IMU','Credito, interessi e investimenti']},
- {id:'i',x:80,y:650,w:350,h:212,t:'branch',color:'teal',mode:'immobiliare',title:'IMMOBILIARE',
-  sub:'L’immobile come bene',lines:['Catasto / conservatoria / urbanistica','Edilizia, condominio, documenti','Valutazione + estimo']},
- {id:'es',x:1155,y:742,w:318,h:188,t:'branch',color:'orange',mode:'estimo',title:'ESTIMO',
-  sub:'Quanto vale? Perché?',lines:['Valore di mercato ≠ prezzo','Comparazione • costo • reddito','Saggi, superfici, indennità']},
- {id:'p',x:576,y:936,w:356,h:178,t:'branch',color:'blue',mode:'professione',title:'PROFESSIONE',
-  sub:'Dal primo contatto al rogito',lines:['Mediazione → proposta → preliminare','Verifiche e informazioni','Provvigione e obblighi']},
- {id:'fideiussione',x:518,y:65,w:320,h:160,t:'note',color:'purple',module:'dir-garanzie',
-  title:'FIDEIUSSIONE',sub:'Garanzia personale (art. 1936 c.c.)',
-  lines:['Il fideiussore garantisce il debito altrui','≠ ipoteca: garanzia reale']},
- {id:'mutuo',x:1103,y:421,w:315,h:170,t:'note',color:'teal',module:'mutui',
-  title:'MUTUO + IPOTECA',sub:'Credito immobiliare',
-  lines:['Debito → rimborso, interessi','Garanzie accessorie o reali']},
- {id:'vendita',x:112,y:401,w:310,h:178,t:'note',color:'yellow',module:'vendita',
-  title:'COMPRAVENDITA',sub:'Sequenza contrattuale',
-  lines:['Proposta → accettazione','Preliminare → definitivo','Effetti e trascrizione: distinguere']},
- {id:'catasto',x:482,y:711,w:315,h:151,t:'note',color:'purple',module:'catasto',
-  title:'CATASTO',sub:'Identificazione e rendita',
-  lines:['Visura + planimetria + particella','≠ prova assoluta della proprietà']},
- {id:'fisco',x:780,y:647,w:306,h:169,t:'note',color:'yellow',module:'fisco',
-  title:'IMPOSTE',sub:'Trasferimento e gestione',
-  lines:['Registro / IVA: regime dell’atto','IMU: titolarità e presupposto']},
- {id:'margine',x:29,y:25,w:320,h:68,t:'scribble',title:'APPUNTI DI RIPASSO',sub:'segui anche le frecce tratteggiate ↝'}
+ {id:'root',x:656,y:118,w:370,h:216,t:'root',title:'ESAME DA AGENTE IMMOBILIARE',
+  sub:'Tre settori didattici, due parti scritte',lines:['Diritto → rapporti e norme','Economia → valori, tributi, credito','Immobiliare → beni, edilizia, estimo','Prova scritta: normativa + tecnica']},
+ {id:'d',x:90,y:472,w:450,h:265,t:'branch',color:'blue',mode:'diritto',title:'DIRITTO',
+  sub:'Rapporti e tutele',lines:['Soggetti e capacità di agire','Diritti reali, possesso, successioni','Obbligazioni e contratti','Mediazione: provvigione e responsabilità','Garanzie reali e personali']},
+ {id:'e',x:621,y:472,w:450,h:265,t:'branch',color:'orange',mode:'economia',title:'ECONOMIA',
+  sub:'Mercato, tributi, credito',lines:['Domanda e offerta → prezzi','Impresa: costi, ricavi, bilancio','Credito, tassi, rate e ammortamento','Registro, IVA, IMU e fiscalità','Analisi degli investimenti']},
+ {id:'i',x:1152,y:472,w:450,h:265,t:'branch',color:'teal',mode:'immobiliare',title:'IMMOBILIARE',
+  sub:'Beni, documenti, valutazione',lines:['Catasto → identificazione fiscale','Conservatoria → pubblicità dei diritti','Urbanistica → titoli e conformità','Edifici, condominio, superfici','Estimo → criteri e procedimenti']},
+ {id:'fideiussione',x:90,y:848,w:450,h:268,t:'note',color:'purple',module:'dir-garanzie',
+  title:'FIDEIUSSIONE',sub:'Art. 1936 c.c. · garanzia personale',
+  lines:['Il garante risponde di un debito altrui','Accessoria all’obbligazione garantita','Beneficio di escussione solo se previsto','≠ ipoteca: diritto reale di garanzia','Studiare regresso ed eccezioni']},
+ {id:'fisco',x:621,y:848,w:450,h:268,t:'note',color:'yellow',module:'fisco',
+  title:'IMPOSTE IMMOBILIARI',sub:'Trasferimento e possesso',
+  lines:['Registro / IVA: dipende dall’operazione','Ipotecaria e catastale: da distinguere','Prima casa ≠ abitazione principale','IMU: presupposto e soggetto passivo','Prezzo e base imponibile non coincidono sempre']},
+ {id:'catasto',x:1152,y:848,w:450,h:268,t:'note',color:'purple',module:'catasto',
+  title:'CATASTO E CONSERVATORIA',sub:'Identificazione ≠ pubblicità',
+  lines:['Catasto: foglio, particella, subalterno','Rendita → impieghi fiscali','Planimetria ≠ conformità urbanistica','Trascrizione: opponibilità degli atti','Verificare titoli e gravami separatamente']},
+ {id:'vendita',x:90,y:1230,w:450,h:285,t:'note',color:'yellow',module:'vendita',
+  title:'COMPRAVENDITA',sub:'Dal vincolo al trasferimento',
+  lines:['Proposta + accettazione → accordo','Preliminare: obbligo di concludere il definitivo','Rogito / forma / trascrizione: funzioni distinte','Caparra confirmatoria ≠ acconto','Controllare condizioni e inadempimento']},
+ {id:'mutuo',x:621,y:1230,w:450,h:285,t:'note',color:'teal',module:'mutui',
+  title:'MUTUO E CREDITO',sub:'Finanziamento immobiliare',
+  lines:['Capitale + interessi → rimborso','TAN ≠ TAEG, piano di ammortamento','Ipoteca ≠ fideiussione','Quota capitale / quota interessi','Valutazione del merito creditizio']},
+ {id:'es',x:1152,y:1230,w:450,h:285,t:'branch',color:'orange',mode:'estimo',
+  title:'ESTIMO',sub:'Determinazione motivata del valore',
+  lines:['Prezzo effettivo ≠ valore stimato','Comparazione, capitalizzazione, costo','Superfici ragguagliate e coefficienti','Reddito netto e saggio di capitalizzazione','Estimo legale, agrario e speciale']},
+ {id:'p',x:90,y:1634,w:450,h:227,t:'branch',color:'blue',mode:'professione',
+  title:'PROFESSIONE',sub:'Applicazione al lavoro del mediatore',
+  lines:['Incarico → visite → proposta → trattativa','Verifiche documentali e dovere informativo','Provvigione: conclusione dell’affare','Obblighi professionali e antiriciclaggio']}
 ];
 const CM_OVERVIEW_EDGES=[
- ['root','d'],['root','e'],['root','i'],['root','es'],['root','p'],
- ['d','fideiussione'],['e','mutuo'],['i','catasto'],['d','vendita'],
- ['e','fisco'],['es','fisco']
+ ['root','d'],['root','e'],['root','i'],
+ ['d','fideiussione'],['fideiussione','vendita'],['vendita','p'],
+ ['e','fisco'],['fisco','mutuo'],
+ ['i','catasto'],['catasto','es']
 ];
 const CM_OVERVIEW_CROSS=[
- {a:'fideiussione',b:'mutuo',label:'garantisce il credito'},
- {a:'vendita',b:'fisco',label:'imposte sul trasferimento'},
- {a:'catasto',b:'fisco',label:'rendita → imponibile'},
- {a:'e',b:'es',label:'mercato e rendimento'},
- {a:'vendita',b:'catasto',label:'verifiche preliminari'}
+ {a:'fideiussione',b:'mutuo',label:'garanzia personale ↔ credito'},
+ {a:'fisco',b:'catasto',label:'rendita e base imponibile'},
+ {a:'vendita',b:'fisco',label:'trasferimento e tributi'},
+ {a:'mutuo',b:'es',label:'finanziamento e stima'}
 ];
 const CM_CROSS_BY_SECTION={
  diritto:[['obbligazioni','dir-garanzie','garanzie del credito'],['contratti','vendita','contratto tipico'],['reali','successioni','diritti ereditati'],['contratti','dir-invalidita','validità']],
@@ -105,15 +106,28 @@ function cmShort(s,max=78){
  return (p>max/2?short.slice(0,p):short)+'…';
 }
 function cmModulePoints(m){
- const points=(m.summary||[]).filter(Boolean).map(v=>cmShort(v,79)).slice(0,2);
- if(points.length<2&&m.lessons?.[0])points.push(cmShort(m.lessons[0].intro,79));
- return points.slice(0,2);
+ const items=[],seen=new Set();
+ const push=(label,v,max=112)=>{
+  const t=cmShort(v,max).replace(/\s+/g,' ').trim();
+  const k=t.toLocaleLowerCase('it');
+  if(t&&t.length>12&&!seen.has(k)){seen.add(k);items.push(label+': '+t);}
+ };
+ // All of these are derived from the existing study module, not a newly invented syllabus.
+ (m.summary||[]).filter(Boolean).slice(0,3).forEach((v,i)=>push(i===0?'Concetto':i===1?'Regola':'Distinzione',v));
+ const lessons=m.lessons||[];
+ if(lessons[0]){push('Da ricordare',lessons[0].key||lessons[0].intro);push('Esempio',lessons[0].example,120);}
+ if(lessons[1])push('Approfondimento',lessons[1].key||lessons[1].intro);
+ if(items.length<5&&lessons[0])push('Attenzione',lessons[0].mistake);
+ return items.slice(0,6);
 }
+
 function cmBuildOverview(){
- const nodes=CM_OVERVIEW.filter(n=>n.t!=='note'||cmAvailable(n.module));
+ const nodes=CM_OVERVIEW.filter(n=>!n.module||cmAvailable(n.module));
  const exists=new Set(nodes.map(n=>n.id));
- return {nodes,edges:CM_OVERVIEW_EDGES.filter(e=>exists.has(e[0])&&exists.has(e[1])).map(([a,b])=>({a,b})),
-  cross:CM_OVERVIEW_CROSS.filter(e=>exists.has(e.a)&&exists.has(e.b)),w:1550,h:1180};
+ return {nodes,
+  edges:CM_OVERVIEW_EDGES.filter(([a,b])=>exists.has(a)&&exists.has(b)).map(([a,b])=>({a,b})),
+  cross:CM_OVERVIEW_CROSS.filter(e=>exists.has(e.a)&&exists.has(e.b)),
+  w:1700,h:1930};
 }
 function cmBuildDetail(view){
  const groups=CM_GROUPS[view]||[];
@@ -124,68 +138,77 @@ function cmBuildDetail(view){
  });
  if(['diritto','economia','immobiliare'].includes(view)){
   const other=MODULES.filter(m=>m.id!=='cremona'&&sectorOf(m)===view&&!seen.has(m.id));
-  if(other.length)actual.push({name:'Altre note e collegamenti',modules:other});
+  if(other.length)actual.push({name:'Altri approfondimenti',modules:other});
  }
  const nodes=[{
-  id:'root',x:640,y:85,w:340,h:163,t:'root',title:view.toUpperCase(),
-  sub:view==='estimo'?'VALORI, PROCEDIMENTI, FORMULE':view==='professione'?'DALLA MEDIAZIONE AL ROGITO':'APPUNTI DI STUDIO',
-  lines:view==='estimo'?['Comparazione ↔ prezzo di mercato','Reddito ÷ saggio = valore (caso semplice)']:
-  view==='professione'?['Diritto alla provvigione: art. 1755 c.c.','Informazioni dovute: art. 1759 c.c.']:
-  ['Leggi prima i concetti principali','Segui le frecce per i collegamenti']
+  id:'root',x:650,y:110,w:350,h:230,t:'root',
+  title:view==='estimo'?'ESTIMO':view==='professione'?'PROFESSIONE':view.toUpperCase(),
+  sub:view==='estimo'?'Valori, metodi, formule e applicazioni':view==='professione'?'Operazioni e responsabilità':'Appunti per lo studio',
+  lines:view==='estimo'?['Oggetto e scopo della valutazione','Comparazione ↔ dati di mercato','Reddito / saggio: caso semplificato','Aspetti economici e valori speciali']:
+   view==='professione'?['Ruolo del mediatore ex art. 1754 c.c.','Provvigione: art. 1755 c.c.','Dovere informativo: art. 1759 c.c.','Affare concluso ≠ necessariamente rogito']:
+   ['Concetti essenziali → regole','Differenze da non confondere','Esempi pratici → applicazione','Apri la singola lezione per approfondire']
  }];
- const edges=[],sideY=[335,335],groupsById=new Map();
+ const edges=[],sideY=[425,425];
  actual.forEach((g,idx)=>{
-  const side=idx%2,x=side?965:110,gy=sideY[side];
-  const gid='g-'+idx,groupH=108;
-  nodes.push({id:gid,x:x+20,y:gy,w:525,h:groupH,t:'group',
-   color:view==='economia'?'orange':view==='immobiliare'||view==='estimo'?'teal':'blue',
-   title:g.name.toUpperCase(),sub:g.modules.length+' moduli • schema',lines:[]});
+  const side=idx%2,x=side?1000:130,gy=sideY[side];
+  const gid='g-'+idx,groupH=165;
+  nodes.push({id:gid,x,y:gy,w:520,h:groupH,t:'group',
+    color:view==='economia'?'orange':view==='immobiliare'||view==='estimo'?'teal':'blue',
+    title:g.name.toUpperCase(),sub:g.modules.length+' moduli',
+    lines:g.modules.slice(0,3).map(m=>'• '+m.title)});
   edges.push({a:'root',b:gid});
-  let noteY=gy+groupH+30;
+  let noteY=gy+groupH+44,prev=gid;
   g.modules.forEach((m,i)=>{
-   const id='m-'+m.id;
-   nodes.push({id,x:x+(i%2?60:10),y:noteY,w:485,h:160,t:'note',
-    color:['yellow','purple','teal','blue'][i%4],module:m.id,title:m.title.toUpperCase(),
-    sub:m.lessons.length+' lezioni',lines:cmModulePoints(m)});
-   edges.push({a:gid,b:id});
-   noteY+=185;
+   const id='m-'+m.id,lines=cmModulePoints(m);
+   const noteH=310+Math.max(0,lines.length-5)*22;
+   nodes.push({id,x,y:noteY,w:520,h:noteH,t:'note',
+     color:['yellow','purple','teal','blue'][i%4],
+     module:m.id,title:m.title.toUpperCase(),sub:m.lessons.length+' lezioni',
+     lines});
+   edges.push({a:prev,b:id});
+   prev=id;
+   noteY+=noteH+39;
   });
-  groupsById.set(gid,gy);
-  sideY[side]=noteY+115;
+  sideY[side]=noteY+125;
  });
  const cross=[];
- (CM_CROSS_BY_SECTION[view]||[]).forEach(([a,b,label])=>{
-  if(nodes.some(n=>n.id==='m-'+a)&&nodes.some(n=>n.id==='m-'+b)){
+ (CM_CROSS_BY_SECTION[view]||[]).slice(0,3).forEach(([a,b,label])=>{
+  if(nodes.some(n=>n.id==='m-'+a)&&nodes.some(n=>n.id==='m-'+b))
    cross.push({a:'m-'+a,b:'m-'+b,label});
-  }
  });
- const h=Math.max(950,...sideY)+55;
- return {nodes,edges,cross,w:1600,h};
+ return {nodes,edges,cross,w:1650,h:Math.max(1100,...sideY)+45};
 }
+
 function cmGraph(view){return view==='overview'?cmBuildOverview():cmBuildDetail(view)}
-function cmPort(a,b){
- const ax=a.x+a.w/2,ay=a.y+a.h/2,bx=b.x+b.w/2,by=b.y+b.h/2,dx=bx-ax,dy=by-ay;
- if(Math.abs(dx)>Math.abs(dy)*.85){
-  return [{x:dx>0?a.x+a.w:a.x,y:ay},{x:dx>0?b.x:b.x+b.w,y:by},'x'];
- }
- return [{x:ax,y:dy>0?a.y+a.h:a.y},{x:bx,y:dy>0?b.y:b.y+b.h},'y'];
-}
-function cmPath(a,b,cross=false,idx=0){
- const [p,q,axis]=cmPort(a,b);
+function cmPath(a,b,cross=false,idx=0,overview=false){
+ const cx=n=>n.x+n.w/2,cy=n=>n.y+n.h/2;
+ // Clear, hierarchical paths for overview: a shared upper level, then vertical notes.
  if(!cross){
-  if(axis==='x'){const dx=q.x-p.x;return 'M'+p.x+','+p.y+' C'+(p.x+dx*.48)+','+p.y+' '+(q.x-dx*.48)+','+q.y+' '+q.x+','+q.y;}
-  const dy=q.y-p.y;
-  return 'M'+p.x+','+p.y+' C'+p.x+','+(p.y+dy*.5)+' '+q.x+','+(q.y-dy*.5)+' '+q.x+','+q.y;
+  if(overview&&a.id==='root'&&b.t==='branch'){
+   const mid=405,endY=b.y-12;
+   return 'M'+cx(a)+' '+(a.y+a.h+6)+' V'+mid+' H'+cx(b)+' V'+endY;
+  }
+  if(a.t==='root'&&b.t==='group'){
+   const spine=825, target=b.x<spine?b.x+b.w+10:b.x-10;
+   return 'M'+spine+' '+cy(b)+' H'+target;
+  }
+  const x1=cx(a),x2=cx(b),y1=a.y+a.h+5,y2=b.y-10;
+  if(Math.abs(x2-x1)<7)return 'M'+x1+' '+y1+' V'+y2;
+  const mid=y1+(y2-y1)/2;
+  return 'M'+x1+' '+y1+' V'+mid+' H'+x2+' V'+y2;
  }
- // Secondary ink paths arc away from the primary tree. They are deliberately
- // allowed to cross to depict conceptual links between different subjects.
- if(axis==='x'){
-  const dx=q.x-p.x,dy=q.y-p.y,offset=(idx%2?-.24:.24)*Math.max(140,Math.abs(dx));
-  return 'M'+p.x+','+p.y+' C'+(p.x+dx*.27)+','+(p.y+offset)+' '+(q.x-dx*.27)+','+(q.y+offset)+' '+q.x+','+q.y;
+ // Secondary connections run through empty gutters rather than across note text.
+ const ac=cy(a),bc=cy(b),aLeft=cx(a)<825,bLeft=cx(b)<825;
+ if(aLeft===bLeft){
+  const lane=aLeft?72+idx*8:1587-idx*8;
+  const ax=aLeft?a.x-8:a.x+a.w+8,bx=bLeft?b.x-8:b.x+b.w+8;
+  return 'M'+ax+' '+ac+' H'+lane+' V'+bc+' H'+bx;
  }
- const dx=q.x-p.x,dy=q.y-p.y,offset=(idx%2?-.34:.34)*Math.max(130,Math.abs(dy));
- return 'M'+p.x+','+p.y+' C'+(p.x+offset)+','+(p.y+dy*.3)+' '+(q.x+offset)+','+(q.y-dy*.3)+' '+q.x+','+q.y;
+ const fromX=aLeft?a.x+a.w+9:a.x-9,toX=bLeft?b.x+b.w+9:b.x-9;
+ const lane=overview?(aLeft?578+idx*8:1123-idx*8):825+(idx%2?20:-20);
+ return 'M'+fromX+' '+ac+' H'+lane+' V'+bc+' H'+toX;
 }
+
 function cmNodeHtml(n){
  const link=n.mode?' data-cm-mode="'+esc(n.mode)+'"':n.module?' data-open-module="'+esc(n.module)+'"':'';
  const clickable=Boolean(link),tag=clickable?'button':'div';
@@ -201,32 +224,58 @@ function cmNodeHtml(n){
 }
 function cmCanvas(g){
  const byId=new Map(g.nodes.map(n=>[n.id,n]));
+ const overview=CM_STATE.view==='overview';
+ const root=byId.get('root');
+ // One common trunk from the root, rather than drawing the same line repeatedly.
+ const groups=g.edges.filter(e=>e.a==='root'&&byId.get(e.b)?.t==='group').map(e=>byId.get(e.b));
+ const trunk=groups.length&&root?
+  '<path d="M825 '+(root.y+root.h+8)+' V'+Math.max(...groups.map(n=>n.y+n.h/2))+'" />':'';
  const primary=g.edges.map(e=>{
   const a=byId.get(e.a),b=byId.get(e.b);
-  return a&&b?'<path d="'+cmPath(a,b)+'" />':'';
+  return a&&b?'<path d="'+cmPath(a,b,false,0,overview)+'" />':'';
  }).join('');
  const crosses=g.cross.map((e,i)=>{
   const a=byId.get(e.a),b=byId.get(e.b);
-  return a&&b?'<path d="'+cmPath(a,b,true,i)+'" />':'';
- }).join('');
- const labels=g.cross.map((e,i)=>{
-  const a=byId.get(e.a),b=byId.get(e.b);
-  if(!a||!b)return '';
-  const x=(a.x+a.w/2+b.x+b.w/2)/2,y=(a.y+a.h/2+b.y+b.h/2)/2+(i%2?-26:20);
-  return '<span class="cm-edge-label" style="left:'+x+'px;top:'+y+'px">'+esc(e.label)+'</span>';
+  return a&&b?'<path d="'+cmPath(a,b,true,i,overview)+'" />':'';
  }).join('');
  return '<div id="cm-world" class="cm-world" style="width:'+g.w+'px;height:'+g.h+'px">'+
  '<div class="cm-page-heading"><span>MANUALE / PATENTINO</span><b>QUADERNO DI RIPASSO</b><span>'+esc(CM_SECTIONS.find(s=>s.id===CM_STATE.view)?.label||'')+'</span></div>'+
  '<svg class="cm-wires" width="'+g.w+'" height="'+g.h+'" viewBox="0 0 '+g.w+' '+g.h+'" aria-hidden="true"><defs>'+
  '<marker id="cm-arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#326cab" stroke-width="1.5"/></marker>'+
  '<marker id="cm-arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#db781e" stroke-width="1.5"/></marker></defs>'+
- '<g class="cm-tree-lines" fill="none" stroke="#326cab" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#cm-arrow-blue)">'+primary+'</g>'+
- '<g class="cm-cross-lines" fill="none" stroke="#db781e" stroke-width="2.8" stroke-dasharray="10 9" stroke-linecap="round" marker-end="url(#cm-arrow-orange)">'+crosses+'</g></svg>'+
- '<div class="cm-cross-labels">'+labels+'</div>'+
+ '<g class="cm-tree-lines" fill="none" stroke="#326cab" stroke-width="2.7" stroke-linejoin="round">'+trunk+'</g>'+
+ '<g class="cm-tree-lines" fill="none" stroke="#326cab" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#cm-arrow-blue)">'+primary+'</g>'+
+ '<g class="cm-cross-lines" fill="none" stroke="#db781e" stroke-width="2.4" stroke-dasharray="9 9" opacity=".72" stroke-linejoin="round" marker-end="url(#cm-arrow-orange)">'+crosses+'</g></svg>'+
  g.nodes.map(cmNodeHtml).join('')+
- '<div class="cm-margin-note" style="top:'+(g.h-95)+'px">ricorda: il collegamento tra due argomenti non li rende equivalenti.</div>'+
+ '<div class="cm-margin-note" style="top:'+(g.h-85)+'px">Frecce blu: percorso di studio. Frecce arancioni: rimandi tra temi distinti.</div>'+
  '</div>';
 }
+function cmPrintView(view,g){
+ const label=CM_SECTIONS.find(x=>x.id===view)?.label||'Panoramica';
+ const nodes=g.nodes.filter(n=>n.t!=='scribble');
+ const groups=nodes.filter(n=>n.t==='group');
+ const title='<header class="cm-print-head"><div>MANUALE PROPEDEUTICO · AGENTE IMMOBILIARE</div><h1>MAPPE E APPUNTI — '+esc(label.toUpperCase())+'</h1><p>Schede ordinate e leggibili, estratte dal programma di studio. Ogni freccia indica un collegamento concettuale, non una relazione giuridica di equivalenza.</p></header>';
+ let cards='';
+ if(view==='overview'){
+  const cols=[['d','fideiussione','vendita','p'],['e','fisco','mutuo'],['i','catasto','es']];
+  cards=cols.map(chain=>'<section class="cm-print-group">'+chain.map((id,i)=>{
+    const n=nodes.find(n=>n.id===id);return n?'<article class="cm-print-card '+(i===0?'cm-print-lead':'')+'"><h2>'+(i?'↓ ':'')+esc(n.title)+'</h2><p>'+esc(n.sub||'')+'</p><ul>'+(n.lines||[]).map(line=>'<li>'+esc(line)+'</li>').join('')+'</ul></article>':'';
+   }).join('')+'</section>').join('');
+ }else{
+  for(const group of groups){
+   const side=group.x<825;
+   const next=groups.filter(n=>n.x===group.x&&n.y>group.y).sort((a,b)=>a.y-b.y)[0];
+   const members=nodes.filter(n=>n.t==='note'&&(n.x<825)===side&&n.y>group.y&&(!next||n.y<next.y)).sort((a,b)=>a.y-b.y);
+   cards+='<section class="cm-print-group"><h2 class="cm-print-section">'+esc(group.title)+'</h2>'+
+    members.map(n=>'<article class="cm-print-card"><h3>↓ '+esc(n.title)+'</h3><small>'+esc(n.sub||'')+'</small><ul>'+
+    (n.lines||[]).map(line=>'<li>'+esc(line)+'</li>').join('')+'</ul></article>').join('')+'</section>';
+  }
+ }
+ const rel=g.cross.map(e=>{const a=nodes.find(n=>n.id===e.a),b=nodes.find(n=>n.id===e.b);return a&&b?'<p>↝ <b>'+esc(a.title)+'</b> ↔ <b>'+esc(b.title)+'</b> — '+esc(e.label)+'</p>':''}).join('');
+ return '<section id="cm-print-view" class="cm-print-only">'+title+'<div class="cm-print-grid">'+cards+'</div>'+
+ '<aside class="cm-print-rel"><h2>Rimandi da memorizzare</h2>'+rel+'</aside><footer>Materiale di ripasso; verificare sempre testi normativi e fonti ufficiali aggiornate.</footer></section>';
+}
+
 function renderMindmap(section){
  const view=CM_SECTIONS.some(s=>s.id===section)?section:'overview';
  CM_STATE.view=view;
@@ -240,13 +289,13 @@ function renderMindmap(section){
  '<p>Ogni nota riassume un concetto; <b>tocca il titolo</b> per entrare nel modulo. Le frecce blu indicano il percorso, quelle arancioni tratteggiate sono rimandi incrociati tra argomenti, come negli appunti scritti a mano.</p></div><span class="cm-count">'+count+' schede collegate</span></div>'+
  '<div class="cm-tabs" aria-label="Seleziona quaderno">'+tabs+'</div>'+
  '<section class="cm-board"><div class="cm-board-top"><div><strong>▣ '+esc(CM_SECTIONS.find(s=>s.id===view).label)+' <span class="cm-paper-caption">/ PAGINA DI APPUNTI</span></strong><small>Trascina lo sfondo per spostare il foglio, usa + e − per ingrandire.</small></div>'+
- '<div class="cm-controls"><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
+ '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa gli appunti o salva in PDF">⎙ Stampa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
  '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Le frecce possono intrecciarsi per mostrare rapporti tra argomenti.</span></div>'+
  '<div id="cm-viewport" class="cm-viewport" role="region" aria-label="Quaderno di appunti navigabile">'+cmCanvas(g)+'</div>'+
  '<div class="cm-board-foot"><span><i class="cm-key cm-key-root"></i>Tema centrale</span><span><i class="cm-key cm-key-branch"></i>Ramo di studio</span><span><i class="cm-key cm-key-leaf"></i>Appunto apribile</span><span><i class="cm-key cm-key-cross"></i>Collegamento trasversale</span></div></section>'+
  '<div class="cm-under"><div><h3>↳ Da collegare a mente</h3><div class="cm-cross">'+links+'</div></div>'+
  '<div><h3>Indice veloce degli appunti</h3><div class="cm-index">'+(sections||'<button class="cm-index-item" data-cm-mode="diritto">Diritto<b>Apri ↗</b></button><button class="cm-index-item" data-cm-mode="economia">Economia<b>Apri ↗</b></button><button class="cm-index-item" data-cm-mode="immobiliare">Immobiliare<b>Apri ↗</b></button>')+'</div></div></div>'+
- '<p class="cm-disclaimer">Le tre aree sono un’organizzazione didattica. La prova scritta di Milano è divisa in normativa e tecnica. Lo schema è un ausilio al ripasso, non sostituisce le lezioni.</p>';
+ cmPrintView(view,g)+'<p class="cm-disclaimer">Le tre aree sono un’organizzazione didattica. La prova scritta di Milano è divisa in normativa e tecnica. Lo schema è un ausilio al ripasso, non sostituisce le lezioni.</p>';
 }
 function cmApply(){
  const w=document.getElementById('cm-world');if(!w)return;
@@ -295,6 +344,7 @@ document.addEventListener('click',e=>{
  if(tab){navigate('mindmap',tab.dataset.cmMode);return}
  const tool=e.target.closest('[data-cm-tool]');if(!tool)return;
  const key=tool.dataset.cmTool;
+ if(key==='print'){window.print();return;}
  if(key==='fit')cmFit();
  else if(key==='relations'){CM_STATE.relations=!CM_STATE.relations;cmApply()}
  else cmZoom(key==='plus'?1.22:1/1.22);
