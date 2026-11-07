@@ -198,14 +198,22 @@ function cmPath(a,b,cross=false,idx=0,overview=false){
   return 'M'+x1+' '+y1+' V'+mid+' H'+x2+' V'+y2;
  }
  // Secondary connections run through empty gutters rather than across note text.
+ if(overview){
+  const column=n=>n.x<560?0:n.x<1130?1:2;
+  const c1=column(a),c2=column(b);
+  const lane=c1===c2?(c1===0?56:c1===2?1635:1110):(Math.min(c1,c2)===0?579:1113);
+  const ax=c1<c2?a.x+a.w+9:a.x-9;
+  const bx=c1<c2?b.x-9:b.x+b.w+9;
+  return 'M'+ax+' '+cy(a)+' H'+lane+' V'+cy(b)+' H'+bx;
+ }
  const ac=cy(a),bc=cy(b),aLeft=cx(a)<825,bLeft=cx(b)<825;
  if(aLeft===bLeft){
-  const lane=aLeft?72+idx*8:1587-idx*8;
+  const lane=aLeft?75+idx*9:1579-idx*9;
   const ax=aLeft?a.x-8:a.x+a.w+8,bx=bLeft?b.x-8:b.x+b.w+8;
   return 'M'+ax+' '+ac+' H'+lane+' V'+bc+' H'+bx;
  }
  const fromX=aLeft?a.x+a.w+9:a.x-9,toX=bLeft?b.x+b.w+9:b.x-9;
- const lane=overview?(aLeft?578+idx*8:1123-idx*8):825+(idx%2?20:-20);
+ const lane=825+(idx%2?26:-26);
  return 'M'+fromX+' '+ac+' H'+lane+' V'+bc+' H'+toX;
 }
 
