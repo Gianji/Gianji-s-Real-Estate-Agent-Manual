@@ -162,3 +162,10 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
     -webkit-print-color-adjust:exact;print-color-adjust:exact
   }
 }
+
+/* Allow multi-page printing of long subject maps; never shrink dozens of cards onto one sheet. */
+@media print {
+ .cm-print-group{break-inside:auto!important;page-break-inside:auto!important}
+ .cm-print-card{break-inside:avoid!important;page-break-inside:avoid!important}
+ .cm-print-grid{column-fill:auto!important}
+}
