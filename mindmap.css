@@ -145,27 +145,69 @@ button.cm-note:focus-visible{outline:2px dashed #7a49ac;outline-offset:5px}
   .cm-note-tools{padding:9px 12px}
   .cm-print-btn{min-width:0!important}
 }
-@page{size:A4 portrait;margin:12mm}
-@media print{
-  html,body{margin:0!important;padding:0!important;background:#fff!important;color:#111!important}
-  .app-shell{display:block!important;min-height:0!important;background:#fff!important}
-  .main-column{display:block!important;min-height:0!important;width:100%!important}
-  .view-frame{display:block!important;max-width:none!important;width:100%!important;margin:0!important;padding:0!important;overflow:visible!important}
-  .sidebar,.topbar,.bottom-nav,.site-footer,#search-modal,#toast,
-  .page-header,.cm-intro,.cm-tabs,.cm-board,.cm-under,.cm-disclaimer,
-  .study-banner{display:none!important}
-  #cm-print-view.cm-print-only{display:block!important;width:100%!important;position:static!important}
-  .cm-print-grid{display:block!important;columns:2!important;column-gap:8mm!important}
-  .cm-print-group,.cm-print-card{page-break-inside:avoid;break-inside:avoid-column}
-  .cm-print-card,.cm-print-lead{box-shadow:none!important}
-  .cm-print-head h1,.cm-print-section,.cm-print-card h2,.cm-print-card h3{
-    -webkit-print-color-adjust:exact;print-color-adjust:exact
-  }
+
+/* Print the exact visual canvas (not reorganized study cards). */
+.cm-print-choice{display:flex;align-items:center;gap:8px;margin-left:auto;
+ font:700 11px 'DM Sans',sans-serif;color:#675481}
+.cm-print-choice select{border:1px solid #cabada;background:#fff;color:#694b87;
+ font:700 11px 'DM Sans',sans-serif;border-radius:5px;padding:7px 8px;max-width:170px}
+.cm-poster-print{display:none}
+@media(max-width:680px){
+ .cm-print-choice{margin-left:0;flex-wrap:wrap}
+ .cm-note-tools{gap:10px}
 }
 
-/* Allow multi-page printing of long subject maps; never shrink dozens of cards onto one sheet. */
+/* A4 landscape with 8-mm margins: the page body has 278 × 192 mm.
+   Each print tile reproduces the *same* full canvas with a clipping offset.
+   No conversion to columns/cards, no screenshot rasterization. */
+@page{size:A4 landscape;margin:8mm}
 @media print {
- .cm-print-group{break-inside:auto!important;page-break-inside:auto!important}
- .cm-print-card{break-inside:avoid!important;page-break-inside:avoid!important}
- .cm-print-grid{column-fill:auto!important}
+ html,body{margin:0!important;padding:0!important}
+ body.cm-poster-printing{background:#fff!important;overflow:visible!important}
+ body.cm-poster-printing .app-shell,
+ body.cm-poster-printing .bottom-nav,
+ body.cm-poster-printing #search-modal,
+ body.cm-poster-printing #toast{display:none!important}
+ body.cm-poster-printing #cm-print-poster{
+  display:block!important;position:static!important;visibility:visible!important;
+  margin:0!important;padding:0!important;width:278mm!important;
+ }
+ .cm-poster-page{
+  position:relative;box-sizing:border-box;width:278mm;height:192mm;overflow:hidden;
+  padding:0;margin:0;background:#fff;color:#162e47;
+  page-break-after:always;break-after:page;page-break-inside:avoid;break-inside:avoid;
+  display:flex;flex-direction:column;
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+ }
+ .cm-poster-page:last-child{page-break-after:auto;break-after:auto}
+ .cm-poster-head,.cm-poster-foot{
+  box-sizing:border-box;flex:0 0 11mm;height:11mm;
+  display:flex;align-items:center;justify-content:space-between;gap:8mm;
+  padding:1mm 1mm;color:#486c91;background:#fff;
+  font-family:'DM Sans',Arial,sans-serif;font-size:8pt;line-height:1.2;
+ }
+ .cm-poster-head{border-bottom:1px solid #ccd5e2}
+ .cm-poster-head strong{color:#164f83;font-weight:850;font-size:9pt;letter-spacing:.025em}
+ .cm-poster-foot{border-top:1px dashed #c3cbd9;color:#687c8e;font-size:7.5pt}
+ .cm-poster-window{
+  box-sizing:border-box;position:relative;flex:0 0 170mm;
+  height:170mm;width:278mm;max-width:278mm;overflow:hidden!important;
+  background:#fffefa!important;
+ }
+ .cm-poster-world{
+  position:absolute!important;left:0!important;top:0!important;
+  margin:0!important;transform-origin:top left!important;
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+  box-shadow:none!important;
+ }
+ .cm-poster-world *, .cm-poster-world:before,.cm-poster-world .cm-wires{
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+ }
+ .cm-poster-world .cm-note{
+  -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+  box-shadow:none!important;
+ }
+ .cm-poster-world .cm-open{display:none!important}
+ .cm-poster-window.cm-hide-relations .cm-cross-lines{display:none!important}
+ .cm-poster-page,.cm-poster-window,.cm-poster-world{contain:none!important}
 }
