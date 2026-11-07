@@ -39,7 +39,7 @@ function renderEstimoPath(){
   '<h2>ESTIMO. Criteri, metodi e procedimenti di stima.</h2>'+
   '<p>Non basta conoscere comparazione, reddito e costo. Occorre distinguere <b>criteri economici</b> (che valore cercare), <b>procedimenti</b> (come determinarlo), <b>tecniche</b> (formule e dati) e <b>applicazioni speciali</b> (terreni, diritti, indennità, fabbricati e sviluppo).</p>'+
   '<div class="estimo-count">'+groups.length+' capitoli tematici · '+moduleCount+' moduli · '+lessonCount+' lezioni collegate</div></div>'+
-  '<button class="btn estimo-cta" data-open-module="estimo-processo6">Inizia dal metodo →</button></div>'+
+  '<div class="estimo-top-actions"><button class="btn estimo-cta" data-open-module="estimo-processo6">Inizia dal metodo →</button><a class="btn estimo-cta estimo-map-link" href="#/mindmap/estimo">Apri la mappa Estimo ↗</a></div></div>'+
   '<div class="estimo-method-steps"><span>1. Definisci il valore</span><span>2. Raccogli dati</span><span>3. Scegli il procedimento</span><span>4. Calcola e confronta</span><span>5. Redigi la perizia</span></div>'+
   '<div class="estimo-groups">'+groups.map(group=>'<div class="estimo-group">'+
    '<div class="estimo-group-header"><h3>'+esc(group.label)+'</h3><p>'+esc(group.why)+'</p></div>'+
