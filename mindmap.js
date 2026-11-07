@@ -262,14 +262,40 @@ function cmCanvas(g){
  '<div class="cm-margin-note" style="top:'+(g.h-85)+'px">Frecce blu: percorso di studio. Frecce arancioni: rimandi tra temi distinti.</div>'+
  '</div>';
 }
-/* STAMPA FEDELE AL CANVAS DEL SITO.
-   Non spostare, ordinare né ricreare i nodi: usa cmCanvas(g), ovvero
-   lo stesso HTML e lo stesso SVG della visualizzazione web.
-   La mappa viene ridotta IN MODO UNIFORME fino alla larghezza A4;
-   le pagine successive mostrano le sezioni sottostanti, MAI colonne.
-   Questa scelta preserva rami, coordinate, collegamenti e forma.
-*/
+/* Stampa fedele al layout OneNote: box e frecce hanno gli stessi
+   rapporti geometrici del sito. La scala usa soltanto il disegno visibile,
+   eliminando lo spazio vuoto del canvas; le pagine continuano in verticale. */
 const CM_PRINT_PAGE_MM={width:194,height:259};
+/* Bounds of the actual notes AND visible SVG connectors, not the blank
+   1650/1700px planning canvas. Keep all original node coordinates. */
+function cmPrintBounds(g){
+ const visible=g.nodes.filter(n=>n.t!=='scribble');
+ const nodes=visible.length?visible:g.nodes;
+ let minX=Math.min(...nodes.map(n=>n.x));
+ let maxX=Math.max(...nodes.map(n=>n.x+n.w));
+ const byId=new Map(g.nodes.map(n=>[n.id,n]));
+ const paths=[
+  ...g.edges.map(e=>{
+   const a=byId.get(e.a),b=byId.get(e.b);
+   return a&&b?cmPath(a,b,false,0,CM_STATE.view==='overview'):'';
+  }),
+  ...(CM_STATE.relations?g.cross.map((e,i)=>{
+   const a=byId.get(e.a),b=byId.get(e.b);
+   return a&&b?cmPath(a,b,true,i,CM_STATE.view==='overview'):'';
+  }):[])
+ ];
+ for(const d of paths){
+  // In this map, lines use M x/y, H x and V y commands.
+  for(const c of d.matchAll(/[MH](-?\d+(?:\.\d+)?)/g)){
+   const x=Number(c[1]);if(Number.isFinite(x)){
+    minX=Math.min(minX,x);maxX=Math.max(maxX,x);
+   }
+  }
+ }
+ // Keep the notebook's upper-page heading and real notes in view.
+ // A small safety margin protects strokes and arrowheads.
+ return {x:Math.max(0,minX-11),y:0,w:Math.min(g.w,maxX+11)-Math.max(0,minX-11),h:g.h};
+}
 function cmPrintPosterPrepare(){
  if(!document.getElementById('cm-viewport'))return false;
  if(document.getElementById('cm-print-poster'))return true;
@@ -279,10 +305,11 @@ function cmPrintPosterPrepare(){
  const pxPerMm=96/25.4;
  const pageW=CM_PRINT_PAGE_MM.width*pxPerMm;
  const pageH=CM_PRINT_PAGE_MM.height*pxPerMm;
- // A4 width is authoritative. 2px spare room avoids printer rounding.
- const scale=(pageW-2)/graph.w;
+ // Scale the ORIGINAL graph to its painted width, not its empty canvas.
+ const bounds=cmPrintBounds(graph);
+ const scale=(pageW-2)/bounds.w;
  const map=cmCanvas(graph);
- const totalH=graph.h*scale;
+ const totalH=(bounds.h-bounds.y)*scale;
  const overlap=12; // ≈ 3 mm vertical overlap, never horizontal tiling
  const stride=pageH-overlap;
  const pages=Math.max(1,Math.ceil((totalH-overlap)/stride));
@@ -292,7 +319,8 @@ function cmPrintPosterPrepare(){
   const suffix='-p'+i;
   const canvas=map.replace(
    '<div id="cm-world" class="cm-world" style="',
-   '<div class="cm-world cm-poster-world" style="transform:translate(0px,-'+offset+'px) scale('+scale+');'
+   '<div class="cm-world cm-poster-world" style="transform:translate('+
+   (-bounds.x*scale)+'px,'+(-bounds.y*scale-offset)+'px) scale('+scale+');'
   ).replaceAll('cm-arrow-blue','cm-arrow-blue'+suffix)
    .replaceAll('cm-arrow-orange','cm-arrow-orange'+suffix);
   html.push('<section class="cm-poster-page">'+
