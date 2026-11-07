@@ -262,54 +262,135 @@ function cmCanvas(g){
  '<div class="cm-margin-note" style="top:'+(g.h-85)+'px">Frecce blu: percorso di studio. Frecce arancioni: rimandi tra temi distinti.</div>'+
  '</div>';
 }
-/* Stampa realmente la mappa OneNote, non un riepilogo testuale.
-   Ogni pagina mostra una porzione dello STESSO canvas, inclusi connettori e colori.
-   194 × 259 mm di area disegno in A4 verticale, con una piccola sovrapposizione
-   fra fogli contigui per poterli riunire in un poster leggibile. */
-function cmPrintPosterPrepare(){
- const viewport=document.getElementById('cm-viewport');
- if(!viewport)return false;
- const old=document.getElementById('cm-print-poster');
- if(old)return true;
- const view=CM_STATE.view;
- const g=cmGraph(view);
- const label=CM_SECTIONS.find(x=>x.id===view)?.label||'Panoramica';
- const selected=document.getElementById('cm-print-scale');
- const scale=Math.max(.7,Math.min(1.2,Number(selected?.value||'1')||1));
- const pxPerMm=96/25.4;
- const tileW=194*pxPerMm,tileH=259*pxPerMm;
- const overlap=18; // circa 4,8 mm di sovrapposizione per il montaggio
- const stepX=tileW-overlap,stepY=tileH-overlap;
- const totalW=g.w*scale,totalH=g.h*scale;
- const cols=Math.max(1,Math.ceil((totalW-overlap)/stepX));
- const rows=Math.max(1,Math.ceil((totalH-overlap)/stepY));
- const map=cmCanvas(g);
- const pages=[];
- for(let row=0;row<rows;row++){
-  for(let col=0;col<cols;col++){
-   const dx=Math.round(col*stepX),dy=Math.round(row*stepY);
-   // Reuse every original HTML node and SVG arrow, with only a viewport offset.
-   const markerSuffix='-sheet-'+row+'-'+col;
-   const canvas=map.replace(
-    '<div id="cm-world" class="cm-world" style="',
-    '<div class="cm-world cm-poster-world" style="transform:translate('+
-    (-dx)+'px,'+(-dy)+'px) scale('+scale+');'
-   ).replaceAll('cm-arrow-blue','cm-arrow-blue'+markerSuffix)
-    .replaceAll('cm-arrow-orange','cm-arrow-orange'+markerSuffix);
-   pages.push('<section class="cm-poster-page">'+
-    '<header class="cm-poster-head"><strong>MAPPE E APPUNTI · '+esc(label.toUpperCase())+'</strong>'+
-    '<span>Quaderno visuale · scala '+Math.round(scale*100)+'%</span></header>'+
-    '<div class="cm-poster-window'+(CM_STATE.relations?'':' cm-hide-relations')+'">'+canvas+'</div>'+
-    '<footer class="cm-poster-foot"><span>Foglio '+(row*cols+col+1)+'/'+(rows*cols)+
-    ' · riga '+(row+1)+'/'+rows+' · colonna '+(col+1)+'/'+cols+'</span>'+
-    '<span>Unisci i fogli con sovrapposizione di circa 5 mm</span></footer></section>');
+/* Stampa della mappa sul SOLO A4 verticale.
+   Riquadri grafici OneNote, con frecce vettoriali e colori invariati.
+   A differenza della vecchia modalità poster non esistono colonne di fogli:
+   ogni pagina ha la stessa larghezza e la mappa prosegue solo in verticale. */
+const CM_PRINT_WIDTH=628; // px CSS, max a 115% = 722px < 194mm = 733px
+const CM_PRINT_NODE_X=52;
+const CM_PRINT_NODE_W=550;
+const CM_PRINT_PAGE_MM={width:194,height:259};
+function cmPrintSequence(g,view){
+ const byId=new Map(g.nodes.map(n=>[n.id,n]));
+ if(view==='overview'){
+  const order=['root','d','fideiussione','vendita','p','e','fisco','mutuo','i','catasto','es'];
+  const sequence=order.map(id=>byId.get(id)).filter(Boolean);
+  sequence.push(...g.nodes.filter(n=>n.t!=='scribble'&&!order.includes(n.id)));
+  return sequence;
+ }
+ const ordered=[],placed=new Set();
+ const add=id=>{const n=byId.get(id);if(n&&!placed.has(id)){ordered.push(n);placed.add(id)}};
+ add('root');
+ const groups=g.nodes.filter(n=>n.t==='group').sort((a,b)=>Number(a.id.slice(2))-Number(b.id.slice(2)));
+ for(const group of groups){
+  add(group.id);
+  let last=group.id;
+  // Follow the original module chain within this category.
+  for(let limit=0;limit<g.nodes.length;limit++){
+   const edge=g.edges.find(e=>e.a===last&&e.b.startsWith('m-'));
+   if(!edge||placed.has(edge.b))break;
+   add(edge.b);last=edge.b;
   }
  }
+ g.nodes.filter(n=>n.t!=='scribble').forEach(n=>add(n.id));
+ return ordered;
+}
+function cmPrintNoteHeight(n){
+ const lines=n.lines||[];
+ // Conservative height budget so no text is cut when reflowing on a narrow page.
+ const wraps=lines.reduce((sum,line)=>sum+Math.max(1,Math.ceil(String(line).length/60)),0);
+ const titleWraps=Math.max(1,Math.ceil(String(n.title).length/31));
+ const base=n.t==='root'?133:n.t==='branch'?138:n.t==='group'?114:124;
+ const min=n.t==='root'?215:n.t==='branch'?232:n.t==='group'?160:240;
+ return Math.max(min,base+wraps*20+Math.max(0,lines.length-1)*7+(titleWraps-1)*27);
+}
+function cmPrintPages(g,view,scale){
+ const pxPerMm=96/25.4;
+ const maxHeight=Math.floor(CM_PRINT_PAGE_MM.height*pxPerMm/scale)-18;
+ const original=cmPrintSequence(g,view);
+ const byId=new Map(g.nodes.map(n=>[n.id,n]));
+ const notes=original.map(n=>{
+  const related=CM_STATE.relations?g.cross.filter(e=>e.a===n.id||e.b===n.id).map(e=>{
+   const other=byId.get(e.a===n.id?e.b:e.a);
+   return other?'↝ Rimando: '+other.title+' — '+e.label:'';
+  }).filter(Boolean).slice(0,2):[];
+  return {...n,lines:[...(n.lines||[]),...related]};
+ });
+ const pages=[];let current=[],y=48;
+ const flush=()=>{if(current.length){pages.push(current);current=[];y=48}};
+ for(const n of notes){
+  const height=cmPrintNoteHeight(n);
+  if(current.length&&y+height>maxHeight-20)flush();
+  if(height>maxHeight-85)throw Error('Nota troppo alta per la stampa A4: '+n.title);
+  current.push({...n,x:CM_PRINT_NODE_X,y,w:CM_PRINT_NODE_W,h:height});
+  y+=height+37;
+ }
+ flush();
+ return pages;
+}
+function cmPrintPageCanvas(page,pageIndex,totalPages,scale){
+ const logicalHeight=Math.floor(CM_PRINT_PAGE_MM.height*(96/25.4)/scale);
+ const ids=new Set(page.map(n=>n.id));
+ const original=cmGraph(CM_STATE.view);
+ const cross=CM_STATE.relations?original.cross.filter(e=>ids.has(e.a)&&ids.has(e.b)):[];
+ const center=CM_PRINT_NODE_X+CM_PRINT_NODE_W/2;
+ const connectors=[];
+ for(let i=1;i<page.length;i++){
+  const prev=page[i-1],next=page[i];
+  const y1=prev.y+prev.h+5,y2=next.y-9;
+  if(y2>y1)connectors.push('M'+center+' '+y1+' V'+y2);
+ }
+ if(pageIndex>0&&page.length)connectors.unshift('M'+center+' 5 V'+(page[0].y-10));
+ if(pageIndex<totalPages-1&&page.length){
+  const last=page[page.length-1];
+  if(logicalHeight-6>last.y+last.h+6)connectors.push('M'+center+' '+(last.y+last.h+6)+' V'+(logicalHeight-6));
+ }
+ const nodeById=new Map(page.map(n=>[n.id,n]));
+ const crossPaths=cross.map((edge,i)=>{
+  const a=nodeById.get(edge.a),b=nodeById.get(edge.b);
+  const lane=i%2===0?24:618,firstY=a.y+a.h/2,secondY=b.y+b.h/2;
+  const attach=lane<CM_PRINT_WIDTH/2?CM_PRINT_NODE_X-5:CM_PRINT_NODE_X+CM_PRINT_NODE_W+5;
+  return '<path d="M'+attach+' '+firstY+' H'+lane+' V'+secondY+' H'+attach+'" />';
+ }).join('');
+ const marker='cm-print-arrow-'+pageIndex;
+ const other='cm-print-cross-'+pageIndex;
+ return '<div class="cm-world cm-poster-world" style="width:'+CM_PRINT_WIDTH+'px;height:'+logicalHeight+
+ 'px;transform:scale('+scale+');">'+
+ '<svg class="cm-wires" width="'+CM_PRINT_WIDTH+'" height="'+logicalHeight+'" viewBox="0 0 '+CM_PRINT_WIDTH+' '+logicalHeight+'" aria-hidden="true">'+
+ '<defs><marker id="'+marker+'" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">'+
+ '<path d="M0 0 L9 4 L0 8" fill="none" stroke="#326cab" stroke-width="1.5"/></marker>'+
+ '<marker id="'+other+'" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto">'+
+ '<path d="M0 0 L9 4 L0 8" fill="none" stroke="#db781e" stroke-width="1.5"/></marker></defs>'+
+ '<g class="cm-tree-lines" fill="none" stroke="#326cab" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#'+marker+')">'+
+ connectors.map(d=>'<path d="'+d+'"/>').join('')+'</g>'+
+ '<g class="cm-cross-lines" fill="none" stroke="#db781e" stroke-width="2.2" stroke-dasharray="8 8" marker-end="url(#'+other+')">'+crossPaths+'</g></svg>'+
+ page.map(cmNodeHtml).join('')+'</div>';
+}
+function cmPrintPosterPrepare(){
+ if(!document.getElementById('cm-viewport'))return false;
+ if(document.getElementById('cm-print-poster'))return true;
+ const view=CM_STATE.view;
+ const graph=cmGraph(view);
+ const label=CM_SECTIONS.find(x=>x.id===view)?.label||'Panoramica';
+ const scaleInput=document.getElementById('cm-print-scale');
+ const scale=Math.max(.8,Math.min(1.15,Number(scaleInput?.value||'1')||1));
+ // All three user-facing scales fit within the *same* 194-mm portrait width.
+ if(CM_PRINT_WIDTH*scale>CM_PRINT_PAGE_MM.width*96/25.4)throw Error('Scala stampa supera larghezza A4');
+ const pages=cmPrintPages(graph,view,scale);
+ const markup=pages.map((nodes,i)=>
+  '<section class="cm-poster-page">'+
+  '<header class="cm-poster-head"><strong>MAPPE E APPUNTI · '+esc(label.toUpperCase())+'</strong>'+
+  '<span>OneNote · A4 verticale · '+Math.round(scale*100)+'%</span></header>'+
+  '<div class="cm-poster-window'+(CM_STATE.relations?'':' cm-hide-relations')+'">'+
+  cmPrintPageCanvas(nodes,i,pages.length,scale)+'</div>'+
+  '<footer class="cm-poster-foot"><span>Pagina '+(i+1)+' di '+pages.length+'</span>'+
+  '<span>'+(i<pages.length-1?'↓ La mappa continua nella pagina successiva':'Fine della mappa')+'</span></footer></section>'
+ ).join('');
  const poster=document.createElement('div');
  poster.id='cm-print-poster';
  poster.className='cm-poster-print';
- poster.setAttribute('aria-label','Mappa concettuale pronta per stampa su fogli A4');
- poster.innerHTML=pages.join('');
+ poster.setAttribute('aria-label','Mappa OneNote in A4 verticale, senza tagli orizzontali');
+ poster.innerHTML=markup;
  document.body.appendChild(poster);
  document.body.classList.add('cm-poster-printing');
  return true;
@@ -336,8 +417,8 @@ function renderMindmap(section){
  '<p>Ogni nota riassume un concetto; <b>tocca il titolo</b> per entrare nel modulo. Le frecce blu indicano il percorso, quelle arancioni tratteggiate sono rimandi incrociati tra argomenti, come negli appunti scritti a mano.</p></div><span class="cm-count">'+count+' schede collegate</span></div>'+
  '<div class="cm-tabs" aria-label="Seleziona quaderno">'+tabs+'</div>'+
  '<section class="cm-board"><div class="cm-board-top"><div><strong>▣ '+esc(CM_SECTIONS.find(s=>s.id===view).label)+' <span class="cm-paper-caption">/ PAGINA DI APPUNTI</span></strong><small>Trascina lo sfondo per spostare il foglio, usa + e − per ingrandire.</small></div>'+
- '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa questa stessa mappa, con box, frecce e colori">⎙ Stampa mappa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
- '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Stampa fedele alla mappa, su più fogli A4 orizzontali.</span><label class="cm-print-choice" for="cm-print-scale">Scala di stampa <select id="cm-print-scale" aria-label="Dimensione della mappa nella stampa"><option value="0.8">Compatta (80%)</option><option value="1" selected>Normale (100%)</option><option value="1.15">Grande (115%)</option></select></label></div>'+
+ '<div class="cm-controls"><button type="button" class="cm-print-btn" data-cm-tool="print" title="Stampa la mappa OneNote a larghezza A4 verticale, senza affiancare fogli">⎙ Stampa mappa / PDF</button><button type="button" data-cm-tool="minus" aria-label="Riduci zoom">−</button><span id="cm-zoom-label">100%</span><button type="button" data-cm-tool="plus" aria-label="Aumenta zoom">+</button><button type="button" data-cm-tool="fit" title="Adatta al foglio">Adatta</button></div></div>'+
+ '<div class="cm-note-tools"><button type="button" class="cm-toggle active" id="cm-cross-toggle" data-cm-tool="relations" aria-pressed="true">↝ Collegamenti incrociati: visibili</button><span>Stampa la mappa a larghezza A4 verticale: se è lunga, prosegue in basso sulle pagine successive.</span><label class="cm-print-choice" for="cm-print-scale">Scala di stampa <select id="cm-print-scale" aria-label="Dimensione della mappa nella stampa"><option value="0.8">Compatta (80%)</option><option value="1" selected>Normale (100%)</option><option value="1.15">Grande (115%)</option></select></label></div>'+
  '<div id="cm-viewport" class="cm-viewport" role="region" aria-label="Quaderno di appunti navigabile">'+cmCanvas(g)+'</div>'+
  '<div class="cm-board-foot"><span><i class="cm-key cm-key-root"></i>Tema centrale</span><span><i class="cm-key cm-key-branch"></i>Ramo di studio</span><span><i class="cm-key cm-key-leaf"></i>Appunto apribile</span><span><i class="cm-key cm-key-cross"></i>Collegamento trasversale</span></div></section>'+
  '<div class="cm-under"><div><h3>↳ Da collegare a mente</h3><div class="cm-cross">'+links+'</div></div>'+
