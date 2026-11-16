@@ -30,7 +30,7 @@ function renderUnifiedLibrary(){
    '<span class="chapter-summary-end"><b>'+done+'/'+max+' lezioni</b>'+
    '<span class="chapter-meter"><i style="width:'+(max?Math.round(100*done/max):0)+'%"></i></span>'+
    '<span class="chapter-caret">⌄</span></span></summary>'+
-   '<div class="chapter-content">'+
+   '<div class="chapter-content"><div class="chapter-open-all"><a class="btn btn-primary btn-sm" href="#/chapter/'+esc(c.id)+'">Studia tutto il capitolo in una pagina →</a></div>'+
    (estimate?'<div class="chapter-extra"><span>I moduli di Estimo sono distinti per metodo e applicazione; mantengono i collegamenti alle mappe.</span><a href="#/mindmap/estimo">Mappa di Estimo →</a></div>':'')+
    '<div class="chapter-module-grid">'+rows+'</div></div></details>';
  }).join('');
@@ -49,4 +49,39 @@ function renderUnifiedLibrary(){
  '<div class="chapter-list">'+cards+'</div>'+
  (chapters.length?'':'<div class="empty-state">Nessun argomento trovato. Prova con un altro termine.</div>')+
  '<div class="study-banner" style="margin-top:29px"><div><b>Focus territoriale facoltativo · Cremona</b><p>Un approfondimento separato su PGT, zone OMI e rapporti locali, non parte del programma camerale.</p></div><button class="btn btn-outline btn-sm" data-open-module="cremona">Apri Cremona →</button></div>';
+}
+
+/* A chapter is a SINGLE study page containing all its existing lessons.
+   The legacy per-module and per-lesson routes are retained for bookmarks,
+   saved completion IDs, mini-quizzes and old URLs. */
+function renderUnifiedChapter(chapterId){
+ const c=THEORY_CHAPTERS.find(x=>x.id===chapterId);
+ if(!c)return '<div class="empty-state"><h2>Capitolo non trovato</h2><p>Torna al programma per scegliere un capitolo.</p><a class="btn btn-primary" href="#/library">Vai al programma →</a></div>';
+ const mods=theoryChapterModules(c);
+ const count=mods.reduce((n,m)=>n+m.lessons.length,0);
+ const completed=mods.reduce((n,m)=>n+m.lessons.filter((_,i)=>data.completed.includes(m.id+':'+i)).length,0);
+ return '<button class="back-button" type="button" data-nav="library">← Tutti i capitoli</button>'+
+  pageTitle('CAPITOLO · '+esc(c.sector.toUpperCase()),esc(c.title),esc(c.desc))+
+  '<div class="chapter-study-meta"><span>'+mods.length+' moduli collegati</span><span>'+count+' lezioni</span><span>'+completed+' completate</span>'+
+  (chapterId.startsWith('estimo-')?'<a href="#/mindmap/estimo">Mappa Estimo →</a>':'')+'</div>'+
+  '<p class="chapter-study-help">Questo è un unico percorso di studio: apri una lezione per leggere spiegazione, esempio e formula senza lasciare il capitolo. Le schede originarie rimangono disponibili per segnare il completamento.</p>'+
+  mods.map((m,mi)=>{
+   const lessons=m.lessons.map((l,i)=>{
+    const completed=data.completed.includes(m.id+':'+i);
+    const source=l.sourceUrl?'<div class="chapter-lesson-source"><a target="_blank" rel="noopener noreferrer" href="'+esc(l.sourceUrl)+'">'+esc(l.sourceTitle||'Fonte di approfondimento')+' ↗</a></div>':'';
+    return '<details class="chapter-lesson"><summary><span class="chapter-lesson-num">'+String(i+1).padStart(2,'0')+'</span><span>'+esc(l.title)+'</span>'+
+     '<small>'+(completed?'✓ Studiata':'Apri appunti')+'</small></summary>'+
+     '<article class="chapter-lesson-body"><p class="chapter-lesson-lead">'+esc(l.intro)+'</p>'+
+     '<p>'+esc(l.detail)+'</p>'+
+     (l.example?'<div class="chapter-note-example"><strong>Esempio</strong><p>'+esc(l.example)+'</p></div>':'')+
+     (l.mistake?'<div class="chapter-note-warning"><strong>Attenzione all’esame</strong><p>'+esc(l.mistake)+'</p></div>':'')+
+     (l.key?'<div class="chapter-note-key"><strong>Da ricordare</strong><p>'+esc(l.key)+'</p></div>':'')+
+     source+
+     '<div class="chapter-lesson-actions"><a class="btn btn-outline btn-sm" href="#/lesson/'+encodeURIComponent(m.id)+'/'+i+'">Apri scheda e salva il progresso →</a></div></article></details>';
+   }).join('');
+   return '<section class="chapter-study-module"><header><span>SEZIONE '+String(mi+1).padStart(2,'0')+'</span>'+
+    '<h2>'+esc(m.title)+'</h2><p>'+esc(m.description)+'</p><small>'+m.lessons.length+' lezioni</small></header>'+
+    '<div class="chapter-study-lessons">'+lessons+'</div>'+
+    '<footer><a href="#/oral/'+encodeURIComponent(m.id)+'">Domande orali della sezione →</a><a href="#/module/'+encodeURIComponent(m.id)+'">Scheda originale del modulo →</a></footer></section>';
+  }).join('');
 }
