@@ -275,7 +275,7 @@ const ORAL_TARGETED_ANSWERS = {
   ],
   [
    2,
-   "Una donazione può incidere sulle quote di riserva dei legittimari e rilevare nelle operazioni successorie, tra cui collazione e riunione fittizia. Se la riserva risulta lesa può sorgere un problema di riduzione. In una vendita di bene donato si verifica la normativa applicabile e la concreta situazione successoria, senza presumere automaticamente l’invalidità della vendita."
+   "Una donazione può incidere sulla quota riservata ai legittimari e rilevare in collazione, riunione fittizia e riduzione. Tuttavia l'art. 563 c.c., come modificato dall'art. 44 della legge 182/2025 dal 18 dicembre 2025, ha rafforzato la tutela dei terzi acquirenti di immobili donati, prevedendo nei presupposti di legge la compensazione in denaro a carico del donatario. È essenziale verificare il regime transitorio per le successioni già aperte e le eventuali domande e opposizioni notificate e trascritte. La provenienza donativa non rende automaticamente nulla o invendibile una successiva vendita."
   ]
  ],
  "fisco": [
