@@ -372,6 +372,8 @@ function oralNorm(value){
  return String(value||'').toLocaleLowerCase('it').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘]/g,"'").replace(/\s+/g,' ').trim();
 }
 function oralAnswer(m,q,i){
+ const advanced=typeof ORAL_ADVANCED_MAP!=='undefined'?ORAL_ADVANCED_MAP.get(m.id+':'+i):null;
+ if(advanced)return {text:advanced.answer,mistake:advanced.trap,refs:[{mid:m.id,idx:advanced.idx}],source:oralAdvancedSource(advanced.law),kind:'advanced'};
  const targeted=ORAL_TARGETED_ANSWERS[m.id]?.[i];
  if(targeted){
   const [idx,text,extraModule,extraIdx]=targeted;
@@ -396,15 +398,16 @@ function oralRenderAnswer(e){
   const l=MODULES.find(m=>m.id===r.mid)?.lessons[r.idx];
   return l?'<a class="oral-lesson-link" href="#/lesson/'+encodeURIComponent(r.mid)+'/'+r.idx+'">'+esc(l.title)+' →</a>':'';
  }).join('');
- return '<div class="oral-answer-label">RISPOSTA DI RIPASSO · DAL MANUALE</div>'+
+ return '<div class="oral-answer-label">'+(a.kind==='advanced'?'RISPOSTA AVANZATA · SPIEGAZIONE DEL TRABOCCHETTO':'RISPOSTA DI RIPASSO · DAL MANUALE')+'</div>'+
  a.text.split('\n\n').map(p=>'<p>'+esc(p)+'</p>').join('')+
  (a.example?'<div class="oral-example"><strong>Esempio pratico</strong><p>'+esc(a.example)+'</p></div>':'')+
  (a.key?'<div class="oral-key"><strong>Da ricordare</strong><p>'+esc(a.key)+'</p></div>':'')+
  (a.mistake?'<div class="oral-caution"><strong>Attenzione all’esame</strong><p>'+esc(a.mistake)+'</p></div>':'')+
- '<div class="oral-answer-source"><span>Approfondisci nella teoria:</span>'+ (refs||'<a href="#/module/'+encodeURIComponent(e.mid)+'">Apri il modulo →</a>')+'</div>';
+ '<div class="oral-answer-source"><span>Approfondisci nella teoria:</span>'+ (refs||'<a href="#/module/'+encodeURIComponent(e.mid)+'">Apri il modulo →</a>')+'</div>'+(a.source?'<div class="oral-answer-source"><span>Riferimento ufficiale:</span><a href="'+esc(a.source.url)+'" target="_blank" rel="noopener noreferrer">'+esc(a.source.label)+' ↗</a></div>':'');
 }
 function renderOral(moduleId){
  const entries=oralEntries();
+ const advancedCount=entries.filter(e=>e.answer.kind==='advanced').length;
  const modules=MODULES.filter(m=>(m.oral||[]).length);
  const selected=modules.some(m=>m.id===moduleId)?moduleId:'all';
  const cards=ORAL_SECTORS.filter(([id])=>id!=='all').map(([sid,label])=>{
@@ -415,16 +418,17 @@ function renderOral(moduleId){
    return '<section class="oral-module" data-oral-group="'+esc(m.id)+'"><header class="oral-module-head"><div><h3>'+esc(m.title)+'</h3><small>'+qs.length+' domande · '+esc(label)+'</small></div><a href="#/module/'+encodeURIComponent(m.id)+'">Apri teoria →</a></header>'+
     qs.map(e=>{
      const answerId='oral-answer-'+e.mid+'-'+e.i;
-     const search=oralNorm(e.q+' '+e.module);
-     return '<article class="oral-question" data-oral-card data-oral-sector="'+esc(e.sector)+'" data-oral-module="'+esc(e.mid)+'" data-oral-search="'+esc(search)+'"><div class="oral-question-row"><span class="oral-number">'+String(e.i+1).padStart(2,'0')+'</span><h4>'+esc(e.q)+'</h4><button type="button" class="oral-reveal" data-oral-toggle="'+esc(answerId)+'" aria-controls="'+esc(answerId)+'" aria-expanded="false">Mostra risposta <span aria-hidden="true">＋</span></button></div><div id="'+esc(answerId)+'" class="oral-answer" hidden>'+oralRenderAnswer(e)+'</div></article>';
+     const search=oralNorm(e.q+' '+e.module);const advanced=e.answer.kind==='advanced';
+     return '<article class="oral-question" data-oral-card data-oral-sector="'+esc(e.sector)+'" data-oral-module="'+esc(e.mid)+'" data-oral-search="'+esc(search)+'" data-oral-level="'+(advanced?'advanced':'standard')+'"><div class="oral-question-row"><span class="oral-number">'+String(e.i+1).padStart(2,'0')+'</span><h4>'+(advanced?'<span class="oral-level-label">AVANZATA</span>':'')+esc(e.q)+'</h4><button type="button" class="oral-reveal" data-oral-toggle="'+esc(answerId)+'" aria-controls="'+esc(answerId)+'" aria-expanded="false">Mostra risposta <span aria-hidden="true">＋</span></button></div><div id="'+esc(answerId)+'" class="oral-answer" hidden>'+oralRenderAnswer(e)+'</div></article>';
     }).join('')+'</section>';
   }).join('');
   return '<section class="oral-sector" data-oral-section="'+esc(sid)+'"><div class="oral-sector-title"><h2>'+esc(label)+'</h2><span>'+list.length+' domande</span></div>'+groups+'</section>';
  }).join('');
- return pageTitle('RIPASSO ATTIVO','Domande aperte.','Allenati a rispondere a voce alta. Tutte le domande da orale della teoria, raccolte in un unico posto, con risposte consultabili solo quando vuoi.')+
- '<div class="oral-hero"><div><strong>'+entries.length+' domande aperte</strong><p>'+modules.length+' moduli, dalle nozioni fondamentali agli approfondimenti di Estimo. Le tracce sono quelle del manuale; le risposte sono materiale didattico, non soluzioni ufficiali camerali.</p></div><a class="btn btn-outline btn-sm" href="#/library">Vai alla teoria →</a></div>'+
+ return pageTitle('RIPASSO ATTIVO','Domande aperte.','Allenati a rispondere a voce alta. Le domande da orale del manuale e i casi avanzati, con risposte consultabili solo quando vuoi.')+
+ '<div class="oral-hero"><div><strong>'+entries.length+' domande aperte</strong><p>'+modules.length+' moduli · '+advancedCount+' quesiti avanzati con eccezioni, casi pratici, calcoli e trabocchetti. Domande e risposte didattiche del manuale, non soluzioni ufficiali camerali.</p></div><a class="btn btn-outline btn-sm" href="#/library">Vai alla teoria →</a></div>'+
  '<div class="oral-filters"><label>Materia<select id="oral-sector-filter">'+ORAL_SECTORS.map(([id,name])=>'<option value="'+id+'">'+esc(name)+'</option>').join('')+'</select></label>'+
  '<label>Argomento<select id="oral-module-filter"><option value="all">Tutti gli argomenti</option>'+modules.map(m=>'<option value="'+esc(m.id)+'" data-sector="'+esc(m.id==='cremona'?'cremona':sectorOf(m))+'"'+(selected===m.id?' selected':'')+'>'+esc(m.title)+'</option>').join('')+'</select></label>'+
+ '<label>Difficoltà<select id="oral-level-filter"><option value="all">Tutte le domande ('+entries.length+')</option><option value="advanced">Solo avanzate ('+advancedCount+')</option><option value="standard">Domande precedenti ('+(entries.length-advancedCount)+')</option></select></label>'+
  '<label class="oral-search-label">Cerca una domanda<input id="oral-search" type="search" placeholder="Es. fideiussione, usufrutto, MCA…" autocomplete="off"></label>'+
  '<div class="oral-filter-actions"><button type="button" class="btn btn-outline btn-sm" data-oral-action="reset">Azzera filtri</button><button type="button" class="btn btn-outline btn-sm" data-oral-action="hide">Nascondi tutte</button></div></div>'+
  '<div class="oral-result-line" role="status"><strong id="oral-count">'+entries.length+'</strong> domande visualizzate <span>Prova a rispondere prima di svelare la soluzione.</span></div>'+
@@ -433,13 +437,13 @@ function renderOral(moduleId){
 function oralFilter(){
  const sf=document.getElementById('oral-sector-filter'),mf=document.getElementById('oral-module-filter'),search=document.getElementById('oral-search');
  if(!sf||!mf||!search)return;
- const sector=sf.value,query=oralNorm(search.value);
+ const sector=sf.value,query=oralNorm(search.value),level=document.getElementById('oral-level-filter')?.value||'all';
  for(const opt of mf.options){if(opt.value!=='all')opt.hidden=sector!=='all'&&opt.dataset.sector!==sector;}
  if(mf.selectedOptions[0]?.hidden)mf.value='all';
  const module=mf.value;
  let count=0;
  document.querySelectorAll('[data-oral-card]').forEach(card=>{
-  const show=(sector==='all'||card.dataset.oralSector===sector)&&(module==='all'||card.dataset.oralModule===module)&&(!query||card.dataset.oralSearch.includes(query));
+  const show=(sector==='all'||card.dataset.oralSector===sector)&&(module==='all'||card.dataset.oralModule===module)&&(level==='all'||card.dataset.oralLevel===level)&&(!query||card.dataset.oralSearch.includes(query));
   card.hidden=!show;if(show)count++;
  });
  document.querySelectorAll('[data-oral-group]').forEach(group=>{group.hidden=!group.querySelector('[data-oral-card]:not([hidden])')});
@@ -461,8 +465,8 @@ document.addEventListener('click',e=>{
  if(!action)return;
  if(action.dataset.oralAction==='hide')document.querySelectorAll('[data-oral-toggle][aria-expanded="true"]').forEach(b=>oralSetRevealed(b,false));
  if(action.dataset.oralAction==='reset'){
-  document.getElementById('oral-sector-filter').value='all';document.getElementById('oral-module-filter').value='all';document.getElementById('oral-search').value='';oralFilter();
+  document.getElementById('oral-sector-filter').value='all';document.getElementById('oral-module-filter').value='all';document.getElementById('oral-search').value='';document.getElementById('oral-level-filter').value='all';oralFilter();
  }
 });
 document.addEventListener('input',e=>{if(e.target.id==='oral-search')oralFilter();});
-document.addEventListener('change',e=>{if(e.target.id==='oral-sector-filter'||e.target.id==='oral-module-filter')oralFilter();});
+document.addEventListener('change',e=>{if(e.target.id==='oral-sector-filter'||e.target.id==='oral-module-filter'||e.target.id==='oral-level-filter')oralFilter();});
