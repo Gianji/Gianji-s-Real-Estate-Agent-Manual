@@ -21,7 +21,7 @@ const CM_GROUPS={
   {name:'Impresa e bilancio',ids:['economia-azienda','eco-bilancio','eco-impresa2']},
   {name:'Mercato e investimenti',ids:['eco-mercato-stat','eco-dati-mercato','eco-investimenti']},
   {name:'Credito e finanza',ids:['economia-finanza','eco-matematica','eco-credito','eco-pagamenti','mutui']},
-  {name:'Tributi e fiscalità',ids:['fisco','fisco-avanzato','eco-tributi','eco-imposte-procedura']}
+  {name:'Tributi, redditi fondiari e fiscalità',ids:['fisco','fisco-avanzato','eco-tributi','eco-imposte-procedura','eco-redditi-fondiari']}
  ],
  immobiliare:[
   {name:'Catasto e documentazione',ids:['catasto','catasto-terreni','imm-catasto-operativo','pubblicita','imm-documenti','imm-topografia']},
