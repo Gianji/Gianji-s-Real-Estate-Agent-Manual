@@ -43,3 +43,10 @@
 .oral-answer[hidden],.oral-question[hidden],.oral-module[hidden],.oral-sector[hidden],.oral-empty[hidden]{display:none!important}
 @media(max-width:760px){.oral-filters{grid-template-columns:1fr 1fr}.oral-search-label{grid-column:1/-1}.oral-result-line span{margin-left:0;flex-basis:100%}.oral-hero{padding:17px}.oral-hero strong{font-size:21px}}
 @media(max-width:500px){.oral-hero{align-items:flex-start;flex-direction:column;gap:10px}.oral-filters{grid-template-columns:1fr;gap:9px;padding:12px}.oral-search-label{grid-column:auto}.oral-question-row{grid-template-columns:24px minmax(0,1fr);padding:12px;gap:8px}.oral-number{width:24px;height:24px}.oral-reveal{grid-column:2;justify-self:start;min-width:135px}.oral-answer{margin:0 12px 13px 12px;padding:12px}.oral-module-head{padding:12px}.oral-module-head h3{font-size:12.5px}.oral-sector-title h2{font-size:17px}}
+
+/* Difficulty is a filterable question attribute, not a different study mode. */
+.oral-filters{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) minmax(0,1.1fr)}
+.oral-search-label{grid-column:1/-1}
+.oral-level-label{display:inline-block;vertical-align:1px;font-size:8px;font-weight:850;letter-spacing:.045em;color:#88501b;background:#fff4e3;border:1px solid #f2d8b4;border-radius:3px;padding:2px 5px;margin-right:7px;line-height:1.4}
+@media(max-width:760px){.oral-filters{grid-template-columns:1fr 1fr}.oral-search-label{grid-column:1/-1}}
+@media(max-width:500px){.oral-filters{grid-template-columns:1fr}.oral-search-label{grid-column:auto}}
