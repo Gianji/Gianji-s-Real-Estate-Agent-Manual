@@ -365,6 +365,12 @@ const ORAL_TARGETED_ANSWERS = {
   ]
  ]
 };
+/* Risposte specifiche per i redditi fondiari; evita risposte mancanti nelle domande di base. */
+ORAL_TARGETED_ANSWERS['eco-redditi-fondiari']=[
+ [1,"Il reddito dominicale è la quota catastale media ordinaria imputabile al fondo e al suo possesso. Il reddito agrario riguarda invece capitale di esercizio e organizzazione del lavoro agricolo, nei limiti fiscali. Se il proprietario coltiva direttamente, in generale può dichiarare entrambe le componenti; in affitto per uso agricolo il dominicale compete ordinariamente al titolare del diritto reale e l’agrario al conduttore dal momento previsto dall’art. 33 TUIR. Non corrispondono al canone incassato né al fatturato della coltivazione.","eco-redditi-fondiari",2],
+ [12,"La rendita catastale è un parametro tecnico-fiscale attribuito al fabbricato, mentre il prezzo è il corrispettivo realmente concordato. Il valore di mercato richiede una stima riferita a caratteristiche, condizioni e data; il valore catastale fiscale deriva da rivalutazioni e moltiplicatori applicabili al tributo e non è un prezzo di mercato. Redditi dominicale e agrario sono invece grandezze catastali dei terreni."],
+ [15,"I redditi fondiari riguardano il possesso di terreni e fabbricati secondo il regime fiscale; i redditi agrari catastali attribuiscono una quota al capitale di esercizio e all’organizzazione del lavoro agricolo, ma non coincidono con ogni reddito d’impresa agricola effettivo. Il d.lgs. 117/2026 riordina le imposte sui redditi e stabilisce l’applicabilità delle proprie norme dal 1° gennaio 2027: per il 2026 occorre ancora distinguere il regime previgente e le norme transitorie." ]
+];
 const ORAL_SECTORS=[
  ['all','Tutte le materie'],['diritto','Diritto'],['economia','Economia'],['immobiliare','Immobiliare'],['cremona','Focus Cremona']
 ];
@@ -424,7 +430,8 @@ function renderOral(moduleId){
   }).join('');
   return '<section class="oral-sector" data-oral-section="'+esc(sid)+'"><div class="oral-sector-title"><h2>'+esc(label)+'</h2><span>'+list.length+' domande</span></div>'+groups+'</section>';
  }).join('');
- return pageTitle('RIPASSO ATTIVO','Domande aperte.','Allenati a rispondere a voce alta. Le domande da orale del manuale e i casi avanzati, con risposte consultabili solo quando vuoi.')+
+ return pageTitle('RIPASSO DI BASE','Definizioni e teoria.','Archivio completo delle domande e dei richiami alle lezioni, comprese le nozioni introduttive. Per simulare la commissione usa la selezione di casi avanzati.')+
+ '<div class="program-link-row"><a class="btn btn-primary btn-sm" href="#/oral">Vai alle domande di livello esame →</a></div>'+
  '<div class="study-banner" style="margin-bottom:16px;flex-wrap:wrap"><div><b>Videoripasso orale con voce</b><p>470 domande, con risposta e spiegazione lette in italiano. Scegli la voce, la velocità e la pausa per rispondere.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><a href="./videoripasso-voce.html" class="btn btn-primary btn-sm" style="text-decoration:none">▶ Ascolta le domande</a><a href="#/milanpriorities" class="btn btn-primary btn-sm" style="text-decoration:none">Argomenti segnalati · Milano →</a><a href="./orale-milano.html" class="btn btn-outline btn-sm" style="text-decoration:none">Simulazione orale · 90 domande →</a></div></div>'+
  '<div class="oral-hero"><div><strong>'+entries.length+' domande aperte</strong><p>'+modules.length+' moduli · '+advancedCount+' quesiti avanzati con eccezioni, casi pratici, calcoli e trabocchetti. Domande e risposte didattiche del manuale, non soluzioni ufficiali camerali.</p></div><a class="btn btn-outline btn-sm" href="#/library">Vai alla teoria →</a></div>'+
  '<div class="oral-filters"><label>Materia<select id="oral-sector-filter">'+ORAL_SECTORS.map(([id,name])=>'<option value="'+id+'">'+esc(name)+'</option>').join('')+'</select></label>'+
