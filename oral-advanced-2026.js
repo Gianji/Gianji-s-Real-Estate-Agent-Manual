@@ -1022,5 +1022,5 @@ for(const item of ORAL_ADVANCED_ROWS){
 function oralAdvancedSource(law){
  if(!law)return null;
  if(law==='AE')return {label:'Agenzia delle Entrate · Guida acquisto casa',url:'https://www1.agenziaentrate.gov.it/web_app_entrate/guida_acquisto_casa.html'};
- return {label:'Codice civile · art. '+law,url:'https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262!vig=~art'+law};
+ return {label:'Codice civile · art. '+law,url:'https://www.normattiva.it/atto/caricaDettaglioAtto?atto.articolo.numero='+encodeURIComponent(law)+'&atto.articolo.sottoArticolo=1&atto.articolo.tipoArticolo=2&atto.codiceRedazionale=042U0262&atto.dataPubblicazioneGazzetta=1942-04-04'};
 }
