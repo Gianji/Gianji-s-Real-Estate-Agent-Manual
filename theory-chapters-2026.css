@@ -39,3 +39,41 @@
 .module-chapter-link span{font-weight:700;color:#405e78}
 @media(max-width:800px){.chapter-module-grid{grid-template-columns:1fr}.chapter-summary-end{min-width:90px}.chapter-meter{width:84px}}
 @media(max-width:550px){.chapter-summary{gap:9px;min-height:90px;padding:14px 12px}.chapter-summary-icon{flex-basis:34px;width:34px;height:34px;font-size:17px}.chapter-summary-copy strong{font-size:13px}.chapter-summary-copy>span{font-size:10px}.chapter-summary-end{min-width:64px}.chapter-summary-end>b{font-size:9px}.chapter-meter{width:61px}.chapter-content{padding:10px}.chapter-extra{flex-direction:column;align-items:flex-start}}
+
+/* One chapter page contains the actual lesson texts, not merely a link list. */
+.chapter-open-all{display:flex;justify-content:flex-end;margin:0 0 10px}
+.chapter-study-meta{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:-7px 0 15px}
+.chapter-study-meta>*{font-size:10px;font-weight:750;color:#386b90;border-radius:5px;background:#ecf4fb;padding:7px 10px;text-decoration:none}
+.chapter-study-meta>a{color:#d96b1f;background:#fff3e6}
+.chapter-study-help{font-size:12px;line-height:1.7;color:#617a8c;margin:0 0 22px;border-left:3px solid #e5a45c;padding:10px 14px;background:#f8fafc}
+.chapter-study-module{border:1px solid #d7e3ef;background:#fff;border-radius:10px;overflow:hidden;margin:0 0 18px}
+.chapter-study-module>header{background:#f3f7fb;border-bottom:1px solid #d9e5ef;padding:20px 22px}
+.chapter-study-module>header>span{color:#d97426;font-weight:850;letter-spacing:.06em;font-size:9px}
+.chapter-study-module h2{color:#173e60;font-size:18px;margin:7px 0 5px;line-height:1.35}
+.chapter-study-module>header p{font-size:11px;color:#6d8090;line-height:1.55;margin:0 0 6px}
+.chapter-study-module>header small{font-size:10px;font-weight:700;color:#2e628b}
+.chapter-study-lessons{padding:10px 15px}
+.chapter-lesson{border-bottom:1px solid #e5edf4}
+.chapter-lesson:last-child{border-bottom:0}
+.chapter-lesson>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:13px 6px;cursor:pointer;font-size:12.5px;font-weight:700;line-height:1.5;color:#1d4c70}
+.chapter-lesson>summary::-webkit-details-marker{display:none}
+.chapter-lesson>summary::marker{content:''}
+.chapter-lesson>summary:hover{background:#f8fafc}
+.chapter-lesson>summary:focus-visible{outline:2px solid #f58200}
+.chapter-lesson[open]>summary{color:#d36b22}
+.chapter-lesson>summary>span:nth-child(2){flex:1;min-width:0}
+.chapter-lesson>summary>small{font-size:10px;color:#8a9baa;font-weight:600;white-space:nowrap}
+.chapter-lesson-num{display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;height:28px;background:#edf3f9;border-radius:5px;color:#66849f;font-size:10px}
+.chapter-lesson-body{padding:5px 15px 20px 48px;font-size:12.2px;line-height:1.78;color:#364f64}
+.chapter-lesson-body>p{margin:0 0 12px;white-space:pre-line}
+.chapter-lesson-lead{font-weight:650;color:#203e57}
+.chapter-note-example,.chapter-note-warning,.chapter-note-key{border-left:3px solid #b4cde1;background:#f3f8fc;padding:12px 14px;margin:10px 0;border-radius:3px}
+.chapter-note-warning{border-left-color:#e4a16b;background:#fff8ed}
+.chapter-note-key{border-left-color:#a3bdaa;background:#f3faf2}
+.chapter-note-example strong,.chapter-note-warning strong,.chapter-note-key strong{font-size:11px;font-weight:800;color:#255b7d}
+.chapter-note-example p,.chapter-note-warning p,.chapter-note-key p{margin:4px 0 0}
+.chapter-lesson-source,.chapter-lesson-actions{margin:12px 0 0}
+.chapter-lesson-source a{color:#236791;font-weight:750;text-decoration:none;font-size:11px}
+.chapter-study-module>footer{display:flex;gap:16px;justify-content:flex-end;flex-wrap:wrap;border-top:1px solid #e5edf4;padding:12px 19px}
+.chapter-study-module>footer a{font-size:11px;color:#1e648f;font-weight:750;text-decoration:none}
+@media(max-width:640px){.chapter-study-module>header{padding:15px}.chapter-study-lessons{padding:8px}.chapter-lesson-body{padding:8px 7px 17px}.chapter-lesson>summary{gap:8px}.chapter-lesson>summary>small{font-size:9px}}
