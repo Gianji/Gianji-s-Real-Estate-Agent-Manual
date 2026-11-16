@@ -1,0 +1,37 @@
+/* Programma orale di Milano segnalato dall'utente; non una classifica ufficiale. */
+.milan-priority-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;padding:18px 22px;background:#f2f7fc;border:1px solid #d3e3f0;border-left:4px solid #e88a32;border-radius:9px;margin:12px 0 16px}
+.milan-priority-intro strong{color:#20597f;font-size:14px;font-weight:800}
+.milan-priority-intro p{font-size:12px;color:#55728b;line-height:1.75;margin:7px 0 0}
+.milan-priority-intro>a{flex:0 0 auto;font-size:11px;font-weight:800;text-decoration:none;color:#1b638e}
+.milan-priority-actions{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 21px}
+.milan-priority-grid{display:grid;gap:21px}
+.milan-priority-section{background:#fff;border:1px solid #d8e4ed;border-radius:10px;overflow:hidden}
+.milan-priority-section>header{padding:18px 20px;background:#f5f9fd;border-bottom:1px solid #e2ebf3}
+.milan-priority-section>header>span{font-size:9px;letter-spacing:.09em;font-weight:900;color:#cb742a}
+.milan-priority-section>header>h2{font-size:20px;color:#184c74;margin:6px 0}
+.milan-priority-section>header>p{font-size:11px;color:#758a9b;margin:0}
+.milan-priority-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:13px}
+.milan-priority-topic{min-width:0;background:#fff;border:1px solid #dfe8f0;border-radius:7px;display:flex;flex-direction:column;overflow:hidden}
+.milan-priority-topic>header{display:flex;align-items:flex-start;gap:10px;padding:15px}
+.milan-priority-num{color:#c87d3f;font-size:10px;font-weight:850;background:#fff2e5;padding:5px 7px;border-radius:4px;white-space:nowrap}
+.milan-priority-topic h3{font-size:13px;line-height:1.35;color:#164970;margin:1px 0 5px}
+.milan-priority-topic>header p{color:#657f95;font-size:11px;line-height:1.55;margin:0}
+.milan-priority-answer{margin:0 13px 12px;background:#f7fafd;border:1px solid #e0e9f1;border-radius:6px}
+.milan-priority-answer>summary{list-style:none;padding:10px 12px;font-size:11px;font-weight:800;color:#1f658d;cursor:pointer}
+.milan-priority-answer>summary::-webkit-details-marker{display:none}
+.milan-priority-answer[open]>summary{border-bottom:1px solid #e1eaf2;background:#eff5fa}
+.milan-priority-answer>summary:focus-visible{outline:2px solid #f58200}
+.milan-priority-answer-body{padding:11px 13px;font-size:12px;line-height:1.72;color:#34536a}
+.milan-priority-answer-body h4{font-size:12px;line-height:1.6;margin:0 0 10px;color:#234a69}
+.milan-priority-answer-body>p{margin:0 0 10px}
+.milan-priority-trap{background:#fff3e7;border-left:3px solid #e58a41;padding:10px 12px}
+.milan-priority-trap strong{font-size:10px;color:#88511c}
+.milan-priority-trap p{font-size:11px;margin:4px 0 0}
+.milan-priority-topic>footer{margin-top:auto;border-top:1px solid #e8eef4;padding:11px 13px;display:flex;align-items:flex-start;flex-direction:column;gap:8px}
+.milan-priority-links{display:flex;gap:7px;flex-wrap:wrap}
+.milan-priority-links a{font-size:10px;color:#1e648f;background:#f0f6fb;padding:5px 7px;border-radius:4px;text-decoration:none}
+.milan-priority-practice,.milan-priority-source{font-size:11px;font-weight:800;color:#20688f;text-decoration:none}
+.milan-priority-source{font-size:10px;color:#677f93}
+.milan-priority-links a:hover,.milan-priority-practice:hover,.milan-priority-source:hover{text-decoration:underline}
+@media(max-width:940px){.milan-priority-topics{grid-template-columns:1fr}}
+@media(max-width:580px){.milan-priority-intro{flex-direction:column;padding:14px;gap:10px}.milan-priority-section>header{padding:14px}.milan-priority-topics{padding:9px}.milan-priority-topic>header{padding:12px}}
