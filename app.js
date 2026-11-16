@@ -7,10 +7,44 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const allLessons=MODULES.filter(m=>m.id!=='cremona').flatMap(m=>m.lessons.map((l,i)=>({...l,mid:m.id,idx:i,category:m.category,moduleTitle:m.title,id:`${m.id}:${i}`})));
 const lessonBy=(mid,i)=>MODULES.find(m=>m.id===mid)?.lessons[Number(i)];
 const moduleBy=id=>MODULES.find(m=>m.id===id);
-const rand=a=>[...a].sort(()=>Math.random()-.5);
-const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
-// Prevent the next run from opening with the very same question when alternatives exist.
-const shuffleDifferent=(questions,previousFirst)=>{const deck=shuffle(questions);if(deck.length>1&&previousFirst&&deck[0].id===previousFirst){const candidates=deck.map((q,i)=>q.id!==previousFirst?i:-1).filter(i=>i>0);if(candidates.length){const swap=candidates[Math.floor(Math.random()*candidates.length)];[deck[0],deck[swap]]=[deck[swap],deck[0]]}}return deck};
+/* Uniform Fisher–Yates instead of Array.sort with a random comparator.
+   Draw indices from crypto when available; rejection sampling avoids modulo bias. */
+const randomIndex=max=>{
+ if(max<=1)return 0;
+ if(typeof crypto!=='undefined'&&crypto.getRandomValues){
+  const bound=4294967296,limit=bound-(bound%max),buf=new Uint32Array(1);
+  do{crypto.getRandomValues(buf)}while(buf[0]>=limit);
+  return buf[0]%max;
+ }
+ return Math.floor(Math.random()*max);
+};
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=randomIndex(i+1);[b[i],b[j]]=[b[j],b[i]]}return b;};
+const rand=shuffle;
+const shuffleDifferent=(questions,previousFirst)=>{
+ const deck=shuffle(questions);
+ if(deck.length>1&&previousFirst&&deck[0].id===previousFirst){
+  const swap=1+randomIndex(deck.length-1);[deck[0],deck[swap]]=[deck[swap],deck[0]];
+ }
+ return deck;
+};
+/* Remember recently shown IDs on the device, independently of completion data.
+   Prefer unseen questions from the currently selected pool, while allowing
+   previously seen ones after the pool has been exhausted. */
+const RECENT_QUESTIONS_KEY='patentino-recent-quiz-v2';
+const recentQuizIds=(()=>{try{const value=JSON.parse(localStorage.getItem(RECENT_QUESTIONS_KEY)||'[]');return Array.isArray(value)?value.slice(-600):[]}catch{return []}})();
+function pickFreshQuestions(pool,count){
+ if(!Array.isArray(pool)||!count)return [];
+ const byId=new Map(pool.map(q=>[q.id,q]));
+ const unique=[...byId.values()], needed=Math.min(count,unique.length);
+ const recent=new Set(recentQuizIds.slice(-Math.max(120,Math.min(500,Math.floor(unique.length*.75)))));
+ const unseen=shuffle(unique.filter(q=>!recent.has(q.id)));
+ const seen=shuffle(unique.filter(q=>recent.has(q.id)));
+ const chosen=unseen.concat(seen).slice(0,needed);
+ recentQuizIds.push(...chosen.map(q=>q.id));
+ if(recentQuizIds.length>600)recentQuizIds.splice(0,recentQuizIds.length-600);
+ try{localStorage.setItem(RECENT_QUESTIONS_KEY,JSON.stringify(recentQuizIds))}catch{}
+ return shuffle(chosen);
+}
 // Create a question-specific presentation copy: source text remains untouched while
 // A/B/C/D are reshuffled and the correct answer index is remapped consistently.
 const previousChoiceOrders=new Map();
@@ -20,7 +54,7 @@ const permuteQuestion=q=>{
  const signature=entries=>entries.map(x=>x.index).join(',');
  const previous=previousChoiceOrders.get(q.id);
  if(deck.length>1&&(signature(deck)===previous||(!previous&&deck.every((x,i)=>x.index===i)))){
-  const swap=1+Math.floor(Math.random()*(deck.length-1));
+  const swap=1+randomIndex(deck.length-1);
   [deck[0],deck[swap]]=[deck[swap],deck[0]];
  }
  previousChoiceOrders.set(q.id,signature(deck));
@@ -99,7 +133,13 @@ function renderExam(){if(examSession)return renderExamGame();const latest=data.e
 function examTime(){if(!examSession)return '40:00';const sec=Math.max(0,Math.ceil((examSession.deadline-Date.now())/1000));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;}
 function renderExamGame(){const g=examSession,q=g.questions[g.i],sel=g.answers[g.i];return `<div class="quiz-stage"><div class="question-top"><div><div class="eyebrow">SIMULAZIONE IN CORSO</div><h2 style="font-size:19px;margin:0">Domanda ${g.i+1}<span class="muted"> / 40</span></h2></div><div style="text-align:right"><small class="muted">TEMPO RESTANTE</small><div class="exam-timer" id="exam-timer">${examTime()}</div></div></div><div class="exam-meter quiz-meter"><span style="width:${(g.i+1)/40*100}%"></span></div>${questionCard(q,sel,false)}<div class="exam-dots">${g.questions.map((_,i)=>`<button class="exam-dot ${g.answers[i]!==null?'answered':''} ${i===g.i?'current':''}" title="Domanda ${i+1}" aria-label="Vai alla domanda ${i+1}" data-exam-jump="${i}"></button>`).join('')}</div><div class="quiz-controls"><button class="btn btn-outline" data-action="exam-prev" ${g.i===0?'disabled':''}>← Precedente</button><button class="btn btn-outline btn-sm" data-action="exam-clear">Lascia in bianco</button><span style="font-size:11px;color:#80958a">${g.answers.filter(x=>x!==null).length}/40 risposte</span>${g.i===39?btn('Consegna la prova','submit-exam','btn-primary'):btn('Successiva →','exam-next','btn-primary')}</div><div style="display:flex;justify-content:center;margin-top:17px"><button class="btn-link" data-action="submit-exam">Consegna prima del tempo</button></div></div>`;}
 function renderExamResult(){const g=examSession;if(!g)return renderExam();const {n,t}=examCategoryScores(g),mean=(n+t)/2,passed=n>=6&&t>=6&&mean>=7;return `<div class="quiz-stage"><div class="result-banner ${passed?'':'fail'}"><div class="eyebrow">RISULTATO DELLA SIMULAZIONE</div><h1>${passed?'Obiettivo scritto raggiunto!':'Adesso sai cosa migliorare.'}</h1><p>${passed?'Hai raggiunto le soglie richieste per l’ammissione all’orale nella simulazione.':'Per superare lo scritto servono almeno 6/10 in ciascuna parte e una media minima di 7/10. Ripassa gli errori e riprova.'}</p></div><div class="result-tiles"><div><b>${n.toFixed(2).replace('.00','')}/10</b><span>Normativa</span></div><div><b>${t.toFixed(2).replace('.00','')}/10</b><span>Tecnica</span></div><div><b>${mean.toFixed(2).replace('.00','')}/10</b><span>Media</span></div></div><div class="panel" style="margin-top:20px"><h3>Analisi delle risposte</h3><div class="summary-list">${g.questions.map((q,i)=>`<div class="summary-item" style="border-bottom:1px solid #edf1ed;padding-bottom:10px"><span style="background:${g.answers[i]===q.answer?'#d7ead4':g.answers[i]===null?'#e6e9e4':'#fbe7df'};color:${g.answers[i]===q.answer?'#397250':'#a56c4f'}">${g.answers[i]===q.answer?'✓':g.answers[i]===null?'–':'×'}</span><div><b style="font-size:11px;color:#344c40">${i+1}. ${esc(q.question)}</b><div style="font-size:11px;margin-top:5px">${esc(q.why)}</div></div></div>`).join('')}</div><div class="article-toolbar">${btn('Nuova simulazione','reset-exam','btn-primary')}${btn('Ripassa gli errori','go-errors','btn-outline')}</div></div></div>`;}
-function flashCards(){return allLessons.filter(l=>flashCategory==='all'||flashCategory==='again'&&data.flashAgain.includes(l.id)||l.category===flashCategory)}
+let flashDeckKey='',flashDeck=[];
+function flashCards(){
+ const items=allLessons.filter(l=>flashCategory==='all'||flashCategory==='again'&&data.flashAgain.includes(l.id)||l.category===flashCategory);
+ const key=flashCategory+'|'+items.map(l=>l.id).join(';');
+ if(key!==flashDeckKey){flashDeckKey=key;flashDeck=shuffle(items);flashIndex=0;}
+ return flashDeck;
+}
 function renderFlashcards(){const cards=flashCards();if(flashIndex>=cards.length)flashIndex=0;const card=cards[flashIndex];return `${pageTitle('RICHIAMO ATTIVO','Flashcard.','Prima prova a ricordare la risposta. Poi gira la scheda e verifica: il recupero attivo allena la memoria più della semplice rilettura.')}
  <div class="filters"><button class="chip ${flashCategory==='all'?'active':''}" data-flash-category="all">Tutte</button><button class="chip ${flashCategory==='normativa'?'active':''}" data-flash-category="normativa">Normativa</button><button class="chip ${flashCategory==='tecnica'?'active':''}" data-flash-category="tecnica">Tecnica</button><button class="chip ${flashCategory==='again'?'active':''}" data-flash-category="again">Da rivedere (${data.flashAgain.length})</button><span style="margin-left:auto;font-size:11px;color:#85948a">${data.flashKnown.length} concetti acquisiti</span></div>${!card?`<div class="empty-state"><h3>Nessuna scheda da rivedere</h3><p>Quando trovi un concetto difficile, premi «Da rivedere» sulla sua flashcard.</p><button class="btn btn-primary" data-flash-category="all">Vedi tutte le flashcard →</button></div>`:`<div class="flashcard-wrap"><div style="display:flex;justify-content:space-between;color:#85948a;font-size:11px;margin-bottom:11px"><span>${esc(card.moduleTitle)}</span><b>${flashIndex+1} / ${cards.length}</b></div><div class="flashcard ${flashFlipped?'flipped':''}" data-action="flip-flashcard" tabindex="0" role="button" aria-label="Gira la scheda"><div class="flashcard-inner"><div class="flash-face"><small>✦ RICORDA IL CONCETTO</small><h2>${esc(card.title)}</h2><small>Tocca la scheda per scoprire la risposta ↗</small></div><div class="flash-face back"><small>✓ LA RISPOSTA IN SINTESI</small><h2>${esc(card.key)}</h2><p>${esc(card.intro)}</p><small>Tocca per tornare alla domanda</small></div></div></div><div class="flashcard-actions"><button class="btn btn-outline" data-action="flash-prev">← Indietro</button><button class="btn btn-outline" data-action="flash-again">Da rivedere</button><button class="btn btn-soft" data-action="flash-known">✓ Lo so</button><button class="btn btn-primary" data-action="flash-next">Avanti →</button></div></div>`}`;}
 function renderReview(){const savedLessons=allLessons.filter(l=>data.bookmarks.includes(l.id));const wrongQuestions=QUESTIONS.filter(q=>data.wrong.includes(q.id));const errors=reviewTab==='errors';return `${pageTitle('CONSOLIDA QUELLO CHE IMPARI','Il tuo ripasso.','Tutto ciò che vale la pena rivedere: domande sbagliate, lezioni preferite, appunti e dizionario essenziale.','<div class="program-link-row"><button class="btn btn-primary btn-sm" data-nav="oral">Domande aperte →</button><button class="btn btn-outline btn-sm" data-nav="flashcards">Flashcard →</button></div>')}
@@ -139,12 +179,34 @@ function renderMilanoBank(){
 }
 function notFound(){return `<div class="empty-state"><h2>Pagina non trovata</h2><button class="btn btn-primary" data-nav="home">Torna alla home</button></div>`;}
 function render(scrollToTop=false){const {view,id,idx}=currentRoute();navActive(view);const root=$('#view');root.innerHTML=({home:renderHome,library:renderLibrary,mindmap:()=>renderMindmap(id),oral:()=>renderOral(id),milanpriorities:()=>renderMilanPriorities(),chapter:()=>renderUnifiedChapter(id),module:()=>renderModule(id),lesson:()=>renderLesson(id,idx),quiz:renderQuiz,exam:()=>examSession?.finished?renderExamResult():renderExam(),flashcards:renderFlashcards,review:renderReview,sources:renderSources,archive:renderOfficialArchive,milanobank:renderMilanoBank,officialtest:()=>renderOfficialTest(id)}[view]||notFound)();document.title=`${({home:'Home',library:'Programma',mindmap:'Mappe concettuali',oral:'Domande aperte',milanpriorities:'Orale Milano',chapter:THEORY_CHAPTERS.find(c=>c.id===id)?.title,module:moduleBy(id)?.title,lesson:lessonBy(id,idx)?.title,quiz:'Quiz',exam:'Simulazione',flashcards:'Flashcard',review:'Ripasso',sources:'Fonti ufficiali',archive:'Banche ufficiali',milanobank:'Banca Milano',officialtest:'Quiz ufficiale Roma'}[view]||'Patentino')} — Patentino`;if(view==='mindmap')setTimeout(cmInit,0);if(view==='oral')oralFilter();if(scrollToTop)window.scrollTo({top:0,behavior:'instant'});}
-function startQuiz(errorsOnly=false){let pool=categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector);if(errorsOnly||quizSize==='errors')pool=pool.filter(q=>data.wrong.includes(q.id));if(!pool.length){toast('Nessun quesito disponibile con questi filtri');return}const count=errorsOnly||quizSize==='errors'?Math.min(pool.length,20):Math.min(Number(quizSize),pool.length);const selection=(quizOrigin==='milano'?shuffle(pool.filter(q=>q.authenticStem)).concat(shuffle(pool.filter(q=>!q.authenticStem))):quizOrigin==='original'?shuffle(pool.filter(q=>q.difficulty==='avanzato')).concat(shuffle(pool.filter(q=>q.difficulty!=='avanzato'))):shuffle(pool)).slice(0,count);const qs=shuffleDifferent(selection,lastQuizFirst).map(permuteQuestion);lastQuizFirst=qs[0]?.id??null;streakSession=null;quizSession={questions:qs,answers:Array(qs.length).fill(null),i:0,recorded:false};navigate('quiz');}
-function startModuleMiniQuiz(id){let all=QUESTIONS.filter(q=>q.module===id);if(!all.length&&typeof ESTIMO_MINI_QUIZ_FALLBACK_2026!=='undefined'&&ESTIMO_MINI_QUIZ_FALLBACK_2026[id]){const related=ESTIMO_MINI_QUIZ_FALLBACK_2026[id];all=QUESTIONS.filter(q=>related.includes(q.module)&&(q.authenticStem||['milano','roma','venezia-rovigo'].includes(questionOrigin(q))));if(!all.length)all=QUESTIONS.filter(q=>related.includes(q.module));}const authentic=all.filter(q=>q.authenticStem),official=all.filter(q=>!q.authenticStem&&['milano','roma','venezia-rovigo'].includes(questionOrigin(q)));const original=all.filter(q=>!authentic.includes(q)&&!official.includes(q));const prioritized=shuffle(authentic).concat(shuffle(official),shuffle(original.filter(q=>q.difficulty==='avanzato')),shuffle(original.filter(q=>q.difficulty!=='avanzato')));if(!prioritized.length){toast('Nessuna domanda disponibile per questo modulo');return}const qs=shuffleDifferent(prioritized.slice(0,Math.min(5,prioritized.length)),lastQuizFirst).map(permuteQuestion);lastQuizFirst=qs[0]?.id??null;streakSession=null;quizSession={questions:qs,answers:Array(qs.length).fill(null),i:0,recorded:false,miniModule:id};navigate('quiz');}
+function startQuiz(errorsOnly=false,expertOnly=false){
+ let pool=categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector);
+ if(errorsOnly||quizSize==='errors')pool=pool.filter(q=>data.wrong.includes(q.id));
+ if(expertOnly)pool=pool.filter(q=>q.difficulty==='avanzato');
+ if(!pool.length){toast('Nessun quesito disponibile con questi filtri');return;}
+ const count=errorsOnly||quizSize==='errors'?Math.min(pool.length,20):Math.min(Number(quizSize),pool.length);
+ const selected=pickFreshQuestions(pool,count);
+ const qs=shuffleDifferent(selected,lastQuizFirst).map(permuteQuestion);
+ lastQuizFirst=qs[0]?.id??null;
+ streakSession=null;quizSession={questions:qs,answers:Array(qs.length).fill(null),i:0,recorded:false};
+ navigate('quiz');
+}
+function startModuleMiniQuiz(id){
+ let pool=QUESTIONS.filter(q=>q.module===id);
+ if(!pool.length&&typeof ESTIMO_MINI_QUIZ_FALLBACK_2026!=='undefined'&&ESTIMO_MINI_QUIZ_FALLBACK_2026[id]){
+  const related=ESTIMO_MINI_QUIZ_FALLBACK_2026[id];
+  pool=QUESTIONS.filter(q=>related.includes(q.module));
+ }
+ if(!pool.length){toast('Nessuna domanda disponibile per questo modulo');return;}
+ const qs=shuffleDifferent(pickFreshQuestions(pool,Math.min(5,pool.length)),lastQuizFirst).map(permuteQuestion);
+ lastQuizFirst=qs[0]?.id??null;
+ streakSession=null;quizSession={questions:qs,answers:Array(qs.length).fill(null),i:0,recorded:false,miniModule:id};
+ navigate('quiz');
+}
 function startStreak(filtered=false){
  const pool=filtered?categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector):categoryQuestions('all','all','all','all');
  if(!pool.length){toast('Nessun quesito disponibile con questi filtri');return}
- const questions=shuffleDifferent(pool,lastStreakFirst).map(permuteQuestion);
+ const first=pickFreshQuestions(pool,Math.min(120,pool.length));const topIds=new Set(first.map(q=>q.id));const questions=shuffleDifferent([...first,...shuffle(pool.filter(q=>!topIds.has(q.id)))],lastStreakFirst).map(permuteQuestion);
  lastStreakFirst=questions[0]?.id??null;
  quizSession=null;
  streakSession={questions,i:0,score:0,selected:null,failed:false,completed:false,filtered};
@@ -168,7 +230,15 @@ function streakNext(){
 function streakRestart(){if(!streakSession)return;startStreak(streakSession.filtered);}
 function quizAnswer(i){if(!quizSession||quizSession.answers[quizSession.i]!==null)return;const q=quizSession.questions[quizSession.i];quizSession.answers[quizSession.i]=i;if(i!==q.answer&&!data.wrong.includes(q.id))data.wrong.push(q.id);save();render();}
 function quizNext(){if(!quizSession)return;if(quizSession.i<quizSession.questions.length-1){quizSession.i++;render(true)}else{if(!quizSession.recorded){const correct=quizSession.questions.filter((q,i)=>quizSession.answers[i]===q.answer).length;data.quizHistory.push({date:new Date().toISOString(),count:quizSession.questions.length,correct});quizSession.recorded=true;save()}quizSession.i=quizSession.questions.length;render(true)}}
-function startExam(){const eligible=QUESTIONS.filter(q=>['milano','roma','venezia-rovigo'].includes(questionOrigin(q)));const pick=(category)=>{const pool=eligible.filter(q=>moduleBy(q.module).category===category),milan=shuffle(pool.filter(q=>q.authenticStem)),other=shuffle(pool.filter(q=>!q.authenticStem));return milan.slice(0,20).concat(other.slice(0,Math.max(0,20-milan.length)))};const n=pick('normativa'),t=pick('tecnica'),questions=shuffleDifferent([...n,...t],lastExamFirst).map(permuteQuestion);lastExamFirst=questions[0]?.id??null;examSession={questions,answers:Array(questions.length).fill(null),i:0,deadline:Date.now()+40*60000,finished:false,recorded:false};startTicker();navigate('exam');}
+function startExam(){
+ const eligible=QUESTIONS.filter(q=>['milano','roma','venezia-rovigo'].includes(questionOrigin(q)));
+ const pick=category=>pickFreshQuestions(eligible.filter(q=>moduleBy(q.module)?.category===category),20);
+ const questions=shuffleDifferent([...pick('normativa'),...pick('tecnica')],lastExamFirst).map(permuteQuestion);
+ if(questions.length!==40){toast('La banca dati non contiene 40 quesiti validi');return;}
+ lastExamFirst=questions[0]?.id??null;
+ examSession={questions,answers:Array(questions.length).fill(null),i:0,deadline:Date.now()+40*60000,finished:false,recorded:false};
+ startTicker();navigate('exam');
+}
 function startTicker(){clearInterval(examTicker);examTicker=setInterval(()=>{if(!examSession||examSession.finished){clearInterval(examTicker);return}const target=$('#exam-timer');if(target){target.textContent=examTime();target.classList.toggle('urgent',examSession.deadline-Date.now()<5*60000)}if(Date.now()>=examSession.deadline)finishExam()},1000)}
 function examCategoryScores(g){const scoreFor=category=>Math.max(0,g.questions.reduce((total,q,i)=>moduleBy(q.module).category!==category?total:total+(g.answers[i]===null?0:g.answers[i]===q.answer?.5:-.25),0));return {n:scoreFor('normativa'),t:scoreFor('tecnica')}}
 function finishExam(){if(!examSession||examSession.finished)return;examSession.finished=true;clearInterval(examTicker);const {n,t}=examCategoryScores(examSession);data.examHistory.push({date:new Date().toISOString(),count:40,n,t,passed:n>=6&&t>=6&&(n+t)/2>=7});for(let i=0;i<40;i++){const q=examSession.questions[i];if(examSession.answers[i]!==null&&examSession.answers[i]!==q.answer&&!data.wrong.includes(q.id))data.wrong.push(q.id)}save();render();}
@@ -207,7 +277,7 @@ document.addEventListener('click',e=>{
   case 'streak-next':streakNext();break;
   case 'streak-restart':streakRestart();break;
   case 'quit-streak':streakSession=null;render();break;
-  case 'start-expert-quiz':quizSession=null;quizOrigin='original';quizSubject='all';quizSector='all';quizModule='all';quizSize=20;startQuiz();break;
+  case 'start-expert-quiz':quizSession=null;quizOrigin='original';quizSubject='all';quizSector='all';quizModule='all';quizSize=20;startQuiz(false,true);break;
   case 'start-milano-quiz':quizSession=null;quizOrigin='milano';quizSubject='all';quizSector='all';quizModule='all';quizSize=50;navigate('quiz');break;
   case 'start-official-quiz':navigate('officialtest',officialSessionId);break;
   case 'start-error-quiz':quizSubject='all';quizSector='all';quizModule='all';quizOrigin='all';quizSize='errors';startQuiz(true);break;
