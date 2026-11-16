@@ -1,0 +1,19 @@
+/* Domande orali livello esame: mescolate tra materie, senza blocchi fissi per modulo. */
+.oral-quality-toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px;background:#fff;border:1px solid #dbe6f0;border-radius:10px;margin-bottom:16px}
+.oral-quality-toolbar label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:#3d698a;font-weight:800;min-width:0}
+.oral-quality-toolbar input,.oral-quality-toolbar select{font:550 12px 'DM Sans',sans-serif;color:#1e4969;width:100%;min-width:0;box-sizing:border-box;padding:9px 10px;height:39px;border:1px solid #ccdce8;background:#fff;border-radius:6px}
+.oral-quality-toolbar input:focus-visible,.oral-quality-toolbar select:focus-visible{outline:2px solid #f58200;outline-offset:1px}
+.oral-quality-search{grid-column:1/-1}
+.oral-quality-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;grid-column:1/-1}
+.oral-quality-actions>span{font-size:11px;color:#658198;margin-left:auto}
+.oral-quality-list{display:grid;gap:11px}
+.oral-quality-card{background:#fff;border:1px solid #d7e4ed;border-radius:9px;overflow:hidden}
+.oral-quality-card[hidden]{display:none!important}
+.oral-quality-top{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #e9eff4;background:#f8fafc;padding:10px 15px}
+.oral-quality-top span{font-size:10px;letter-spacing:.02em;color:#4a7492;font-weight:700}
+.oral-quality-top span:last-child{color:#a66a2c;text-align:right;font-size:9px;letter-spacing:.04em;white-space:nowrap}
+.oral-quality-card>.oral-question-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+.oral-quality-card>.oral-question-row h3{font:700 13px/1.6 'DM Sans',sans-serif;color:#183e5b;margin:0}
+.oral-quality-card>.oral-answer{margin-left:15px}
+@media(max-width:740px){.oral-quality-toolbar{grid-template-columns:1fr 1fr}.oral-quality-search,.oral-quality-actions{grid-column:1/-1}}
+@media(max-width:490px){.oral-quality-toolbar{grid-template-columns:1fr}.oral-quality-card>.oral-question-row{grid-template-columns:1fr}.oral-quality-card>.oral-question-row .oral-reveal{justify-self:start}.oral-quality-top span{font-size:9px}}
