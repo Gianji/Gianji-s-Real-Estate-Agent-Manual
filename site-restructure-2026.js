@@ -110,12 +110,17 @@ function site2026Home(){
  const validIds=new Set(allLessons.map(l=>l.id));
  const done=data.completed.filter(id=>validIds.has(id)).length;
  const total=allLessons.length;
- const percent=total?Math.min(100,Math.round(done/total*100)):0;
+ const volumes=window.PATENTINO_ACADEMIC_VOLUMES||[];
+ const readSet=typeof patentinoBookRead!=='undefined'?patentinoBookRead:new Set();
+ const bookTotal=volumes.reduce((n,b)=>n+b.sections.length,0);
+ const bookRead=volumes.reduce((n,b)=>n+b.sections.filter((_,i)=>readSet.has(b.id+':'+i)).length,0);
+ const percent=bookTotal?Math.min(100,Math.round(100*bookRead/bookTotal)):(total?Math.min(100,Math.round(done/total*100)):0);
  const wrongCount=data.wrong.filter(id=>QUESTIONS.some(q=>q.id===id)).length;
  const best=Number(data.streakBest)||0;
- const mainLink=first?'#/lesson/'+encodeURIComponent(first.mid)+'/'+first.idx:'#/studio';
- const mainTitle=first?'Continua con la prossima lezione':'Consulta il programma';
- const subtitle=first?'Prossima: '+esc(first.title)+' · '+esc(first.module):'Hai completato tutte le lezioni disponibili.';
+ const nextVolume=volumes.find(b=>b.sections.some((_,i)=>!readSet.has(b.id+':'+i)));
+ const mainLink=nextVolume?'#/chapter/'+encodeURIComponent(nextVolume.id):first?'#/lesson/'+encodeURIComponent(first.mid)+'/'+first.idx:'#/studio';
+ const mainTitle=nextVolume?'Continua con il manuale':'Consulta il programma';
+ const subtitle=nextVolume?'Prossimo volume: '+esc(nextVolume.title):'I paragrafi pubblicati sono stati tutti segnati come letti.';
  const pictogram='<svg viewBox="0 0 340 270" role="img" aria-label="Illustrazione geometrica di edifici, linee architettoniche e un tetto" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M26 229H314" stroke="#92B6D2" stroke-width="2"/><path d="M53 229V100L150 47L247 100V229" stroke="#CEE1EF" stroke-width="2.5"/><path d="M40 108L150 44L260 108" stroke="#F49A38" stroke-width="5" stroke-linecap="square"/><path d="M89 229V119H209V229" stroke="#8DB5D3" stroke-width="2"/><path d="M113 145H145V179H113zM160 145H192V179H160z" stroke="#C7DFED" stroke-width="2"/><path d="M135 229V195H172V229" stroke="#C7DFED" stroke-width="2"/><path d="M237 229V139H286V229" stroke="#77A7C8" stroke-width="2"/><path d="M249 156H274M249 177H274M249 198H274" stroke="#A8C9DE" stroke-width="1.7"/><path d="M16 229V165H53" stroke="#709FBE" stroke-width="2"/><path d="M26 180H43M26 199H43" stroke="#709FBE" stroke-width="1.5"/><path d="M79 66V35M79 35H99" stroke="#F49A38" stroke-width="2"/><circle cx="79" cy="35" r="4" fill="#F49A38"/></svg>';
  return '<div class="site2026-home">'+
  '<div class="site2026-home-kicker"><span class="site2026-home-kicker-mark"></span><span>PATENTINO / PERCORSO DI PREPARAZIONE</span><small>ESAME AGENTE IMMOBILIARE</small></div>'+
@@ -126,9 +131,9 @@ function site2026Home(){
  '<div class="site2026-home-hero-actions"><a class="site2026-home-button" href="'+mainLink+'">'+mainTitle+' <span aria-hidden="true">↗</span></a><a class="site2026-home-hero-secondary" href="#/studio">Esplora lo studio</a></div>'+
  '<div class="site2026-home-next">'+subtitle+'</div></div>'+
  '<div class="site2026-home-illustration" aria-hidden="true"><div class="site2026-home-illustration-frame">'+pictogram+'</div><div class="site2026-home-visual-caption">STUDIO · PRATICA · RIPASSO <span>01 / 03</span></div></div></section>'+
- '<section class="site2026-home-progress" aria-label="I tuoi progressi"><div class="site2026-home-progress-lead"><div><span class="site2026-home-overline">IL TUO PERCORSO</span><h2>La preparazione, passo dopo passo.</h2></div><span class="site2026-home-percent">'+percent+'<small>%</small></span></div>'+
- '<div class="site2026-home-progress-track" role="progressbar" aria-label="Lezioni completate" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percent+'"><span style="width:'+percent+'%"></span></div>'+
- '<div class="site2026-home-metrics"><div><b>'+done+' <span>/ '+total+'</span></b><small>Lezioni completate</small></div><div><b>'+wrongCount+'</b><small>Quesiti da rivedere</small></div><div><b>'+best+'</b><small>Record quiz consecutivi</small></div></div></section>'+
+ '<section class="site2026-home-progress" aria-label="I tuoi progressi"><div class="site2026-home-progress-lead"><div><span class="site2026-home-overline">IL TUO PERCORSO</span><h2>La tua lettura, passo dopo passo.</h2></div><span class="site2026-home-percent">'+percent+'<small>%</small></span></div>'+
+ '<div class="site2026-home-progress-track" role="progressbar" aria-label="Paragrafi accademici letti" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percent+'"><span style="width:'+percent+'%"></span></div>'+
+ '<div class="site2026-home-metrics"><div><b>'+bookRead+' <span>/ '+bookTotal+'</span></b><small>Paragrafi dei manuali letti</small></div><div><b>'+done+' <span>/ '+total+'</span></b><small>Lezioni precedenti completate</small></div><div><b>'+wrongCount+'</b><small>Quesiti da rivedere · Record '+best+'</small></div></div></section>'+
  '<section class="site2026-home-paths" aria-labelledby="site2026-home-paths-title"><div class="site2026-home-section-head"><div><span class="site2026-home-overline">DA DOVE COMINCIARE</span><h2 id="site2026-home-paths-title">Tre aree, un unico obiettivo.</h2></div><p>Seleziona il percorso che ti serve.</p></div>'+
  '<div class="site2026-home-path-grid">'+
  '<a class="site2026-home-path" href="#/studio"><span class="site2026-home-path-index">01 <span>—</span> CONOSCENZA</span><h3>Studio</h3><p>Esplora il programma diviso in Normativa e Tecnica, oppure in quattro materie.</p><span class="site2026-home-path-cta">Vai allo studio <b aria-hidden="true">↗</b></span></a>'+
