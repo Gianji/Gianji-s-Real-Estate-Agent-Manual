@@ -110,6 +110,7 @@ renderQuiz=site2026Quiz;
 const site2026OriginalRender=render;
 render=function(scroll){
  const route=currentRoute(),view=route.view;
+ if(view==='home'){history.replaceState(null,'','#/studio');return render(scroll);}
  if(['studio','domande','ripasso-generale'].includes(view)){
   navActive(view);
   const body=view==='studio'?site2026Study(route.id,route.idx):view==='domande'?site2026Domande():site2026Ripasso(route.id);
