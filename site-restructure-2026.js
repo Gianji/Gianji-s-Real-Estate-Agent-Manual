@@ -26,16 +26,24 @@ function site2026Study(division,selected){
   const chapters=THEORY_CHAPTERS.map(ch=>({ch:ch,modules:theoryChapterModules(ch).filter(m=>mode==='a'?m.category===o[0]:site2026Sector(ch)===o[0])})).filter(x=>x.modules.length);
   const groupModules=chapters.flatMap(x=>x.modules),stat=site2026Count(groupModules);
   const cards=chapters.map(x=>{
-   const s=site2026Count(x.modules);
+   const b=typeof patentinoVolume==='function'?patentinoVolume(x.ch.id):null;
+   const stat=site2026Count(x.modules);
+   const read=b&&typeof patentinoBookRead!=='undefined'?b.sections.filter((_,i)=>patentinoBookRead.has(b.id+':'+i)).length:0;
    const rows=x.modules.map(m=>{
     const progress=site2026Count([m]);
-    return '<a class="site2026-module" href="'+(typeof patentinoVolume==='function'&&patentinoVolume(x.ch.id)?'#/chapter/'+encodeURIComponent(x.ch.id):'#/module/'+encodeURIComponent(m.id))+'"><span><strong>'+esc(m.title)+'</strong><small>'+esc(m.description)+'</small></span><em>'+progress.done+'/'+progress.total+'</em></a>';
+    return '<a class="site2026-module" href="#/module/'+encodeURIComponent(m.id)+'"><span><strong>'+esc(m.title)+'</strong><small>'+esc(m.description)+'</small></span><em>'+progress.done+'/'+progress.total+'</em></a>';
    }).join('');
-   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span><span class="site2026-chapter-meta">'+x.modules.length+' moduli · '+s.done+'/'+s.total+' lezioni</span><span class="site2026-chevron" aria-hidden="true">⌄</span></summary><div class="site2026-chapter-content"><div class="site2026-modules">'+rows+'</div><a class="site2026-text-link" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">'+(typeof patentinoVolume==='function'&&patentinoVolume(x.ch.id)?'Leggi il manuale di approfondimento →':'Apri le lezioni del capitolo →')+'</a></div></details>';
+   const preview=b?'<div class="site2026-academic-preview"><div class="site2026-academic-intro"><strong>Volume di approfondimento</strong><span>'+b.sections.length+' paragrafi · '+read+' segnati come letti</span></div>'+
+    '<ol>'+b.sections.slice(0,5).map((p,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span>'+esc(p.title)+'</li>').join('')+(b.sections.length>5?'<li class="site2026-academic-more">e altri '+(b.sections.length-5)+' paragrafi</li>':'')+'</ol>'+
+    '<a class="site2026-academic-read" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">Leggi il manuale <span aria-hidden="true">↗</span></a>'+
+    '<details class="site2026-academic-legacy"><summary>Schede e moduli precedenti</summary><div class="site2026-modules">'+rows+'</div></details></div>'
+   :'<div class="site2026-chapter-content"><div class="site2026-modules">'+rows+'</div><a class="site2026-text-link" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">Apri le lezioni originali</a></div>';
+   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><small>VOLUME · '+esc(x.ch.sector.toUpperCase())+'</small><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span>'+
+    '<span class="site2026-chapter-meta">'+(b?b.sections.length+' paragrafi approfonditi':x.modules.length+' moduli')+'</span><span class="site2026-chevron" aria-hidden="true">⌄</span></summary>'+preview+'</details>';
   }).join('');
   return '<section class="site2026-study-group"><div class="site2026-group-head"><div><div class="site2026-overline">'+(mode==='a'?'DIVISIONE A':'DIVISIONE B')+'</div><h2>'+esc(o[1])+'</h2><p>'+esc(o[2])+'</p></div><div class="site2026-count">'+stat.done+' / '+stat.total+' lezioni completate</div></div><div class="site2026-chapters">'+cards+'</div></section>';
  }).join('');
- return '<div class="site2026-page">'+pageTitle('AREA STUDIO','Studio','Scegli come organizzare il programma. Le due divisioni consultano le stesse lezioni: non generano doppioni e condividono i progressi.')+tabs+filter+groups+
+ return '<div class="site2026-page">'+pageTitle('COLLANA ACCADEMICA','Studio','Scegli la divisione del programma e apri i volumi di approfondimento. Norme, teoria, distinzioni, casi e fonti sono riuniti in testi continui. La redazione è in progressivo ampliamento.')+tabs+filter+groups+
  '<div class="site2026-secondary"><a href="#/sources">Consulta le fonti ufficiali</a><a href="#/ripasso-generale/argomenti">Ripassa per argomento</a></div></div>';
 }
 function site2026Card(title,description,url,meta,extra){
