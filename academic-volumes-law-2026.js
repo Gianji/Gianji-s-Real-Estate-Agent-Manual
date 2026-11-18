@@ -30,7 +30,7 @@ window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCE
   },
   "L431": {
     "label": "Legge 431/1998 — locazioni abitative, Normattiva",
-    "url": "https://www.normattiva.it/eli/id/1998/12/15/098G0484/CONSOLIDATED"
+    "url": "https://www.normattiva.it/eli/id/1998/12/15/098G0483/CONSOLIDATED"
   }
 });
 window.PATENTINO_ACADEMIC_VOLUMES=(window.PATENTINO_ACADEMIC_VOLUMES||[]).concat([
