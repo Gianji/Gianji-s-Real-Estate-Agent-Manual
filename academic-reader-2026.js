@@ -19,23 +19,44 @@ function patentinoBookMeta(b){
  return {modules,words,read,sections:b.sections.length};
 }
 function patentinoCitedCivilArticles(section){
+ if(section.expert)return [...new Set((section.expert.civilArticles||[]).filter(x=>Number.isInteger(x)&&x>0&&x<=2969))].sort((a,b)=>a-b);
  const text=[section.title,...section.paragraphs,section.focus,section.caseStudy,section.exam].join(' ');
  const found=new Set();
- for(const m of text.matchAll(/\b(?:articolo|articoli|art\.)\s+(\d{3,4})(?![-\w])/gi)){
-  const n=Number(m[1]);
-  if(n>100&&n<3000)found.add(n);
+ for(const m of text.matchAll(/\b(?:art(?:icolo|icoli)?\.?)\s*(\d{1,4})(?:\s*(?:e|,|-)\s*\d{1,4})?\s*(?:c\.\s*c\.|del\s+Codice\s+civile)\b/gi)){
+  found.add(Number(m[1]));
  }
  return [...found].sort((a,b)=>a-b);
 }
+
+function patentinoExpertPanel(s){
+ const u=s.expert;
+ if(!u)return '<aside class="academic-examination"><div class="academic-examination-item"><h3>Distinzione da padroneggiare</h3><p>'+patentinoBookEsc(s.focus)+'</p></div>'+
+ '<div class="academic-examination-item"><h3>Caso applicativo</h3><p>'+patentinoBookEsc(s.caseStudy)+'</p></div>'+
+ '<div class="academic-examination-item"><h3>Domanda possibile all’orale</h3><p>'+patentinoBookEsc(s.exam)+'</p></div></aside>';
+ const steps=(u.method||[]).map((v,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span><p>'+patentinoBookEsc(v)+'</p></li>').join('');
+ const limits=(u.limits||[]).map(v=>'<li>'+patentinoBookEsc(v)+'</li>').join('');
+ const questions=(u.questions||[]).map((v,i)=>'<li><span>'+String(i+1).padStart(2,'0')+'</span>'+patentinoBookEsc(v)+'</li>').join('');
+ return '<div class="academic-expert-material">'+
+ '<section class="academic-expert-method"><h3>Procedimento operativo e metodo di verifica</h3><ol>'+steps+'</ol></section>'+
+ '<section class="academic-expert-pitfalls"><h3>Eccezioni, limiti ed errori di qualificazione</h3><ul>'+limits+'</ul></section>'+
+ '<section class="academic-expert-case"><h3>Fascicolo di studio · caso complesso</h3><p>'+patentinoBookEsc(u.caseFacts||'')+'</p>'+
+ '<details><summary>Mostra il ragionamento motivato</summary><p>'+patentinoBookEsc(u.caseAnswer||'')+'</p></details></section>'+
+ '<section class="academic-expert-oral"><h3>Interrogazione specialistica</h3><ol>'+questions+'</ol></section>'+
+ '</div>';
+}
+
 function patentinoBookChapter(id){
  const b=patentinoVolume(id);
  if(!b)return null;
  const meta=patentinoBookMeta(b);
  const chapter=THEORY_CHAPTERS.find(c=>c.id===id);
  const num=chapter?THEORY_CHAPTERS.indexOf(chapter)+1:0;
+ const advancedStart=b.sections.findIndex(s=>!!s.expert);
+ const expertCount=b.sections.filter(s=>!!s.expert).length;
  const contents=b.sections.map((s,i)=>{
   const completed=patentinoBookRead.has(b.id+':'+i);
-  return '<button type="button" class="academic-index-item'+(completed?' read':'')+'" data-academic-goto="academic-part-'+i+'"><span class="academic-index-num">'+String(i+1).padStart(2,'0')+'</span><span>'+patentinoBookEsc(s.title)+'</span></button>';
+  const head=i===0?'<div class="academic-index-phase">PARTE I · FONDAMENTI</div>':i===advancedStart?'<div class="academic-index-phase expert">PARTE II · MONOGRAFIE SPECIALISTICHE</div>':'';
+  return head+'<button type="button" class="academic-index-item'+(completed?' read':'')+(s.expert?' expert':'')+'" data-academic-goto="academic-part-'+i+'"><span class="academic-index-num">'+String(i+1).padStart(2,'0')+'</span><span>'+patentinoBookEsc(s.title)+'</span></button>';
  }).join('');
  const blocks=b.sections.map((s,i)=>{
   const checked=patentinoBookRead.has(b.id+':'+i);
@@ -44,13 +65,12 @@ function patentinoBookChapter(id){
    const entry=patentinoSource(ref);
    return entry?'<li><a href="'+patentinoBookEsc(entry.url)+'" target="_blank" rel="noopener noreferrer">'+patentinoBookEsc(entry.label)+'</a></li>':'';
   }).join('');
-  return '<section id="academic-part-'+i+'" class="academic-section" data-academic-section="'+i+'">'+
-   '<div class="academic-section-heading"><div><span class="academic-section-number">PARAGRAFO '+String(i+1).padStart(2,'0')+' / '+String(b.sections.length).padStart(2,'0')+'</span>'+
+  return (i===advancedStart?'<div class="academic-phase-break"><span>PARTE II · STUDIO SPECIALISTICO</span><h2>Monografie di approfondimento</h2><p>Analisi interdisciplinare: regole, procedimenti, prove, eccezioni e casi complessi. Queste trattazioni ampliano il programma ma non sostituiscono i percorsi professionali abilitanti.</p></div>':'')+
+   '<section id="academic-part-'+i+'" class="academic-section'+(s.expert?' academic-specialist-section':'')+'" data-academic-section="'+i+'">'+
+   '<div class="academic-section-heading"><div><span class="academic-section-number">'+(s.expert?'MONOGRAFIA SPECIALISTICA · '+patentinoBookEsc(s.expert.view)+' · ':'PARAGRAFO ')+String(i+1).padStart(2,'0')+' / '+String(b.sections.length).padStart(2,'0')+'</span>'+
    '<h2>'+patentinoBookEsc(s.title)+'</h2></div></div>'+
    '<div class="academic-prose">'+s.paragraphs.map(p=>'<p>'+patentinoBookEsc(p)+'</p>').join('')+'</div>'+
-   '<aside class="academic-examination"><div class="academic-examination-item"><h3>Distinzione da padroneggiare</h3><p>'+patentinoBookEsc(s.focus)+'</p></div>'+
-   '<div class="academic-examination-item"><h3>Caso applicativo</h3><p>'+patentinoBookEsc(s.caseStudy)+'</p></div>'+
-   '<div class="academic-examination-item"><h3>Domanda possibile all’orale</h3><p>'+patentinoBookEsc(s.exam)+'</p></div></aside>'+
+   patentinoExpertPanel(s)+
    (refs||articles?'<div class="academic-references"><strong>Fonti per la verifica</strong>'+(articles?'<div class="academic-article-links">'+articles+'</div>':'')+(refs?'<ul>'+refs+'</ul>':'')+'</div>':'')+
    '<div class="academic-section-foot"><button type="button" class="academic-done'+(checked?' is-read':'')+'" data-academic-done="'+patentinoBookEsc(b.id)+'|'+i+'" aria-pressed="'+(checked?'true':'false')+'">'+(checked?'Segnato come letto':'Segna questo paragrafo come letto')+'</button><a href="#/studio">Torna all’indice generale</a></div>'+
    '</section>';
@@ -66,7 +86,7 @@ function patentinoBookChapter(id){
  return '<div class="academic-reader">'+
  '<div class="academic-return"><a href="#/studio">‹ Indice dello Studio</a><span>COLLANA PATENTINO · TESTO DI APPROFONDIMENTO</span></div>'+
  '<header class="academic-cover"><div class="academic-cover-overline">MANUALE DI PREPARAZIONE · VOLUME '+String(num).padStart(2,'0')+'</div><h1>'+patentinoBookEsc(b.title)+'</h1><p>'+patentinoBookEsc(b.lead)+'</p>'+
- '<div class="academic-cover-meta"><span>'+meta.sections+' paragrafi di trattazione</span><span>Riferimenti a fonti istituzionali</span><span>Prima redazione estesa · 2026</span></div></header>'+
+ '<div class="academic-cover-meta"><span>'+meta.sections+' paragrafi</span>'+(expertCount?'<span>'+expertCount+' monografie specialistiche</span>':'')+'<span>Fonti primarie e standard professionali</span><span>Redazione in ampliamento · novembre 2026</span></div></header>'+
  '<div class="academic-toolbar"><div><strong>Il tuo avanzamento nel volume</strong><span id="academic-progress-label">'+meta.read+' di '+meta.sections+' paragrafi letti</span></div>'+
  '<div class="academic-progress-bar"><span id="academic-progress-fill" style="width:'+completePct+'%"></span></div><button type="button" data-academic-print>Stampa / salva PDF</button></div>'+
  '<div class="academic-layout"><aside class="academic-toc"><div class="academic-toc-sticky"><div class="academic-toc-caption">INDICE DEL VOLUME</div><nav aria-label="Indice dei paragrafi">'+contents+'</nav><button type="button" class="academic-toc-top" data-academic-top>↑ Torna all’inizio</button></div></aside>'+
