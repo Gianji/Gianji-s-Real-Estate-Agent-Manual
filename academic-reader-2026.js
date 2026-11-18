@@ -18,6 +18,15 @@ function patentinoBookMeta(b){
  const read=b.sections.filter((s,i)=>patentinoBookRead.has(b.id+':'+i)).length;
  return {modules,words,read,sections:b.sections.length};
 }
+function patentinoCitedCivilArticles(section){
+ const text=[section.title,...section.paragraphs,section.focus,section.caseStudy,section.exam].join(' ');
+ const found=new Set();
+ for(const m of text.matchAll(/\b(?:articolo|articoli|art\.)\s+(\d{3,4})(?![-\w])/gi)){
+  const n=Number(m[1]);
+  if(n>100&&n<3000)found.add(n);
+ }
+ return [...found].sort((a,b)=>a-b);
+}
 function patentinoBookChapter(id){
  const b=patentinoVolume(id);
  if(!b)return null;
@@ -30,6 +39,7 @@ function patentinoBookChapter(id){
  }).join('');
  const blocks=b.sections.map((s,i)=>{
   const checked=patentinoBookRead.has(b.id+':'+i);
+  const articles=patentinoCitedCivilArticles(s).map(n=>'<a href="https://www.normattiva.it/atto/caricaDettaglioAtto?atto.articolo.numero='+n+'&amp;atto.articolo.sottoArticolo=1&amp;atto.articolo.tipoArticolo=2&amp;atto.codiceRedazionale=042U0262&amp;atto.dataPubblicazioneGazzetta=1942-04-04" target="_blank" rel="noopener noreferrer">Art. '+n+' c.c.</a>').join('');
   const refs=[...new Set(s.refs||[])].map(ref=>{
    const entry=patentinoSource(ref);
    return entry?'<li><a href="'+patentinoBookEsc(entry.url)+'" target="_blank" rel="noopener noreferrer">'+patentinoBookEsc(entry.label)+'</a></li>':'';
@@ -41,7 +51,7 @@ function patentinoBookChapter(id){
    '<aside class="academic-examination"><div class="academic-examination-item"><h3>Distinzione da padroneggiare</h3><p>'+patentinoBookEsc(s.focus)+'</p></div>'+
    '<div class="academic-examination-item"><h3>Caso applicativo</h3><p>'+patentinoBookEsc(s.caseStudy)+'</p></div>'+
    '<div class="academic-examination-item"><h3>Domanda possibile all’orale</h3><p>'+patentinoBookEsc(s.exam)+'</p></div></aside>'+
-   (refs?'<div class="academic-references"><strong>Fonti per la verifica</strong><ul>'+refs+'</ul></div>':'')+
+   (refs||articles?'<div class="academic-references"><strong>Fonti per la verifica</strong>'+(articles?'<div class="academic-article-links">'+articles+'</div>':'')+(refs?'<ul>'+refs+'</ul>':'')+'</div>':'')+
    '<div class="academic-section-foot"><button type="button" class="academic-done'+(checked?' is-read':'')+'" data-academic-done="'+patentinoBookEsc(b.id)+'|'+i+'" aria-pressed="'+(checked?'true':'false')+'">'+(checked?'Segnato come letto':'Segna questo paragrafo come letto')+'</button><a href="#/studio">Torna all’indice generale</a></div>'+
    '</section>';
  }).join('');
