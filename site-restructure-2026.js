@@ -38,7 +38,7 @@ function site2026Study(division,selected){
     '<a class="site2026-academic-read" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">Leggi il manuale <span aria-hidden="true">↗</span></a>'+
     '<details class="site2026-academic-legacy"><summary>Schede e moduli precedenti</summary><div class="site2026-modules">'+rows+'</div></details></div>'
    :'<div class="site2026-chapter-content"><div class="site2026-modules">'+rows+'</div><a class="site2026-text-link" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">Apri le lezioni originali</a></div>';
-   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><small>VOLUME · '+esc(x.ch.sector.toUpperCase())+'</small><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span>'+
+   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><small>VOLUME · '+esc(o[1].toUpperCase())+'</small><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span>'+
     '<span class="site2026-chapter-meta">'+(b?b.sections.length+' paragrafi approfonditi':x.modules.length+' moduli')+'</span><span class="site2026-chevron" aria-hidden="true">⌄</span></summary>'+preview+'</details>';
   }).join('');
   return '<section class="site2026-study-group"><div class="site2026-group-head"><div><div class="site2026-overline">'+(mode==='a'?'DIVISIONE A':'DIVISIONE B')+'</div><h2>'+esc(o[1])+'</h2><p>'+esc(o[2])+'</p></div><div class="site2026-count">'+stat.done+' / '+stat.total+' lezioni completate</div></div><div class="site2026-chapters">'+cards+'</div></section>';
