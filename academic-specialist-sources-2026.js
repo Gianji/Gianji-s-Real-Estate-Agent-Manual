@@ -61,7 +61,9 @@ window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCE
     "label": "Agenzia delle Entrate — OMI, Osservatorio del Mercato Immobiliare",
     "url": "https://www.agenziaentrate.gov.it/portale/web/guest/schede/fabbricatiterreni/omi"
   },
-  "CAT-L52": {
+  "GIU-L431": { "label":"Normattiva — Legge 431/1998, locazioni abitative", "url":"https://www.normattiva.it/eli/id/1998/12/15/098G0483/CONSOLIDATED" },
+"GIU-COSTR": { "label":"Consiglio Nazionale del Notariato — garanzie del preliminare per immobili da costruire", "url":"https://www.notariato.it/it/guida/garanzia-preliminare/" },
+"CAT-L52": {
     "label": "Normattiva — legge 52/1985, pubblicità immobiliare e conformità catastale",
     "url": "https://www.normattiva.it/atto/caricaDettaglioAtto?atto.codiceRedazionale=085U0052&atto.dataPubblicazioneGazzetta=1985-03-06&tipoDettaglio=vigente"
   }
