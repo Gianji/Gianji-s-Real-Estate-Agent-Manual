@@ -192,3 +192,6 @@ button:hover,.btn:hover,.module-card:hover,.mode-card:hover{transform:none!impor
 }
 @media(max-width:430px){.site2026-form-side{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Three equal mobile destinations instead of the legacy five-column dock. */
+.bottom-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
