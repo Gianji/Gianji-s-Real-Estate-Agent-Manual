@@ -130,3 +130,8 @@
 .site2026-academic-legacy .site2026-modules{padding:9px 0}
 .site2026-academic-preview .site2026-module{padding:11px 2px}
 @media(max-width:560px){.site2026-academic-preview{padding:16px 14px 18px}.site2026-academic-intro{display:grid;gap:5px}.site2026-academic-read{width:100%;justify-content:space-between}}
+
+.academic-article-links{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 8px}
+.academic-article-links a{display:inline-block;border:1px solid #d8e3ec;border-radius:4px;padding:5px 8px;background:#f5f8fa;color:#215f8a;font-size:10px;text-decoration:none}
+.academic-article-links a:hover{border-color:#83a9c5;background:#fff}
+@media print{.academic-article-links a{border:0!important;background:none!important;padding:2px!important;color:#222!important}}
