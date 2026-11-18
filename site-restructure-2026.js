@@ -29,9 +29,9 @@ function site2026Study(division,selected){
    const s=site2026Count(x.modules);
    const rows=x.modules.map(m=>{
     const progress=site2026Count([m]);
-    return '<a class="site2026-module" href="#/module/'+encodeURIComponent(m.id)+'"><span><strong>'+esc(m.title)+'</strong><small>'+esc(m.description)+'</small></span><em>'+progress.done+'/'+progress.total+'</em></a>';
+    return '<a class="site2026-module" href="'+(typeof patentinoVolume==='function'&&patentinoVolume(x.ch.id)?'#/chapter/'+encodeURIComponent(x.ch.id):'#/module/'+encodeURIComponent(m.id))+'"><span><strong>'+esc(m.title)+'</strong><small>'+esc(m.description)+'</small></span><em>'+progress.done+'/'+progress.total+'</em></a>';
    }).join('');
-   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span><span class="site2026-chapter-meta">'+x.modules.length+' moduli · '+s.done+'/'+s.total+' lezioni</span><span class="site2026-chevron" aria-hidden="true">⌄</span></summary><div class="site2026-chapter-content"><div class="site2026-modules">'+rows+'</div><a class="site2026-text-link" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">Apri il capitolo completo</a></div></details>';
+   return '<details class="site2026-chapter"><summary><span class="site2026-chapter-main"><strong>'+esc(x.ch.title)+'</strong><small>'+esc(x.ch.desc)+'</small></span><span class="site2026-chapter-meta">'+x.modules.length+' moduli · '+s.done+'/'+s.total+' lezioni</span><span class="site2026-chevron" aria-hidden="true">⌄</span></summary><div class="site2026-chapter-content"><div class="site2026-modules">'+rows+'</div><a class="site2026-text-link" href="#/chapter/'+encodeURIComponent(x.ch.id)+'">'+(typeof patentinoVolume==='function'&&patentinoVolume(x.ch.id)?'Leggi il manuale di approfondimento →':'Apri le lezioni del capitolo →')+'</a></div></details>';
   }).join('');
   return '<section class="site2026-study-group"><div class="site2026-group-head"><div><div class="site2026-overline">'+(mode==='a'?'DIVISIONE A':'DIVISIONE B')+'</div><h2>'+esc(o[1])+'</h2><p>'+esc(o[2])+'</p></div><div class="site2026-count">'+stat.done+' / '+stat.total+' lezioni completate</div></div><div class="site2026-chapters">'+cards+'</div></section>';
  }).join('');
