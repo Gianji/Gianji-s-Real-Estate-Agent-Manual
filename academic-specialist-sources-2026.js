@@ -63,6 +63,6 @@ window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCE
   },
   "CAT-L52": {
     "label": "Normattiva — legge 52/1985, pubblicità immobiliare e conformità catastale",
-    "url": "https://www.normattiva.it/eli/id/1985/03/02/085U0052/CONSOLIDATED"
+    "url": "https://www.normattiva.it/atto/caricaDettaglioAtto?atto.codiceRedazionale=085U0052&atto.dataPubblicazioneGazzetta=1985-03-06&tipoDettaglio=vigente"
   }
 });
