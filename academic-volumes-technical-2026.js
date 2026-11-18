@@ -26,11 +26,11 @@ window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCE
   },
   "L52": {
     "label": "Legge 52/1985 — formalità catastali e art. 29, Normattiva",
-    "url": "https://www.normattiva.it/eli/id/1985/03/02/085U0052/CONSOLIDATED"
+    "url": "https://www.normattiva.it/eli/id/1985/03/06/085U0052/CONSOLIDATED"
   },
   "L431": {
     "label": "Legge 431/1998 — disciplina locazioni abitative, Normattiva",
-    "url": "https://www.normattiva.it/eli/id/1998/12/15/098G0484/CONSOLIDATED"
+    "url": "https://www.normattiva.it/eli/id/1998/12/15/098G0483/CONSOLIDATED"
   },
   "CC": {
     "label": "CCIAA Milano — regolamento esami agenti immobiliari",
