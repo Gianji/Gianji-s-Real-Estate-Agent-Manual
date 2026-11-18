@@ -47,7 +47,7 @@ window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCE
   },
   "FIS-TU2027": {
     "label": "Normattiva — D.Lgs. 123/2025, testo unico tributi indiretti; verificare decorrenza 2027",
-    "url": "https://www.normattiva.it/eli/id/2025/08/12/25G00134/CONSOLIDATED"
+    "url": "https://www.normattiva.it/eli/id/2025/08/12/25G00124/CONSOLIDATED"
   },
   "VAL-ABI": {
     "label": "ABI — linee guida valutazione immobili in garanzia delle esposizioni creditizie, 2024",
