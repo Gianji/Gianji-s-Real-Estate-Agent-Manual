@@ -195,3 +195,5 @@ button:hover,.btn:hover,.module-card:hover,.mode-card:hover{transform:none!impor
 
 /* Three equal mobile destinations instead of the legacy five-column dock. */
 .bottom-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+@media(max-width:760px){.bottom-nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}.bottom-nav button.active{color:#214d70}}
