@@ -113,3 +113,20 @@
  .academic-section-number,.academic-examination-item h3{color:black!important}
  a{color:#222!important;text-decoration:none!important}
 }
+
+/* Volumes-first study catalogue; previous short lessons are optional. */
+.site2026-academic-preview{padding:18px 21px 22px;background:#fff}
+.site2026-academic-intro{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #e8edf2;padding:0 0 13px}
+.site2026-academic-intro strong{font-size:12px;color:#2f526d}
+.site2026-academic-intro span{color:#7890a2;font-size:11px}
+.site2026-academic-preview ol{list-style:none;margin:15px 0 18px;padding:0;display:grid;gap:13px}
+.site2026-academic-preview li{display:flex;align-items:flex-start;gap:14px;font-size:12px;line-height:1.45;color:#465e71}
+.site2026-academic-preview li span{font-size:10px;font-weight:750;flex:0 0 22px;color:#d0812a}
+.site2026-academic-preview .site2026-academic-more{font-size:11px;color:#8a9bab;padding-left:36px}
+.site2026-academic-read{display:inline-flex;align-items:center;gap:17px;padding:11px 15px;background:#1e557e;color:white!important;border-radius:7px;font-size:12px;text-decoration:none!important;font-weight:750}
+.site2026-academic-read:hover{background:#174363}
+.site2026-academic-legacy{margin-top:22px;border-top:1px solid #e6edf3}
+.site2026-academic-legacy>summary{font-size:11px;color:#778b9d;cursor:pointer;padding:16px 0 0}
+.site2026-academic-legacy .site2026-modules{padding:9px 0}
+.site2026-academic-preview .site2026-module{padding:11px 2px}
+@media(max-width:560px){.site2026-academic-preview{padding:16px 14px 18px}.site2026-academic-intro{display:grid;gap:5px}.site2026-academic-read{width:100%;justify-content:space-between}}
