@@ -22,7 +22,7 @@ function patentinoCitedCivilArticles(section){
  if(section.expert)return [...new Set((section.expert.civilArticles||[]).filter(x=>Number.isInteger(x)&&x>0&&x<=2969))].sort((a,b)=>a-b);
  const text=[section.title,...section.paragraphs,section.focus,section.caseStudy,section.exam].join(' ');
  const found=new Set();
- for(const m of text.matchAll(/\b(?:art(?:icolo|icoli)?\.?)\s*(\d{1,4})(?:\s*(?:e|,|-)\s*\d{1,4})?\s*(?:c\.\s*c\.|del\s+Codice\s+civile)\b/gi)){
+ for(const m of text.matchAll(/\b(?:art(?:icolo|icoli)?\.?)\s*(\d{1,4})(?:\s*(?:e|,|-)\s*\d{1,4})?\s*(?:c\.\s*c\.|del\s+Codice\s+civile)(?=\W|$)/gi)){
   found.add(Number(m[1]));
  }
  return [...found].sort((a,b)=>a-b);
@@ -97,6 +97,15 @@ function patentinoBookChapter(id){
  '</div></div></div>';
 }
 (function(){
+ let previousPrintDetails=[];
+ window.addEventListener('beforeprint',()=>{
+  previousPrintDetails=Array.from(document.querySelectorAll('.academic-expert-case details')).map(el=>({el,wasOpen:el.open}));
+  previousPrintDetails.forEach(x=>{x.el.open=true});
+ });
+ window.addEventListener('afterprint',()=>{
+  previousPrintDetails.forEach(x=>{x.el.open=x.wasOpen});
+  previousPrintDetails=[];
+ });
  const original=renderUnifiedChapter;
  renderUnifiedChapter=function(id){
   const academic=patentinoBookChapter(id);
