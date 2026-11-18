@@ -93,14 +93,54 @@ function site2026Ripasso(kind){
  site2026Card('Ripasso argomenti','Definizioni e concetti essenziali, ordinati per capitolo con link alle spiegazioni complete.','#/ripasso-generale/argomenti','Consulta')+'</div>'+
  '<section class="site2026-map-section"><h2>Mappe disponibili</h2><div class="site2026-map-list">'+maps+'</div></section></div>';
 }
+
+/* Home editoriale, accessibile senza login e alimentata dai progressi locali. */
+function site2026Home(){
+ const ordered=typeof theoryOrderedModules==='function'?theoryOrderedModules():MODULES.filter(m=>m.id!=='cremona');
+ const studyList=ordered.flatMap(m=>m.lessons.map((l,i)=>({mid:m.id,idx:i,id:m.id+':'+i,title:l.title,module:m.title})));
+ const first=studyList.find(l=>!data.completed.includes(l.id));
+ const validIds=new Set(allLessons.map(l=>l.id));
+ const done=data.completed.filter(id=>validIds.has(id)).length;
+ const total=allLessons.length;
+ const percent=total?Math.min(100,Math.round(done/total*100)):0;
+ const wrongCount=data.wrong.filter(id=>QUESTIONS.some(q=>q.id===id)).length;
+ const best=Number(data.streakBest)||0;
+ const mainLink=first?'#/lesson/'+encodeURIComponent(first.mid)+'/'+first.idx:'#/studio';
+ const mainTitle=first?'Continua con la prossima lezione':'Consulta il programma';
+ const subtitle=first?'Prossima: '+esc(first.title)+' · '+esc(first.module):'Hai completato tutte le lezioni disponibili.';
+ const pictogram='<svg viewBox="0 0 340 270" role="img" aria-label="Illustrazione geometrica di edifici, linee architettoniche e un tetto" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M26 229H314" stroke="#92B6D2" stroke-width="2"/><path d="M53 229V100L150 47L247 100V229" stroke="#CEE1EF" stroke-width="2.5"/><path d="M40 108L150 44L260 108" stroke="#F49A38" stroke-width="5" stroke-linecap="square"/><path d="M89 229V119H209V229" stroke="#8DB5D3" stroke-width="2"/><path d="M113 145H145V179H113zM160 145H192V179H160z" stroke="#C7DFED" stroke-width="2"/><path d="M135 229V195H172V229" stroke="#C7DFED" stroke-width="2"/><path d="M237 229V139H286V229" stroke="#77A7C8" stroke-width="2"/><path d="M249 156H274M249 177H274M249 198H274" stroke="#A8C9DE" stroke-width="1.7"/><path d="M16 229V165H53" stroke="#709FBE" stroke-width="2"/><path d="M26 180H43M26 199H43" stroke="#709FBE" stroke-width="1.5"/><path d="M79 66V35M79 35H99" stroke="#F49A38" stroke-width="2"/><circle cx="79" cy="35" r="4" fill="#F49A38"/></svg>';
+ return '<div class="site2026-home">'+
+ '<div class="site2026-home-kicker"><span class="site2026-home-kicker-mark"></span><span>PATENTINO / PERCORSO DI PREPARAZIONE</span><small>ESAME AGENTE IMMOBILIARE</small></div>'+
+ '<section class="site2026-home-hero" aria-labelledby="site2026-home-title"><div class="site2026-home-hero-copy">'+
+ '<span class="site2026-home-eyebrow">MANUALE DI STUDIO</span>'+
+ '<h1 id="site2026-home-title">Prepararsi,<br><em>con metodo.</em></h1>'+
+ '<p>Un unico spazio per studiare il programma, allenarti sulle domande d’esame e ripassare gli argomenti fondamentali.</p>'+
+ '<div class="site2026-home-hero-actions"><a class="site2026-home-button" href="'+mainLink+'">'+mainTitle+' <span aria-hidden="true">↗</span></a><a class="site2026-home-hero-secondary" href="#/studio">Esplora lo studio</a></div>'+
+ '<div class="site2026-home-next">'+subtitle+'</div></div>'+
+ '<div class="site2026-home-illustration" aria-hidden="true"><div class="site2026-home-illustration-frame">'+pictogram+'</div><div class="site2026-home-visual-caption">STUDIO · PRATICA · RIPASSO <span>01 / 03</span></div></div></section>'+
+ '<section class="site2026-home-progress" aria-label="I tuoi progressi"><div class="site2026-home-progress-lead"><div><span class="site2026-home-overline">IL TUO PERCORSO</span><h2>La preparazione, passo dopo passo.</h2></div><span class="site2026-home-percent">'+percent+'<small>%</small></span></div>'+
+ '<div class="site2026-home-progress-track" role="progressbar" aria-label="Lezioni completate" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+percent+'"><span style="width:'+percent+'%"></span></div>'+
+ '<div class="site2026-home-metrics"><div><b>'+done+' <span>/ '+total+'</span></b><small>Lezioni completate</small></div><div><b>'+wrongCount+'</b><small>Quesiti da rivedere</small></div><div><b>'+best+'</b><small>Record quiz consecutivi</small></div></div></section>'+
+ '<section class="site2026-home-paths" aria-labelledby="site2026-home-paths-title"><div class="site2026-home-section-head"><div><span class="site2026-home-overline">DA DOVE COMINCIARE</span><h2 id="site2026-home-paths-title">Tre aree, un unico obiettivo.</h2></div><p>Seleziona il percorso che ti serve.</p></div>'+
+ '<div class="site2026-home-path-grid">'+
+ '<a class="site2026-home-path" href="#/studio"><span class="site2026-home-path-index">01 <span>—</span> CONOSCENZA</span><h3>Studio</h3><p>Esplora il programma diviso in Normativa e Tecnica, oppure in quattro materie.</p><span class="site2026-home-path-cta">Vai allo studio <b aria-hidden="true">↗</b></span></a>'+
+ '<a class="site2026-home-path" href="#/domande"><span class="site2026-home-path-index">02 <span>—</span> ALLENAMENTO</span><h3>Domande</h3><p>Simulazioni d’esame, quiz guidati, domande aperte e ripasso degli errori.</p><span class="site2026-home-path-cta">Esercitati <b aria-hidden="true">↗</b></span></a>'+
+ '<a class="site2026-home-path" href="#/ripasso-generale"><span class="site2026-home-path-index">03 <span>—</span> CONSOLIDAMENTO</span><h3>Ripasso generale</h3><p>Mappe concettuali scaricabili e schede per fissare i concetti essenziali.</p><span class="site2026-home-path-cta">Apri il ripasso <b aria-hidden="true">↗</b></span></a>'+
+ '</div></section>'+
+ '<section class="site2026-home-finish"><div><span class="site2026-home-overline">METTITI ALLA PROVA</span><h2>Quando vuoi, verifica la tua preparazione.</h2><p>Avvia una simulazione oppure esercitati rapidamente con dieci domande casuali.</p></div>'+
+ '<div class="site2026-home-finish-actions"><a href="#/exam">Simulazione d’esame <span aria-hidden="true">↗</span></a><button type="button" data-site2026-action="flash">Quiz flash <span aria-hidden="true">↗</span></button></div></section>'+
+ '<div class="site2026-home-disclaimer">Risorsa didattica indipendente. Non costituisce un sito ufficiale del franchising Tecnorete né delle Camere di Commercio.</div>'+
+ '</div>';
+}
+
 const site2026OriginalNav=navActive;
 navActive=function(view){
- const group=['studio','library','chapter','module','lesson','sources'].includes(view)?'studio':
+ const group=view==='home'?'home':['studio','library','chapter','module','lesson','sources'].includes(view)?'studio':
  ['domande','quiz','exam','oral','oralbase','archive','officialtest','milanobank','review','flashcards'].includes(view)?'domande':'ripasso-generale';
  document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===group));
- const names={studio:'Studio',library:'Studio',chapter:'Capitolo',module:'Modulo',lesson:'Lezione',domande:'Domande',quiz:'Quiz',exam:'Simulazione',oral:'Domande aperte',oralbase:'Definizioni',archive:'Banche ufficiali',officialtest:'Batteria ufficiale',milanobank:'Tracce di Milano',review:'Ripasso errori',flashcards:'Flashcard','ripasso-generale':'Ripasso generale',mindmap:'Mappe concettuali',milanpriorities:'Ripasso orale',sources:'Fonti ufficiali'};
+ const names={home:'Home',studio:'Studio',library:'Studio',chapter:'Capitolo',module:'Modulo',lesson:'Lezione',domande:'Domande',quiz:'Quiz',exam:'Simulazione',oral:'Domande aperte',oralbase:'Definizioni',archive:'Banche ufficiali',officialtest:'Batteria ufficiale',milanobank:'Tracce di Milano',review:'Ripasso errori',flashcards:'Flashcard','ripasso-generale':'Ripasso generale',mindmap:'Mappe concettuali',milanpriorities:'Ripasso orale',sources:'Fonti ufficiali'};
  const breadcrumb=document.getElementById('breadcrumb');
- if(breadcrumb)breadcrumb.textContent='PATENTINO / '+(group==='studio'?'Studio':group==='domande'?'Domande':'Ripasso generale')+' / '+(names[view]||'Panoramica');
+ if(breadcrumb)breadcrumb.textContent=view==='home'?'PATENTINO / Home':'PATENTINO / '+(group==='studio'?'Studio':group==='domande'?'Domande':'Ripasso generale')+' / '+(names[view]||'Panoramica');
  const percent=document.getElementById('sidebar-percent'),progress=document.getElementById('sidebar-progress-fill'),completed=document.getElementById('sidebar-completed');
  if(percent)percent.textContent=pct()+'%';
  if(progress)progress.style.width=pct()+'%';
@@ -110,12 +150,11 @@ renderQuiz=site2026Quiz;
 const site2026OriginalRender=render;
 render=function(scroll){
  const route=currentRoute(),view=route.view;
- if(view==='home'){history.replaceState(null,'','#/studio');return render(scroll);}
- if(['studio','domande','ripasso-generale'].includes(view)){
+ if(['home','studio','domande','ripasso-generale'].includes(view)){
   navActive(view);
-  const body=view==='studio'?site2026Study(route.id,route.idx):view==='domande'?site2026Domande():site2026Ripasso(route.id);
+  const body=view==='home'?site2026Home():view==='studio'?site2026Study(route.id,route.idx):view==='domande'?site2026Domande():site2026Ripasso(route.id);
   document.getElementById('view').innerHTML=body;
-  document.title=(view==='studio'?'Studio':view==='domande'?'Domande':'Ripasso generale')+' — Patentino';
+  document.title=(view==='home'?'Home':view==='studio'?'Studio':view==='domande'?'Domande':'Ripasso generale')+' — Patentino';
   if(scroll)window.scrollTo({top:0,behavior:'instant'});
   return;
  }
@@ -149,8 +188,8 @@ document.addEventListener('click',event=>{
   quizSession=null;streakSession=null;startStreak(false);
  }
 });
-if(!location.hash||location.hash==='#/home'){
- history.replaceState(null,'','#/studio');
+if(!location.hash){
+ history.replaceState(null,'','#/home');
 }
 render(true);
 })();
