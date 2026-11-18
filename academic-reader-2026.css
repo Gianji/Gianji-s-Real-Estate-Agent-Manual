@@ -135,3 +135,49 @@
 .academic-article-links a{display:inline-block;border:1px solid #d8e3ec;border-radius:4px;padding:5px 8px;background:#f5f8fa;color:#215f8a;font-size:10px;text-decoration:none}
 .academic-article-links a:hover{border-color:#83a9c5;background:#fff}
 @media print{.academic-article-links a{border:0!important;background:none!important;padding:2px!important;color:#222!important}}
+
+/* Professional research layer: separate foundation from specialist monographs. */
+.academic-index-phase{border-top:1px solid #dce6ed;margin:15px 0 9px;padding-top:15px;color:#748c9e;letter-spacing:.11em;font-weight:800;font-size:9px;line-height:1.5}
+.academic-index-phase:first-child{border-top:0;margin-top:0}
+.academic-index-phase.expert{color:#a96625}
+.academic-index-item.expert{border-left:2px solid #e6b67f;padding-left:8px;color:#38576e;font-size:11px}
+.academic-index-item.expert .academic-index-num{color:#b37131}
+.academic-phase-break{padding:32px 32px 29px;margin:47px 0 35px;background:#eef3f7;border:1px solid #dce6ee;border-left:4px solid #e88e2b;border-radius:4px}
+.academic-phase-break>span{font-size:10px;font-weight:800;letter-spacing:.13em;color:#a06d37}
+.academic-phase-break h2{font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(25px,3vw,33px);font-weight:500;color:#1f4867;margin:13px 0}
+.academic-phase-break p{font-size:12px;line-height:1.8;color:#5e7587;margin:0;max-width:75ch}
+.academic-specialist-section{border-bottom:1px solid #cedde8}
+.academic-specialist-section>.academic-section-heading{border-left:3px solid #e6a15a;padding-left:16px}
+.academic-specialist-section .academic-section-number{font-size:9px;color:#a8733b;line-height:1.7}
+.academic-expert-material{margin:36px 0 22px;display:grid;gap:16px}
+.academic-expert-material section{border:1px solid #dce6ee;background:#fff;border-radius:9px;padding:23px 25px}
+.academic-expert-material h3{margin:0 0 18px;font-family:"DM Sans",system-ui,sans-serif;letter-spacing:-.015em;font-size:14px;font-weight:750;color:#244e6c}
+.academic-expert-method ol,.academic-expert-oral ol{list-style:none;padding:0;margin:0;display:grid;gap:11px}
+.academic-expert-method li{display:flex;gap:13px;align-items:flex-start;padding:0;font-size:12px;line-height:1.7}
+.academic-expert-method li>span,.academic-expert-oral li>span{font-size:10px;font-weight:800;color:#ba7a3b;flex:0 0 22px;margin-top:2px}
+.academic-expert-method li>p{margin:0;color:#43586a}
+.academic-expert-pitfalls{background:#fdfaf6!important;border-color:#eadfce!important}
+.academic-expert-pitfalls h3{color:#9a6031}
+.academic-expert-pitfalls ul{padding-left:19px;margin:0;display:grid;gap:8px;color:#604f43;font-size:12px;line-height:1.75}
+.academic-expert-case{background:#f3f7fa!important}
+.academic-expert-case>p{font-size:13px;line-height:1.85;color:#3d576b;margin:0 0 20px}
+.academic-expert-case details{border-top:1px solid #d4e2ec;padding-top:14px}
+.academic-expert-case summary{cursor:pointer;font-size:12px;color:#1a5e91;font-weight:750;line-height:1.5}
+.academic-expert-case details>p{margin:14px 0 0;border-left:3px solid #e9953c;padding:4px 0 4px 15px;color:#3d586e;font-size:12px;line-height:1.85}
+.academic-expert-oral ol{gap:8px}
+.academic-expert-oral li{display:flex;gap:12px;line-height:1.7;font-size:12px;color:#425d72}
+.academic-specialist-section .academic-references{border-top:1px solid #e6edf2;padding-top:20px}
+.academic-specialist-section .academic-prose p:first-child::first-letter{font-size:1.13em}
+@media(max-width:540px){
+ .academic-phase-break{padding:23px 18px;margin:28px 0}
+ .academic-expert-material{gap:12px}
+ .academic-expert-material section{padding:18px 16px}
+ .academic-specialist-section>.academic-section-heading{padding-left:11px}
+}
+@media print{
+ .academic-phase-break{break-before:page;border:0!important;padding:0!important;background:white!important}
+ .academic-expert-material section{break-inside:avoid;background:white!important}
+ .academic-expert-case details{display:block!important}
+ .academic-expert-case details>p{display:block!important}
+ .academic-expert-case summary{display:none}
+}
