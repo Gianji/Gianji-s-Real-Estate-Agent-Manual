@@ -315,3 +315,9 @@ button:hover,.btn:hover,.module-card:hover,.mode-card:hover{transform:none!impor
  .site2026-home-metrics small{text-align:right}
  .bottom-nav button{font-size:9px!important}
 }
+
+/* Compact independent-site wordmark for small screens. */
+.mobile-brand{display:none;align-items:center;gap:9px;text-decoration:none!important;color:#164f83;font-size:12px;font-weight:800;letter-spacing:.1em}
+.mobile-brand-icon{position:relative;display:grid;place-items:center;height:29px;width:29px;border-radius:6px;background:#164f83;color:#fff;font-size:15px;letter-spacing:0}
+.mobile-brand-icon:after{position:absolute;content:"";left:3px;right:3px;bottom:3px;height:3px;border-radius:3px;background:#ef932d}
+@media(max-width:990px){.topbar{display:flex;justify-content:space-between;gap:12px}.mobile-brand{display:inline-flex!important}.breadcrumb{display:none!important}.topbar-actions{margin-left:auto}}
