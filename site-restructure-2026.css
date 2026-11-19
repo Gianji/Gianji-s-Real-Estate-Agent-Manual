@@ -321,3 +321,65 @@ button:hover,.btn:hover,.module-card:hover,.mode-card:hover{transform:none!impor
 .mobile-brand-icon{position:relative;display:grid;place-items:center;height:29px;width:29px;border-radius:6px;background:#164f83;color:#fff;font-size:15px;letter-spacing:0}
 .mobile-brand-icon:after{position:absolute;content:"";left:3px;right:3px;bottom:3px;height:3px;border-radius:3px;background:#ef932d}
 @media(max-width:990px){.topbar{display:flex;justify-content:space-between;gap:12px}.mobile-brand{display:inline-flex!important}.breadcrumb{display:none!important}.topbar-actions{margin-left:auto}}
+
+
+/* Quiz Gromia: catalogo di collegamenti esterni, senza duplicare la banca dati. */
+.site26-gromia{--gromia-ink:#1f425d;--gromia-blue:#1d547d;--gromia-orange:#e68e35;--gromia-line:#dfe8ef;}
+.site26-gromia .site2026-back{display:inline-flex;margin-bottom:17px;}
+.site26-gromia-hero{display:grid;grid-template-columns:minmax(0,1fr) 212px;align-items:stretch;background:#163e5f;border:1px solid #255373;border-left:5px solid var(--gromia-orange);border-radius:10px;overflow:hidden;margin:28px 0 42px;color:white;}
+.site26-gromia-hero-text{padding:34px 38px 36px;min-width:0;}
+.site26-gromia-kicker{display:block;font-size:10px;letter-spacing:.14em;font-weight:750;color:#aebfce;}
+.site26-gromia-hero h2{color:#fff!important;font-family:Georgia,"Times New Roman",serif;font-size:clamp(27px,3.3vw,41px);font-weight:500;letter-spacing:-.025em;line-height:1.2;margin:12px 0 12px;}
+.site26-gromia-hero p{color:#d5e3ee;font-size:13px;line-height:1.8;max-width:620px;margin:0;}
+.site26-gromia-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px;}
+.site26-gromia-actions a{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 15px;font-size:12px;font-weight:750;text-decoration:none!important;border:1px solid transparent;border-radius:7px;transition:background .12s,border-color .12s;}
+.site26-gromia-primary{background:#fff;color:#174a70!important;}
+.site26-gromia-primary:hover{background:#eef4f8;}
+.site26-gromia-secondary{background:#234f70;color:#fff!important;border-color:#587b97!important;}
+.site26-gromia-secondary:hover{background:#306383;}
+.site26-gromia-hero-stat{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#204f72;border-left:1px solid #436986;padding:20px;}
+.site26-gromia-hero-stat strong{color:#fff;font-size:42px;font-weight:650;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;}
+.site26-gromia-hero-stat>span{margin:11px 0 23px;color:#eeb173;font-size:12px;font-weight:700;}
+.site26-gromia-hero-stat small{font-size:10px;color:#b3c8d8;}
+.site26-gromia-head{display:flex;justify-content:space-between;align-items:end;gap:18px;border-bottom:1px solid var(--gromia-line);padding-bottom:18px;}
+.site26-gromia-head h2{font-size:24px;letter-spacing:-.03em;font-weight:700;color:var(--gromia-ink);margin:7px 0 0;}
+.site26-gromia-head .site26-gromia-kicker{color:#b17e4a;}
+.site26-gromia-head-count{color:#72899a;font-size:11px;padding-bottom:5px;white-space:nowrap;}
+.site26-gromia-toolbar{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:14px;margin:23px 0;}
+.site26-gromia-toolbar label{display:grid;gap:8px;font-size:11px;color:#60798a;font-weight:700;}
+.site26-gromia-toolbar input,.site26-gromia-toolbar select{box-sizing:border-box;min-width:0;display:block;width:100%;background:#fff;border:1px solid #d5e2eb;border-radius:7px;padding:11px 13px;font-size:12px;color:#34536a;font-weight:500;height:43px;outline:none;}
+.site26-gromia-toolbar input:focus,.site26-gromia-toolbar select:focus{border-color:#5b91b7;box-shadow:0 0 0 2px #cae0ef;}
+.site26-gromia-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;}
+.site26-gromia-card{display:flex;gap:12px;align-items:center;min-height:83px;padding:18px 17px;border:1px solid var(--gromia-line);background:#fff;color:#244762!important;border-radius:9px;text-decoration:none!important;transition:border-color .12s,background .12s;}
+.site26-gromia-card:hover{background:#f7fafc;border-color:#90b4cf;}
+.site26-gromia-card[hidden]{display:none!important;}
+.site26-gromia-index{font-size:10px;flex:0 0 25px;color:#bf7d3c;font-weight:750;}
+.site26-gromia-card-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:6px;}
+.site26-gromia-card-main strong{font-size:13px;color:var(--gromia-ink);line-height:1.3;}
+.site26-gromia-card-main small{font-size:10px;color:#8296a6;}
+.site26-gromia-card-count{text-align:right;min-width:42px;display:flex;flex-direction:column;gap:4px;color:#2c5b7e;font-size:17px;font-weight:750;line-height:1.15;font-variant-numeric:tabular-nums;}
+.site26-gromia-card-count small{color:#8597a5;font-size:9px;font-weight:500;}
+.site26-gromia-out{color:#b8895c;font-size:18px;margin-left:2px;}
+.site26-gromia-empty{background:#f3f7fa;border:1px solid #e1e8ee;padding:25px;text-align:center;color:#61798d;border-radius:8px;font-size:12px;}
+.site26-gromia-empty[hidden]{display:none!important;}
+.site26-gromia-note{background:#f2f6f9;border:1px solid #dfe8ef;border-left:3px solid #b8cfdf;border-radius:7px;padding:24px 25px;margin:34px 0 15px;}
+.site26-gromia-note>strong{font-size:12px;color:#2c526e;}
+.site26-gromia-note p{font-size:12px;color:#637e90;line-height:1.8;max-width:85ch;margin:9px 0 18px;}
+.site26-gromia-note>div{display:flex;flex-wrap:wrap;gap:12px 23px;}
+.site26-gromia-note a{font-size:11px;color:#205b86;text-decoration:underline;text-underline-offset:3px;}
+.site26-gromia a:focus-visible{outline:2px solid #ed9a42;outline-offset:3px;}
+@media(max-width:900px){.site26-gromia-grid{grid-template-columns:1fr}.site26-gromia-hero{grid-template-columns:1fr 160px}.site26-gromia-hero-text{padding:27px 25px}.site26-gromia-hero-stat strong{font-size:35px}}
+@media(max-width:600px){
+.site26-gromia-hero{display:block;}
+.site26-gromia-hero-text{padding:26px 21px 23px;}
+.site26-gromia-hero-stat{border-left:0;border-top:1px solid #456b86;padding:16px 19px;display:flex;flex-direction:row;gap:8px;justify-content:flex-start;text-align:left;}
+.site26-gromia-hero-stat strong{font-size:25px;}
+.site26-gromia-hero-stat>span{margin:0;font-size:11px;}
+.site26-gromia-hero-stat small{margin-left:auto;}
+.site26-gromia-toolbar{grid-template-columns:1fr;gap:15px;}
+.site26-gromia-head h2{font-size:20px;}
+.site26-gromia-card{padding:15px 13px;gap:8px;}
+.site26-gromia-card-main strong{font-size:12px;}
+.site26-gromia-card-count{font-size:15px;}
+.site26-gromia-note{padding:20px 17px;}
+}
