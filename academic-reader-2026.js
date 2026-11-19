@@ -10,7 +10,27 @@ function patentinoVolume(id){
 function patentinoSource(id){
  return (window.PATENTINO_ACADEMIC_SOURCES||{})[id]||null;
 }
-function patentinoBookEsc(s){return esc(String(s??''))}
+/* Uniforma la grafia delle citazioni; non modifica le fonti originarie. */
+function patentinoLegalStyle(value){
+ let t=String(value??'');
+ // Nelle disposizioni di attuazione si indica prima il corpus, poi il numero.
+ t=t.replace(/\b(l['’])?(?:articolo|art\.)\s+(\d+(?:-[a-z]+)?)(?:\s*,\s*comma\s+(\d+))?\s+delle\s+disposizioni\s+(?:per\s+l['’]|di\s+)?attuazione\s+(?:al|del)\s+Codice\s+civile/gi,
+  (_,article,num,comma)=> (article?(article[0]==='L'?'La ':'la '):'')+'disp. att. '+num+' c.c.'+(comma?', comma '+comma:''));
+ t=t.replace(/\b(l['’])?(?:articolo|art\.)\s+(\d+(?:-[a-z]+)?)\s+disp\.\s*att\.\s*c\.c\./gi,
+  (_,article,num)=>(article?(article[0]==='L'?'La ':'la '):'')+'disp. att. '+num+' c.c.');
+ t=t.replace(/\b(?:disposizione|disposizioni)\s+attuativ[aoei]\s+(\d+(?:-[a-z]+)?)\s+(?:al|del)\s+Codice\s+civile/gi,
+  (_,num)=>'disp. att. '+num+' c.c.');
+ // Per gli articoli del codice civile occorre indicare il codice, non la legge generica.
+ t=t.replace(/\b(articoli|artt\.)\s+(\d+(?:-[a-z]+)?)(\s+e\s+seguenti)?\s+del\s+Codice\s+civile/gi,
+  (_,label,num,ss)=>'artt. '+num+(ss?' ss.':'')+' c.c.');
+ t=t.replace(/\b(articolo|art\.)\s+(\d+(?:-[a-z]+)?)(\s*,\s*comma\s+\d+)?\s+del\s+Codice\s+civile/gi,
+  (_,label,num,comma)=>'art. '+num+(comma||'')+' c.c.');
+ // Abbreviazioni per tutte le altre disposizioni, senza attribuire loro il corpus c.c.
+ t=t.replace(/\barticoli(?=\s+\d)/gi,'artt.');
+ t=t.replace(/\barticolo(?=\s+\d)/gi,'art.');
+ return t;
+}
+function patentinoBookEsc(s){return esc(patentinoLegalStyle(s))}
 function patentinoBookMeta(b){
  const original=THEORY_CHAPTERS.find(c=>c.id===b.id);
  const modules=original?theoryChapterModules(original):[];
