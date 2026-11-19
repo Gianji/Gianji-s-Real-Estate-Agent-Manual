@@ -168,6 +168,7 @@
       ],
       "refs": [
         "GIU-CC",
+        "GIU-DISPATT",
         "NOTCON"
       ],
       "civilArticles": [
