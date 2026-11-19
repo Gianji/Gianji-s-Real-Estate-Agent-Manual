@@ -1,6 +1,7 @@
 /* Fonti primarie e professionali del percorso specialistico.
    Link alla fonte non significa validazione di ogni specifica proposizione del testo. */
 window.PATENTINO_ACADEMIC_SOURCES=Object.assign(window.PATENTINO_ACADEMIC_SOURCES||{},{
+  "GIU-DISPATT": {"label":"Normattiva — R.D. 318/1942, disposizioni di attuazione del Codice civile","url":"https://www.normattiva.it/atto/caricaDettaglioAtto?atto.codiceRedazionale=042U0318&atto.dataPubblicazioneGazzetta=1942-04-17"},
   "GIU-CC": {
     "label": "Normattiva — Codice civile (R.D. 262/1942), testo consolidato",
     "url": "https://www.normattiva.it/eli/id/1942/04/04/042U0262/CONSOLIDATED"
