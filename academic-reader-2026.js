@@ -39,7 +39,13 @@ function patentinoBookMeta(b){
  return {modules,words,read,sections:b.sections.length};
 }
 function patentinoCitedCivilArticles(section){
- if(section.expert)return [...new Set((section.expert.civilArticles||[]).filter(x=>Number.isInteger(x)&&x>0&&x<=2969))].sort((a,b)=>a-b);
+ if(section.expert){
+  const valid=/^\\d{1,4}(?:-(?:bis|ter|quater|quinquies))?$/i;
+  const items=(section.expert.civilArticles||[]).map(String).filter(x=>valid.test(x)&&Number.parseInt(x,10)<=2969);
+  const corpus=[section.title,...section.paragraphs].join(' ');
+  for(const m of corpus.matchAll(/\\bart\\.\\s*(\\d{1,4}-(?:bis|ter|quater|quinquies))\\s*c\\.c\\./gi))items.push(m[1]);
+  return [...new Set(items)].sort((a,b)=>Number.parseInt(a,10)-Number.parseInt(b,10));
+ }
  const text=[section.title,...section.paragraphs,section.focus,section.caseStudy,section.exam].join(' ');
  const found=new Set();
  for(const m of text.matchAll(/\b(?:art(?:icolo|icoli)?\.?)\s*(\d{1,4})(?:\s*(?:e|,|-)\s*\d{1,4})?\s*(?:c\.\s*c\.|del\s+Codice\s+civile)(?=\W|$)/gi)){
@@ -80,7 +86,11 @@ function patentinoBookChapter(id){
  }).join('');
  const blocks=b.sections.map((s,i)=>{
   const checked=patentinoBookRead.has(b.id+':'+i);
-  const articles=patentinoCitedCivilArticles(s).map(n=>'<a href="https://www.normattiva.it/atto/caricaDettaglioAtto?atto.articolo.numero='+n+'&amp;atto.articolo.sottoArticolo=1&amp;atto.articolo.tipoArticolo=2&amp;atto.codiceRedazionale=042U0262&amp;atto.dataPubblicazioneGazzetta=1942-04-04" target="_blank" rel="noopener noreferrer">Art. '+n+' c.c.</a>').join('');
+  const articles=patentinoCitedCivilArticles(s).map(n=>{
+   const base='https://www.normattiva.it/';
+   const href=String(n).includes('-')?base+'eli/id/1942/04/04/042U0262/CONSOLIDATED':base+'atto/caricaDettaglioAtto?atto.articolo.numero='+n+'&amp;atto.articolo.sottoArticolo=1&amp;atto.articolo.tipoArticolo=2&amp;atto.codiceRedazionale=042U0262&amp;atto.dataPubblicazioneGazzetta=1942-04-04';
+   return '<a href="'+href+'" target="_blank" rel="noopener noreferrer">art. '+n+' c.c.</a>';
+  }).join('');
   const refs=[...new Set(s.refs||[])].map(ref=>{
    const entry=patentinoSource(ref);
    return entry?'<li><a href="'+patentinoBookEsc(entry.url)+'" target="_blank" rel="noopener noreferrer">'+patentinoBookEsc(entry.label)+'</a></li>':'';
