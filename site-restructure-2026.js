@@ -49,11 +49,56 @@ function site2026Study(division,selected){
 function site2026Card(title,description,url,meta,extra){
  return '<a class="site2026-choice" href="'+url+'"><span class="site2026-choice-main"><strong>'+title+'</strong><span>'+description+'</span></span><span class="site2026-choice-meta">'+(meta||'Apri')+' <b aria-hidden="true">›</b></span></a>'+(extra||'');
 }
+function site2026Gromia(){
+ const bank=window.PATENTINO_GROMIA;
+ if(!bank)return '<div class="site2026-page">'+pageTitle('QUIZ ESTERNI','Quiz Gromia','Il catalogo non è disponibile.')+'<a href="https://www.gromia.com/diventare-agente-immobiliare/quiz/" target="_blank" rel="noopener noreferrer">Apri i quiz sul sito Gromia ↗</a></div>';
+ const external=' target="_blank" rel="noopener noreferrer"';
+ const cards=bank.categories.map((c,i)=>{
+  const match=esc((c.name+' '+c.division).toLocaleLowerCase('it'));
+  return '<a class="site26-gromia-card" href="'+esc(c.url)+'"'+external+' data-gromia-category data-area="'+c.division+'" data-search="'+match+'">'+
+  '<span class="site26-gromia-index">'+String(i+1).padStart(2,'0')+'</span>'+
+  '<span class="site26-gromia-card-main"><strong>'+esc(c.name)+'</strong><small>Quiz per argomento · Sito Gromia</small></span>'+
+  '<span class="site26-gromia-card-count">'+c.count+'<small>domande</small></span>'+
+  '<span class="site26-gromia-out" aria-hidden="true">↗</span></a>';
+ }).join('');
+ return '<div class="site2026-page site26-gromia">'+
+ '<a class="site2026-back" href="#/domande">‹ Torna a Domande</a>'+
+ pageTitle('BANCHE DI QUIZ / FONTE ESTERNA','Quiz Gromia','Accesso alle 1.380 domande originali di Gromia, suddivise in 14 argomenti. I quiz si svolgono direttamente sul sito dell’autore.')+
+ '<section class="site26-gromia-hero" aria-labelledby="site26-gromia-head">'+
+ '<div class="site26-gromia-hero-text"><span class="site26-gromia-kicker">RISORSA DI STUDIO ESTERNA · GROMIA</span>'+
+ '<h2 id="site26-gromia-head">Un’altra banca di esercitazioni.</h2><p>Usa la simulazione completa oppure scegli la materia da ripassare. Le domande, le risposte e le spiegazioni appartengono a Gromia.</p>'+
+ '<div class="site26-gromia-actions"><a class="site26-gromia-primary" href="'+esc(bank.root)+'"'+external+'>Simulazione da 40 domande <span aria-hidden="true">↗</span></a>'+
+ '<a class="site26-gromia-secondary" href="'+esc(bank.root)+'"'+external+'>Allenamento da 10 domande <span aria-hidden="true">↗</span></a></div>'+
+ '</div><div class="site26-gromia-hero-stat"><strong>'+bank.totalQuestions.toLocaleString('it-IT')+'</strong><span>quesiti</span><small>14 materie disponibili</small></div></section>'+
+ '<section class="site26-gromia-listing" aria-labelledby="site26-gromia-list-title">'+
+ '<div class="site26-gromia-head"><div><span class="site26-gromia-kicker">SCEGLI UN ARGOMENTO</span><h2 id="site26-gromia-list-title">Quiz per materia</h2></div><span class="site26-gromia-head-count">14 argomenti</span></div>'+
+ '<div class="site26-gromia-toolbar"><label for="gromia-search">Cerca un argomento<input id="gromia-search" type="search" placeholder="Es. catasto, contratti, estimo…" autocomplete="off" /></label>'+
+ '<label for="gromia-area">Divisione orientativa<select id="gromia-area"><option value="all">Tutte le materie</option><option value="normativa">Normativa</option><option value="tecnica">Tecnica</option></select></label></div>'+
+ '<div class="site26-gromia-grid" id="site26-gromia-cards">'+cards+'</div>'+
+ '<p id="site26-gromia-empty" class="site26-gromia-empty" hidden>Nessun argomento corrisponde ai filtri selezionati.</p></section>'+
+ '<aside class="site26-gromia-note"><strong>Come funziona il collegamento</strong><p>Le schede aprono una nuova scheda del sito ufficiale Gromia. Non importiamo né ripubblichiamo la loro banca dati. I risultati svolti su Gromia non si sincronizzano con i progressi di PATENTINO. I numeri indicati sono quelli pubblicati il 19 novembre 2026 e possono essere aggiornati dal sito originale.</p>'+
+ '<div><a href="'+esc(bank.root)+'"'+external+'>Fonte: Gromia — quiz d’esame ↗</a><a href="#/quiz">Usa invece i quiz interni di PATENTINO</a></div></aside></div>';
+}
+function site2026FilterGromia(){
+ const input=document.getElementById('gromia-search'),select=document.getElementById('gromia-area');
+ if(!input||!select)return;
+ const term=input.value.trim().toLocaleLowerCase('it'),area=select.value;
+ let visible=0;
+ document.querySelectorAll('[data-gromia-category]').forEach(card=>{
+  const yes=(area==='all'||card.dataset.area===area)&&(!term||card.dataset.search.includes(term));
+  card.hidden=!yes;
+  if(yes)visible++;
+ });
+ const empty=document.getElementById('site26-gromia-empty');
+ if(empty)empty.hidden=visible!==0;
+}
+
 function site2026Domande(){
- return '<div class="site2026-page">'+pageTitle('ALLENAMENTO','Domande','Quattro percorsi per esercitarti, dalla simulazione completa al ripasso degli errori.')+
+ return '<div class="site2026-page">'+pageTitle('ALLENAMENTO','Domande','Cinque percorsi: simulazione, quiz interni, banca Gromia, domande aperte e ripasso degli errori.')+
  '<div class="site2026-area-list">'+
  site2026Card('Simulazione','Prova scritta completa con punteggio e condizioni di superamento.','#/exam','Avvia')+
  '<section class="site2026-block"><div class="site2026-block-head"><div><h2>Quiz</h2><p>Allenamenti guidati e filtri per materia, argomento e provenienza.</p></div><a class="site2026-small-link" href="#/quiz">Configura i filtri ›</a></div><div class="site2026-mode-row"><button type="button" data-site2026-action="flash">Quiz flash <small>10 domande casuali</small></button><button type="button" data-site2026-action="streak">Fino alla morte <small>Termina al primo errore</small></button><a href="#/quiz">Quiz guidato <small>Personalizza la sessione</small></a></div></section>'+
+ site2026Card('Quiz Gromia · 1.380 domande','Catalogo di 14 materie, simulazione da 40 e sessioni rapide da 10. Si apre sul sito Gromia.','#/domande/gromia','Esplora i quiz')+
  site2026Card('Domande aperte','Allenamento orale per argomento, difficoltà e parole chiave, con risposte da mostrare o nascondere.','#/oral','Esercitati')+
  site2026Card('Ripasso','Rivedi le risposte sbagliate, i preferiti e i tuoi appunti.','#/review','Rivedi')+
  '</div><div class="site2026-secondary"><a href="#/archive">Banche ufficiali</a><a href="#/milanobank">Tracce di Milano</a><a href="#/oralbase">Ripasso definizioni</a></div></div>';
@@ -78,7 +123,7 @@ function site2026Quiz(){
  '<label>Origine dei quesiti'+select('quiz-origin',origOpts,quizOrigin)+'</label>'+
  '</div><div class="site2026-form-footer"><span>'+available+' quesiti disponibili con questi filtri</span><button class="btn btn-primary" type="button" data-action="start-quiz">Inizia il quiz</button></div></div>'+
  '<aside class="site2026-form-side"><h3>Modalità rapide</h3><button type="button" data-site2026-action="flash">Quiz flash <small>10 domande casuali, senza timer</small></button><button type="button" data-action="start-streak-filtered">Fino alla morte <small>Utilizza i filtri selezionati</small></button><button type="button" data-action="start-streak-all">Fino alla morte · tutto <small>Usa l’intera banca esercitazioni</small></button><button type="button" data-action="start-expert-quiz">Quiz avanzato <small>20 quesiti ragionati</small></button></aside></div>'+
- '<div class="site2026-secondary"><a href="#/archive">Banche ufficiali e batterie storiche</a><a href="#/milanobank">Tracce di Milano</a><a href="#/domande">Torna a Domande</a></div></div>';
+ '<div class="site2026-secondary"><a href="#/archive">Banche ufficiali e batterie storiche</a><a href="#/milanobank">Tracce di Milano</a><a href="#/domande/gromia">Quiz Gromia (sito esterno)</a><a href="#/domande">Torna a Domande</a></div></div>';
 }
 function site2026Topics(){
  const chapters=THEORY_CHAPTERS.map(c=>{
@@ -165,14 +210,16 @@ render=function(scroll){
  const route=currentRoute(),view=route.view;
  if(['home','studio','domande','ripasso-generale'].includes(view)){
   navActive(view);
-  const body=view==='home'?site2026Home():view==='studio'?site2026Study(route.id,route.idx):view==='domande'?site2026Domande():site2026Ripasso(route.id);
+  const body=view==='home'?site2026Home():view==='studio'?site2026Study(route.id,route.idx):view==='domande'?(route.id==='gromia'?site2026Gromia():site2026Domande()):site2026Ripasso(route.id);
   document.getElementById('view').innerHTML=body;
-  document.title=(view==='home'?'Home':view==='studio'?'Studio':view==='domande'?'Domande':'Ripasso generale')+' — Patentino';
+  document.title=(view==='home'?'Home':view==='studio'?'Studio':view==='domande'?(route.id==='gromia'?'Quiz Gromia':'Domande'):'Ripasso generale')+' — Patentino';
   if(scroll)window.scrollTo({top:0,behavior:'instant'});
   return;
  }
  site2026OriginalRender(scroll);
 };
+document.addEventListener('input',event=>{if(event.target.id==='gromia-search')site2026FilterGromia();});
+document.addEventListener('change',event=>{if(event.target.id==='gromia-area')site2026FilterGromia();});
 document.addEventListener('change',event=>{
  const t=event.target;
  if(t.id==='site2026-quiz-size'){quizSize=t.value==='errors'?'errors':Number(t.value);render();}
