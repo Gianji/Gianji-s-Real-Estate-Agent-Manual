@@ -181,3 +181,33 @@
  .academic-expert-case details>p{display:block!important}
  .academic-expert-case summary{display:none}
 }
+
+
+/* Desktop: the volume index follows reading, rather than stopping at its own box.
+   Sticky must be on the grid item: applying it only to the inner child
+   limits the sticky range to the aside's short intrinsic height. */
+@media screen and (min-width:791px){
+  .academic-layout > .academic-toc{
+    position:sticky;
+    top:18px;
+    align-self:start;
+    max-height:calc(100vh - 36px);
+    max-height:calc(100dvh - 36px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#c6d5e0 transparent;
+  }
+  .academic-toc > .academic-toc-sticky{
+    position:static;
+    top:auto;
+  }
+  .academic-toc .academic-index-item.is-current{
+    color:#174f79;
+    background:#edf4f9;
+    border-radius:5px;
+  }
+  .academic-toc .academic-index-item.is-current .academic-index-num{
+    color:#d77a21;
+  }
+}
