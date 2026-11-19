@@ -211,3 +211,63 @@
     color:#d77a21;
   }
 }
+
+
+/* Stampa accademica: ogni sezione numerata ha un inizio pagina proprio.
+   I testi brevi restano interi; i blocchi oltre una pagina si interrompono
+   solo se fisicamente impossibile mantenerli sulla stessa facciata. */
+@media print {
+  @page { size:A4 portrait; margin:17mm 16mm 19mm; }
+
+  .academic-section{
+    break-before:page!important;
+    page-break-before:always!important;
+    break-inside:auto!important;
+    page-break-inside:auto!important;
+    margin:0!important;
+    padding:0 0 5mm!important;
+    border:0!important;
+  }
+  .academic-section-heading,
+  .academic-section h2,
+  .academic-section-number,
+  .academic-expert-material h3{
+    break-inside:avoid!important;
+    break-after:avoid!important;
+    page-break-after:avoid!important;
+  }
+  .academic-prose p,
+  .academic-introduction p,
+  .academic-examination-item,
+  .academic-expert-material li,
+  .academic-expert-case > p,
+  .academic-expert-case details > p,
+  .academic-legacy-inner p{
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+    orphans:4;
+    widows:4;
+  }
+  .academic-prose p{font-size:10.5pt!important;line-height:1.6!important;margin:0 0 4.5mm!important;}
+  .academic-specialist-section .academic-prose p{font-size:10.3pt!important;}
+  .academic-expert-material{
+    display:block!important;
+    margin:7mm 0 0!important;
+  }
+  .academic-expert-material section{
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+    margin:0 0 5mm!important;
+    padding:4mm!important;
+    border:1px solid #bbb!important;
+    background:white!important;
+  }
+  .academic-examination{break-inside:avoid-page!important;page-break-inside:avoid!important;}
+  /* La testatina di Parte II sul web è sostituita in stampa dalla dicitura
+     'Monografia specialistica' presente nel titolo di ciascuna sezione. */
+  .academic-phase-break{display:none!important;}
+  /* Fonti consultabili online, non nei fascicoli destinati alla stampa. */
+  .academic-references,
+  .academic-bibliography,
+  .academic-article-links{display:none!important;}
+}
