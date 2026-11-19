@@ -40,10 +40,10 @@ function patentinoBookMeta(b){
 }
 function patentinoCitedCivilArticles(section){
  if(section.expert){
-  const valid=/^\\d{1,4}(?:-(?:bis|ter|quater|quinquies))?$/i;
+  const valid=/^\d{1,4}(?:-(?:bis|ter|quater|quinquies))?$/i;
   const items=(section.expert.civilArticles||[]).map(String).filter(x=>valid.test(x)&&Number.parseInt(x,10)<=2969);
   const corpus=[section.title,...section.paragraphs].join(' ');
-  for(const m of corpus.matchAll(/\\bart\\.\\s*(\\d{1,4}-(?:bis|ter|quater|quinquies))\\s*c\\.c\\./gi))items.push(m[1]);
+  for(const m of corpus.matchAll(/\bart\.\s*(\d{1,4}-(?:bis|ter|quater|quinquies))\s*c\.c\./gi))items.push(m[1]);
   return [...new Set(items)].sort((a,b)=>Number.parseInt(a,10)-Number.parseInt(b,10));
  }
  const text=[section.title,...section.paragraphs,section.focus,section.caseStudy,section.exam].join(' ');
