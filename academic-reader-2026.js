@@ -97,6 +97,49 @@ function patentinoBookChapter(id){
  '</div></div></div>';
 }
 (function(){
+ // Desktop reading index: keep current section visible while the whole index sticks.
+ let previousToc=null;
+ let previousSection='';
+ let tocScrollScheduled=false;
+ function syncReadingIndex(){
+  tocScrollScheduled=false;
+  if(window.innerWidth<791)return;
+  const toc=document.querySelector('.academic-reader .academic-toc');
+  if(!toc){previousToc=null;previousSection='';return;}
+  const sections=document.querySelectorAll('.academic-reader .academic-section');
+  if(!sections.length)return;
+  let active=sections[0];
+  for(const section of sections){
+   if(section.getBoundingClientRect().top<=145)active=section;
+   else break;
+  }
+  const changed=toc!==previousToc||active.id!==previousSection;
+  if(!changed)return;
+  const buttons=toc.querySelectorAll('[data-academic-goto]');
+  let selected=null;
+  for(const button of buttons){
+   const current=button.dataset.academicGoto===active.id;
+   button.classList.toggle('is-current',current);
+   if(current){button.setAttribute('aria-current','location');selected=button;}
+   else button.removeAttribute('aria-current');
+  }
+  previousToc=toc;
+  previousSection=active.id;
+  if(!selected)return;
+  const outer=toc.getBoundingClientRect();
+  const inner=selected.getBoundingClientRect();
+  const margin=30;
+  if(inner.top<outer.top+margin||inner.bottom>outer.bottom-margin){
+   toc.scrollTo({top:Math.max(0,toc.scrollTop+inner.top-outer.top-outer.height/3),behavior:'smooth'});
+  }
+ }
+ function scheduleReadingIndex(){
+  if(tocScrollScheduled)return;
+  tocScrollScheduled=true;
+  window.requestAnimationFrame(syncReadingIndex);
+ }
+ window.addEventListener('scroll',scheduleReadingIndex,{passive:true});
+ window.addEventListener('resize',scheduleReadingIndex);
  let previousPrintDetails=[];
  window.addEventListener('beforeprint',()=>{
   previousPrintDetails=Array.from(document.querySelectorAll('.academic-expert-case details')).map(el=>({el,wasOpen:el.open}));
