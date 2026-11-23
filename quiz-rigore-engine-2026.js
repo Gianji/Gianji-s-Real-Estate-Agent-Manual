@@ -39,6 +39,8 @@
  // closed-answer scoring: original historical answers are not fully audited.
  window.PATENTINO_QUIZ_LEGACY_COUNT=QUESTIONS.length;
  QUESTIONS.splice(0,QUESTIONS.length,...vetted);
+ // Old app default was 'milano'; do not accidentally select an unreviewed bank.
+ quizOrigin='all';quizSubject='all';quizSector='all';quizModule='all';quizSize=20;
  window.PATENTINO_QUIZ_RIGOR={
   verifiedTotal:vetted.length,normativa:legal.length,tecnica:tec.length,
   excludedLegacy:window.PATENTINO_QUIZ_LEGACY_COUNT,
