@@ -8,11 +8,12 @@
  'use strict';
  const original=Array.isArray(window.PATENTINO_RIGOR_NORM)?window.PATENTINO_RIGOR_NORM:[];
  const technical=Array.isArray(window.PATENTINO_RIGOR_TEC)?window.PATENTINO_RIGOR_TEC:[];
+ const caseStudy=Array.isArray(window.PATENTINO_RIGOR_CASES)?window.PATENTINO_RIGOR_CASES:[];
  const permitted=new Set(['www.normattiva.it','def.finanze.it','www.fiscooggi.it','www.abi.it','ivsc.org','telematici.agenziaentrate.gov.it','www.mit.gov.it']);
  const ids=new Set();
  const errors=[];
  const vetted=[];
- for(const question of [...original,...technical]){
+ for(const question of [...original,...technical,...caseStudy]){
   const module=MODULES.find(x=>x.id===question.module);
   const key=String(question.id||'');
   const opts=question.options;
