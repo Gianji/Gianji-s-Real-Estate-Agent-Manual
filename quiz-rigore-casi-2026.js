@@ -287,7 +287,7 @@ window.PATENTINO_RIGOR_CASES=[
   },
   {
     "id": "rig-26-x-16",
-    "module": "estimo-analitico",
+    "module": "estimo-calcoli",
     "question": "Un progetto residuale genera ricavi per € 2,6 milioni, costruzione € 1,8 milioni, tecnici/oneri € 250.000, finanza € 150.000 e remunerazione rischio € 200.000. Se il prezzo di vendita aggregato scende del 5% a costi invariati, quali sono il residuo iniziale e quello dopo il calo?",
     "options": [
       "€ 400.000 iniziali ed € 270.000 dopo la flessione.",
