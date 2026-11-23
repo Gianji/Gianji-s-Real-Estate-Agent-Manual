@@ -121,7 +121,7 @@
   if(errorsOnly||quizSize==='errors')pool=pool.filter(q=>data.wrong.includes(q.id));
   if(expertOnly)pool=pool.filter(q=>q.difficulty==='avanzato');
   if(!pool.length){toast('Nessun quesito revisionato disponibile con i filtri selezionati');return;}
-  const count=errorsOnly||quizSize==='errors'?Math.min(pool.length,20):Math.min(Number(quizSize),pool.length);
+  const count=errorsOnly||quizSize==='errors'?Math.min(pool.length,20):Math.min(quizSize==='all'?pool.length:Number(quizSize),pool.length);
   const selected=rigorSelection(pool,count);
   const questions=shuffleDifferent(selected,lastQuizFirst).map(permuteQuestion);
   lastQuizFirst=questions[0]?.id??null;
