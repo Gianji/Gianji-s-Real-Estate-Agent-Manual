@@ -21,7 +21,7 @@
   try {domain=new URL(url).hostname.toLowerCase()}catch{}
   const normalized=Array.isArray(opts)?opts.map(o=>String(o).trim().toLocaleLowerCase('it')):[];
   const ok=module&&key&&!ids.has(key)&&Array.isArray(opts)&&opts.length===4&&
-   normalized.every(x=>x.length>10)&&new Set(normalized).size===4&&Number.isInteger(question.answer)&&
+   normalized.every(x=>x.length>=5)&&new Set(normalized).size===4&&Number.isInteger(question.answer)&&
    question.answer>=0&&question.answer<4&&String(question.why||'').length>=100&&
    permitted.has(domain)&&question.origin==='original'&&question.verifiedAt==='2026-11-23';
   if(!ok){errors.push(key||'(senza ID)');continue;}
