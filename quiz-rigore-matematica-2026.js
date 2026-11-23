@@ -130,7 +130,7 @@ add("grossmultiplier","mercato",j=>{
 add("tassosensibilita","estimo-calcoli",j=>{
  const noi=11000+530*j,rate=4+(j%6)*.5,later=rate+.5,original=noi/(rate/100),newValue=noi/(later/100),difference=original-newValue;
  return [`NOI annuo invariato ${E(noi)}. Il tasso di capitalizzazione passa dal ${n(rate,1)}% al ${n(later,1)}%. Quanto diminuisce il valore della capitalizzazione diretta, arrotondando all'euro?`,
- Math.round(difference),[Math.round(noi*(later-rate)/100),Math.round(newValue-original),Math.round(original*.005)],x=>E(x),
+ Math.round(difference),[Math.round(original*.05),Math.round(original*.13),Math.round(original*.20)],x=>E(x),
  `Il valore passa da ${E(original,2)} a ${E(newValue,2)} poiché un saggio più alto capitalizza lo stesso reddito in misura minore. La differenza positiva di valore è ${E(difference,2)}: non è la percentuale del reddito.`,
  ABI,{noi,rate,later}];
 });
