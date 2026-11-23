@@ -64,12 +64,12 @@ function site2026Quiz(){
  const pool=categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector);
  const available=quizSize==='errors'?pool.filter(q=>data.wrong.includes(q.id)).length:pool.length;
  const origOpts=[['all','Banca revisionata (originali e fonti)']];
- const opts=[['10','Flash · 10 domande'],['20','Guidato · 20 domande'],['50','Approfondito · 50 domande'],['errors','Solo errori']];
+ const opts=[['10','Flash · 10 domande'],['20','Guidato · 20 domande'],['40','Prova lunga · 40 domande'],['50','Approfondito · 50 domande'],['100','Maratona · 100 domande'],['200','Maratona · 200 domande'],['all','Tutta la banca revisionata'],['errors','Solo errori']];
  const select=(id,values,active)=>'<select id="'+id+'">'+values.map(v=>'<option value="'+v[0]+'"'+(String(v[0])===String(active)?' selected':'')+'>'+esc(v[1])+'</option>').join('')+'</select>';
  const modules=MODULES.filter(m=>(quizSubject==='all'||m.category===quizSubject)&&(quizSector==='all'||sectorOf(m)===quizSector)&&(m.id!=='cremona'||quizOrigin==='cremona'));
  const subjectOpts=[['all','Normativa e Tecnica'],['normativa','Normativa'],['tecnica','Tecnica']];
  const sectors=[['all','Tutte le materie']].concat(THEORY_SECTORS.map(s=>[s.id,s.name]));
- return '<div class="site2026-page">'+pageTitle('DOMANDE / QUIZ','Quiz selettivi','Quesiti originali ad alta difficoltà: condizioni, eccezioni, tempi, ipotesi concorrenti e calcoli. Tutte le risposte hanno motivazione e fonte; i quiz d’archivio non revisionati sono esclusi dal punteggio.')+
+ return '<div class="site2026-page">'+pageTitle('DOMANDE / QUIZ','Quiz selettivi','Banca di '+(window.PATENTINO_QUIZ_RIGOR?.verifiedTotal||'numerosi')+' quesiti originali: condizioni, eccezioni, tempi, ipotesi concorrenti e calcoli. Domande e alternative vengono rimescolate; soluzione e fonti sono consultabili dopo ogni risposta.')+
  '<div class="site2026-quiz-layout"><div class="site2026-form-panel"><h2>Imposta la sessione</h2><div class="site2026-form-grid">'+
  '<label>Modalità'+select('site2026-quiz-size',opts,quizSize)+'</label>'+
  '<label>Divisione della prova'+select('quiz-subject',subjectOpts,quizSubject)+'</label>'+
@@ -175,7 +175,7 @@ render=function(scroll){
 };
 document.addEventListener('change',event=>{
  const t=event.target;
- if(t.id==='site2026-quiz-size'){quizSize=t.value==='errors'?'errors':Number(t.value);render();}
+ if(t.id==='site2026-quiz-size'){quizSize=['errors','all'].includes(t.value)?t.value:Number(t.value);render();}
 });
 document.addEventListener('input',event=>{
  if(event.target.id!=='site2026-topic-search')return;
