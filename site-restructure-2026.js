@@ -63,22 +63,22 @@ function site2026Quiz(){
  if(quizSession)return renderQuizGame();
  const pool=categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector);
  const available=quizSize==='errors'?pool.filter(q=>data.wrong.includes(q.id)).length:pool.length;
- const origOpts=[['all','Tutti i quesiti'],['official','Tracce camerali disponibili'],['milano','Milano'],['roma','Roma'],['venezia-rovigo','Venezia/Rovigo'],['original','Originali di allenamento'],['cremona','Focus Cremona']];
+ const origOpts=[['all','Banca revisionata (originali e fonti)']];
  const opts=[['10','Flash · 10 domande'],['20','Guidato · 20 domande'],['50','Approfondito · 50 domande'],['errors','Solo errori']];
  const select=(id,values,active)=>'<select id="'+id+'">'+values.map(v=>'<option value="'+v[0]+'"'+(String(v[0])===String(active)?' selected':'')+'>'+esc(v[1])+'</option>').join('')+'</select>';
  const modules=MODULES.filter(m=>(quizSubject==='all'||m.category===quizSubject)&&(quizSector==='all'||sectorOf(m)===quizSector)&&(m.id!=='cremona'||quizOrigin==='cremona'));
  const subjectOpts=[['all','Normativa e Tecnica'],['normativa','Normativa'],['tecnica','Tecnica']];
  const sectors=[['all','Tutte le materie']].concat(THEORY_SECTORS.map(s=>[s.id,s.name]));
- return '<div class="site2026-page">'+pageTitle('DOMANDE / QUIZ','Quiz guidati','Imposta il tipo di esercitazione e restringi il campo alle materie che vuoi allenare.')+
+ return '<div class="site2026-page">'+pageTitle('DOMANDE / QUIZ','Quiz selettivi','Quesiti originali ad alta difficoltà: condizioni, eccezioni, tempi, ipotesi concorrenti e calcoli. Tutte le risposte hanno motivazione e fonte; i quiz d’archivio non revisionati sono esclusi dal punteggio.')+
  '<div class="site2026-quiz-layout"><div class="site2026-form-panel"><h2>Imposta la sessione</h2><div class="site2026-form-grid">'+
  '<label>Modalità'+select('site2026-quiz-size',opts,quizSize)+'</label>'+
  '<label>Divisione della prova'+select('quiz-subject',subjectOpts,quizSubject)+'</label>'+
  '<label>Materia'+select('quiz-sector',sectors,quizSector)+'</label>'+
  '<label>Argomento'+select('quiz-module',[['all','Tutti gli argomenti']].concat(modules.map(m=>[m.id,m.title])),quizModule)+'</label>'+
- '<label>Origine dei quesiti'+select('quiz-origin',origOpts,quizOrigin)+'</label>'+
+ '<div class="site2026-quiz-proof"><strong>Controllo editoriale</strong><small>Solo quesiti con soluzione motivata, fonte e data della revisione. Non sono domande ufficiali.</small></div>'+
  '</div><div class="site2026-form-footer"><span>'+available+' quesiti disponibili con questi filtri</span><button class="btn btn-primary" type="button" data-action="start-quiz">Inizia il quiz</button></div></div>'+
- '<aside class="site2026-form-side"><h3>Modalità rapide</h3><button type="button" data-site2026-action="flash">Quiz flash <small>10 domande casuali, senza timer</small></button><button type="button" data-action="start-streak-filtered">Fino alla morte <small>Utilizza i filtri selezionati</small></button><button type="button" data-action="start-streak-all">Fino alla morte · tutto <small>Usa l’intera banca esercitazioni</small></button><button type="button" data-action="start-expert-quiz">Quiz avanzato <small>20 quesiti ragionati</small></button></aside></div>'+
- '<div class="site2026-secondary"><a href="#/archive">Banche ufficiali e batterie storiche</a><a href="#/milanobank">Tracce di Milano</a><a href="#/domande">Torna a Domande</a></div></div>';
+ '<aside class="site2026-form-side"><h3>Modalità rapide</h3><button type="button" data-site2026-action="flash">Quiz flash <small>10 domande casuali, senza timer</small></button><button type="button" data-action="start-streak-filtered">Fino alla morte <small>Utilizza i filtri selezionati</small></button><button type="button" data-action="start-streak-all">Fino alla morte · tutto <small>Usa l’intera banca esercitazioni</small></button><button type="button" data-action="start-expert-quiz">Quiz di massima difficoltà <small>20 casi con insidie e risposte documentate</small></button></aside></div>'+
+ '<div class="site2026-secondary"><a href="#/archive">Archivio delle batterie storiche (non corrette in questa modalità)</a><a href="#/milanobank">Tracce pubblicate da Milano · risposte editoriali da verificare</a><a href="#/domande">Torna a Domande</a></div></div>';
 }
 function site2026Topics(){
  const chapters=THEORY_CHAPTERS.map(c=>{
