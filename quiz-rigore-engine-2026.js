@@ -27,7 +27,7 @@
    permitted.has(domain)&&question.origin==='original'&&question.verifiedAt==='2026-11-23';
   if(!ok){errors.push(key||'(senza ID)');continue;}
   ids.add(key);
-  vetted.push({...question,verified:true,difficulty:'avanzato',official:false});
+  vetted.push({...question,verified:true,difficulty:'avanzato',difficultyTier:key.startsWith('rig-26-x-')?'estrema':'alta',official:false});
  }
  const legal=vetted.filter(q=>MODULES.find(m=>m.id===q.module).category==='normativa');
  const tec=vetted.filter(q=>MODULES.find(m=>m.id===q.module).category==='tecnica');
@@ -71,10 +71,34 @@
   quizSession={questions:qs,answers:Array(qs.length).fill(null),i:0,recorded:false,miniModule:id};
   navigate('quiz');
  };
+
+ // Favor questions with simultaneous conditions, counterexamples and close
+ // alternatives; keep enough other vetted questions for meaningful variety.
+ function rigorSelection(pool,count){
+  const extreme=pool.filter(q=>q.difficultyTier==='estrema');
+  const target=Math.min(extreme.length,Math.ceil(count*0.5));
+  const chosen=pickFreshQuestions(extreme,target);
+  const used=new Set(chosen.map(q=>q.id));
+  return chosen.concat(pickFreshQuestions(pool.filter(q=>!used.has(q.id)),count-chosen.length));
+ }
+ startQuiz=function(errorsOnly=false,expertOnly=false){
+  let pool=categoryQuestions(quizSubject,quizModule,quizOrigin,quizSector);
+  if(errorsOnly||quizSize==='errors')pool=pool.filter(q=>data.wrong.includes(q.id));
+  if(expertOnly)pool=pool.filter(q=>q.difficulty==='avanzato');
+  if(!pool.length){toast('Nessun quesito revisionato disponibile con i filtri selezionati');return;}
+  const count=errorsOnly||quizSize==='errors'?Math.min(pool.length,20):Math.min(Number(quizSize),pool.length);
+  const selected=rigorSelection(pool,count);
+  const questions=shuffleDifferent(selected,lastQuizFirst).map(permuteQuestion);
+  lastQuizFirst=questions[0]?.id??null;
+  streakSession=null;
+  quizSession={questions,answers:Array(questions.length).fill(null),i:0,recorded:false};
+  navigate('quiz');
+ };
+
  // The published chamber question selection is not a complete answer key:
  // simulate 40 original sourced questions, 20 per syllabus division.
  startExam=function(){
-  const sample=category=>pickFreshQuestions(QUESTIONS.filter(q=>moduleBy(q.module).category===category),20);
+  const sample=category=>rigorSelection(QUESTIONS.filter(q=>moduleBy(q.module).category===category),20);
   const parts=[...sample('normativa'),...sample('tecnica')];
   if(parts.length!==40){toast('Servono 20 quesiti verificati per ogni divisione.');return;}
   const questions=shuffleDifferent(parts,lastExamFirst).map(permuteQuestion);
