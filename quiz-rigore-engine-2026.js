@@ -30,7 +30,10 @@
    permitted.has(domain)&&question.origin==='original'&&question.verifiedAt==='2026-11-23'&&(!question.audit||window.PATENTINO_RIGOR_AUDIT?.(question)===true);
   if(!ok){errors.push(key||'(senza ID)');continue;}
   ids.add(key);
-  vetted.push({...question,verified:true,difficulty:'avanzato',difficultyTier:key.startsWith('rig-26-x-')?'estrema':'alta',official:false});
+  const provision=String(question.topicKey||'').match(/^civil-(\d+)-/);
+  const exceptionHeavy=new Set([833,844,949,950,980,1014,1061,1073,1144,1159,1176,1218,1225,1227,1230,1243,1260,1337,1338,1353,1376,1382,1427,1442,1455,1460,1489,1491,1494,1497,1599,1602,458,476,519,2557,2558,2560,1138,2821]);
+  const veryHard=key.startsWith('rig-26-x-')||(provision&&exceptionHeavy.has(Number(provision[1])));
+  vetted.push({...question,verified:true,difficulty:'avanzato',difficultyTier:veryHard?'estrema':'alta',official:false});
  }
  const legal=vetted.filter(q=>MODULES.find(m=>m.id===q.module).category==='normativa');
  const tec=vetted.filter(q=>MODULES.find(m=>m.id===q.module).category==='tecnica');
